@@ -33,12 +33,14 @@ func extractExtensions(input []string) {
 	set := make(map[string]int)
 	for _, elem := range input {
 		i := strings.LastIndex(elem, ".")
-		extension := elem[i:]
-		_, exists := set[extension]
-		if exists {
-			set[extension] += 1
-		} else {
-			set[extension] = 1
+		if i >= 0 {
+			extension := elem[i:]
+			_, exists := set[extension]
+			if exists {
+				set[extension] += 1
+			} else {
+				set[extension] = 1
+			}
 		}
 	}
 	n := map[int][]string{}
