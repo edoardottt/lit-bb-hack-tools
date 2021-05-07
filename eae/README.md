@@ -4,6 +4,11 @@ Extract all extensions
 
 Take as input on stdin a list of urls and print on stdout all the extensions sorted. 
 
+### Install
+
+- `go build -o eae`
+- `cp eae /usr/bin`
+
 ### Usage
 
 `cat urls | eae`
