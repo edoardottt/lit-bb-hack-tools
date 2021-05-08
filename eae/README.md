@@ -6,8 +6,10 @@ Take as input on stdin a list of urls and print on stdout all the extensions sor
 
 ### Install
 
+- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
+- `cd lit-bb-hack-tools/eae`
 - `go build -o eae`
-- `cp eae /usr/bin`
+- `sudo cp eae /usr/bin`
 
 ### Usage
 
