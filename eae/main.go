@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"net/url"
 	"os"
 	"sort"
 	"strings"
@@ -32,16 +33,21 @@ func ScanTargets() []string {
 func extractExtensions(input []string) {
 	set := make(map[string]int)
 	for _, elem := range input {
-		i := strings.LastIndex(elem, ".")
-		if i >= 0 {
-			extension := elem[i:]
-			_, exists := set[extension]
-			if exists {
-				set[extension] += 1
-			} else {
-				set[extension] = 1
+		u, err := url.Parse(elem)
+		if err == nil {
+			elem = u.Path
+			i := strings.LastIndex(elem, ".")
+			if i >= 0 {
+				extension := elem[i:]
+				_, exists := set[extension]
+				if exists {
+					set[extension] += 1
+				} else {
+					set[extension] = 1
+				}
 			}
 		}
+
 	}
 	n := map[int][]string{}
 	var a []int
