@@ -1,6 +1,6 @@
 # eae
 
-Extract all extensions
+**e**xtract **a**ll **e**xtensions
 
 Take as input on stdin a list of urls and print on stdout all the extensions sorted. 
 
