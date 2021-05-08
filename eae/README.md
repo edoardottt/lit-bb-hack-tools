@@ -1,13 +1,15 @@
 # eae
 
-Extract all extensions
+**e**xtract **a**ll **e**xtensions
 
 Take as input on stdin a list of urls and print on stdout all the extensions sorted. 
 
 ### Install
 
+- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
+- `cd lit-bb-hack-tools/eae`
 - `go build -o eae`
-- `cp eae /usr/bin`
+- `sudo cp eae /usr/bin`
 
 ### Usage
 
