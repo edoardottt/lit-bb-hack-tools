@@ -5,6 +5,7 @@ List 📝
 -------
 
 - [eae](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eae) Take as input on stdin a list of urls and print on stdout all the extensions sorted.
+- [heacoll](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/heacoll) Take as input on stdin a list of urls and print on stdout all the unique headers found.
 
 License 📝
 -------
