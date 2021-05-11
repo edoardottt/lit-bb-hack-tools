@@ -1,5 +1,5 @@
 # lit-bb-hack-tools
-Little Bug Bounty Hacking Tools
+Little Bug Bounty Hacking Tools⚔️
 
 List 📝
 -------
