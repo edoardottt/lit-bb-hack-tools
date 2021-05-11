@@ -47,8 +47,8 @@ func extractExtensions(input []string) {
 				}
 			}
 		}
-
 	}
+	//sort reverse
 	n := map[int][]string{}
 	var a []int
 	for k, v := range set {
