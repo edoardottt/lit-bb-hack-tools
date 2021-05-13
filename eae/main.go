@@ -33,9 +33,10 @@ func ScanTargets() []string {
 func extractExtensions(input []string) {
 	set := make(map[string]int)
 	for _, elem := range input {
-		u, err := url.Parse(elem)
+		u, err := url.Parse(AddProtocol(elem))
 		if err == nil {
 			elem = u.Path
+			fmt.Println(elem)
 			i := strings.LastIndex(elem, ".")
 			if i >= 0 {
 				extension := elem[i:]
@@ -63,4 +64,12 @@ func extractExtensions(input []string) {
 			fmt.Printf("[ %d ] %s\n", k, s)
 		}
 	}
+}
+
+//AddProtocol
+func AddProtocol(input string) string {
+	if input[:7] != "http://" {
+		return "http://" + input
+	}
+	return input
 }
