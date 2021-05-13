@@ -36,7 +36,6 @@ func extractExtensions(input []string) {
 		u, err := url.Parse(AddProtocol(elem))
 		if err == nil {
 			elem = u.Path
-			fmt.Println(elem)
 			i := strings.LastIndex(elem, ".")
 			if i >= 0 {
 				extension := elem[i:]
