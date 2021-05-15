@@ -7,6 +7,7 @@ List 📝
 - [eae](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eae) Take as input on stdin a list of urls and print on stdout all the extensions sorted.
 - [heacoll](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/heacoll) Take as input on stdin a list of urls and print on stdout all the unique headers found.
 - [removepro](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/removepro) Take as input on stdin a list of urls and print on stdout all the unique urls without protocols.
+- [subtake](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/subtake) Take as input on stdin a list of urls and print on stdout CNAME records found with `dig`.
 
 License 📝
 -------
