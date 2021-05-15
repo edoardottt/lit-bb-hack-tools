@@ -14,7 +14,7 @@ Take as input on stdin a list of urls and print on stdout CNAME records found wi
 
 ### Usage
 
-- `cat urls | ./subtake.sh`
+- `cat urls | subtake`
 
 ### Sample output
 
