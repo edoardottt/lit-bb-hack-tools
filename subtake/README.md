@@ -8,8 +8,7 @@ Take as input on stdin a list of urls and print on stdout CNAME records found wi
 
 - `git clone https://github.com/edoardottt/lit-bb-hack-tools`
 - `cd lit-bb-hack-tools/subtake`
-- `chmod +x subtake.sh`
-- `mv subtake.sh subtake`
+- `chmod +x subtake`
 - `sudo cp subtake /usr/bin`
 
 ### Usage
