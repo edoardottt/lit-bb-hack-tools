@@ -9,7 +9,7 @@ Install 📥
 - `make build`
 - `make clean` (to uninstall)
 
-List 📃
+Tools list 📃
 -------
 
 - [eae](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eae) Take as input on stdin a list of urls and print on stdout all the extensions sorted.
