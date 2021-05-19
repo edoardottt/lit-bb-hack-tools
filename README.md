@@ -1,6 +1,14 @@
 # lit-bb-hack-tools
 Little Bug Bounty & Hacking Tools⚔️
 
+Install 📥
+-------
+
+- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
+- `cd lit-bb-hack-tools`
+- `make build`
+- `make clean` (to uninstall)
+
 List 📝
 -------
 
