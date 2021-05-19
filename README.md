@@ -17,6 +17,7 @@ List 📃
 - [removepro](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/removepro) Take as input on stdin a list of urls and print on stdout all the unique urls without protocols.
 - [subtake](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/subtake) Take as input on stdin a list of urls and print on stdout CNAME records found with `dig`.
 - [eap](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eap) Take as input on stdin a list of urls and print on stdout all the protocols sorted.
+- [gitdump](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/gitdump) It prints all the matches in a git repository with a specified pattern.
 
 License 📝
 -------
