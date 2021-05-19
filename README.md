@@ -9,7 +9,7 @@ Install 📥
 - `make build`
 - `make clean` (to uninstall)
 
-List 📝
+List 📃
 -------
 
 - [eae](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eae) Take as input on stdin a list of urls and print on stdout all the extensions sorted.
@@ -18,7 +18,7 @@ List 📝
 - [subtake](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/subtake) Take as input on stdin a list of urls and print on stdout CNAME records found with `dig`.
 - [eap](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eap) Take as input on stdin a list of urls and print on stdout all the protocols sorted.
 
-License 📃
+License 📝
 -------
 
 This repository is under [GNU General Public License v3.0](https://github.com/edoardottt/lit-bb-hack-tools/blob/main/LICENSE).  
