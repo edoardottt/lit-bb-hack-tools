@@ -1,6 +1,6 @@
 # eap
 
-**e**xtract **a**ll **p**protocols
+**e**xtract **a**ll **p**rotocols
 
 Take as input on stdin a list of urls and print on stdout all the protocols sorted. 
 
