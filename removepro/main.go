@@ -14,7 +14,7 @@ func main() {
 	var result []string
 	if !ScanFlag() {
 		for _, elem := range input {
-			result = append(result, RemoveHeaders(elem))
+			result = append(result, RemoveProtocol(elem))
 		}
 		result = removeDuplicateValues(result)
 		for _, elem := range result {
@@ -22,7 +22,7 @@ func main() {
 		}
 	} else {
 		for _, elem := range input {
-			sub := RemovePort(RemoveHeaders(GetOnlySubs(elem)))
+			sub := RemovePort(RemoveProtocol(GetOnlySubs(elem)))
 			if sub != "" {
 				result = append(result, sub)
 			}
@@ -67,8 +67,8 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//RemoveHeaders
-func RemoveHeaders(input string) string {
+//RemoveProtocol
+func RemoveProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {
 		return input[res+3:]
