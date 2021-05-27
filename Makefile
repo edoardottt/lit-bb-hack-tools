@@ -6,6 +6,7 @@ build:
 	@cd eap && go build -o eap && sudo mv eap /usr/bin && echo "[ + ] eap installed!"
 	@cd gitdump && chmod +x gitdump && sudo cp gitdump /usr/bin && echo "[ + ] gitdump installed!"
 	@cd removehost && go build -o removehost && sudo mv removehost /usr/bin && echo "[ + ] removehost installed!"
+	@cd revlist && go build -o revlist && sudo mv revlist /usr/bin && echo "[ + ] revlist installed!"
 	@echo Done!
 
 clean:
@@ -16,4 +17,5 @@ clean:
 	@sudo rm -rf /usr/bin/eap
 	@sudo rm -rf /usr/bin/gitdump
 	@sudo rm -rf /usr/bin/removehost
+	@sudo rm -rf /usr/bin/revlist
 	@echo Cleaned everything!
