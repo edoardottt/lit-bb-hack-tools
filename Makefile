@@ -7,6 +7,7 @@ build:
 	@cd gitdump && chmod +x gitdump && sudo cp gitdump /usr/bin && echo "[ + ] gitdump installed!"
 	@cd removehost && go build -o removehost && sudo mv removehost /usr/bin && echo "[ + ] removehost installed!"
 	@cd revlist && go build -o revlist && sudo mv revlist /usr/bin && echo "[ + ] revlist installed!"
+	@cd chainredir && go build -o chainredir && sudo mv chainredir /usr/bin && echo "[ + ] chainredir installed!"
 	@echo Done!
 
 clean:
@@ -18,4 +19,5 @@ clean:
 	@sudo rm -rf /usr/bin/gitdump
 	@sudo rm -rf /usr/bin/removehost
 	@sudo rm -rf /usr/bin/revlist
+	@sudo rm -rf /usr/bin/chainredir
 	@echo Cleaned everything!

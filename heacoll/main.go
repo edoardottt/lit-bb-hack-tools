@@ -13,7 +13,7 @@ func main() {
 	RetrieveHeaders(ScanTargets())
 }
 
-//ScanInput return the array of elements
+//ScanTargets return the array of elements
 //taken as input on stdin.
 func ScanTargets() []string {
 
