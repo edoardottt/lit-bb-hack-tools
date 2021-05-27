@@ -19,6 +19,7 @@ Tools list 📃
 - [eap](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eap) Take as input on stdin a list of urls and print on stdout all the protocols sorted.
 - [gitdump](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/gitdump) It prints all the matches in a git repository with a specified pattern.
 - [removehost](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/removehost) Take as input on stdin a list of urls and print on stdout all the unique queries without protocol and host.
+- [revlist](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/revlist) Take as input on stdin a list of items and print on stdout all the unique items in reverse order.
 
 License 📝
 -------
