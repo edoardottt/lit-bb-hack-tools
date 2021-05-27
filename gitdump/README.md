@@ -36,6 +36,4 @@ func RemovePort(input string) string {
 func RetrieveHeaders(input []string) {
 func ScanFlag() bool {
 func ScanTargets() []string {
-(~/github/lit-bb-hack-tools)>$ gitdump func
-suffice to ensure that the continued functioning of the modified object
 ```
