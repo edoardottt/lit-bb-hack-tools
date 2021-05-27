@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"net/url"
 	"os"
@@ -12,23 +11,17 @@ import (
 func main() {
 	input := ScanTargets()
 	var result []string
-	if !ScanFlag() {
-		for _, elem := range input {
-			result = append(result, RemoveProtocol(elem))
+	for _, elem := range input {
+		query := GetQuery(elem)
+		if query != "" {
+			result = append(result, query)
 		}
-	} else {
-		for _, elem := range input {
-			sub := RemovePort(RemoveProtocol(GetOnlySubs(elem)))
-			if sub != "" {
-				result = append(result, sub)
-			}
-		}
+
 	}
 	result = removeDuplicateValues(result)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
-
 }
 
 //ScanInput return the array of elements
@@ -63,37 +56,20 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//RemoveProtocol
-func RemoveProtocol(input string) string {
-	res := strings.Index(input, "://")
-	if res >= 0 {
-		return input[res+3:]
-	} else {
-		return input
-	}
-}
-
-//GetOnlySubs
-func GetOnlySubs(input string) string {
+//GetQuery
+func GetQuery(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
 		return ""
 	}
-	return u.Host
-}
-
-//ScanFlag
-func ScanFlag() bool {
-	subsPtr := flag.Bool("subs", false, "Return only subdomains without protocols.")
-	flag.Parse()
-	return *subsPtr
-}
-
-//RemovePort
-func RemovePort(input string) string {
-	res := strings.Index(input, ":")
-	if res >= 0 {
-		return input[:res-1]
+	if u.RawQuery != "" && u.Fragment != "" {
+		return u.Path + "?" + u.RawQuery + "#" + u.Fragment
 	}
-	return input
+	if u.RawQuery != "" {
+		return u.Path + "?" + u.RawQuery
+	}
+	if u.Fragment != "" {
+		return u.Path + "#" + u.Fragment
+	}
+	return u.Path
 }

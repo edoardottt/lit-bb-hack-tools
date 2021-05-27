@@ -5,6 +5,7 @@ build:
 	@cd subtake && chmod +x subtake && sudo cp subtake /usr/bin && echo "[ + ] subtake installed!"
 	@cd eap && go build -o eap && sudo mv eap /usr/bin && echo "[ + ] eap installed!"
 	@cd gitdump && chmod +x gitdump && sudo cp gitdump /usr/bin && echo "[ + ] gitdump installed!"
+	@cd removehost && go build -o removehost && sudo mv removehost /usr/bin && echo "[ + ] removehost installed!"
 	@echo Done!
 
 clean:
@@ -14,4 +15,5 @@ clean:
 	@sudo rm -rf /usr/bin/subtake
 	@sudo rm -rf /usr/bin/eap
 	@sudo rm -rf /usr/bin/gitdump
+	@sudo rm -rf /usr/bin/removehost
 	@echo Cleaned everything!
