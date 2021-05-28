@@ -45,6 +45,12 @@ func ScanRedirects(input string) []Redirect {
 				return http.ErrUseLastResponse
 			}}
 
+		if len(nextURL) == 0 {
+			break
+		}
+		if nextURL[0] == '/' {
+			nextURL = ExtractHost(result[len(result)-1].Url) + nextURL
+		}
 		resp, err := client.Get(nextURL)
 
 		if err != nil {
@@ -57,7 +63,6 @@ func ScanRedirects(input string) []Redirect {
 			break
 		} else {
 			nextURL = resp.Header.Get("Location")
-			fmt.Println(nextURL)
 			output := Redirect{Url: resp.Request.URL.String(), Code: resp.Status}
 			result = append(result, output)
 			i += 1
@@ -76,4 +81,13 @@ func isUrl(input string) bool {
 		return true
 	}
 	return false
+}
+
+//ExtractHost
+func ExtractHost(input string) string {
+	u, err := url.Parse(input)
+	if err != nil {
+		return ""
+	}
+	return u.Scheme + u.Host
 }
