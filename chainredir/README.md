@@ -23,5 +23,4 @@ Take as input a URL and print on stdout all the redirects.
 
 [>] https://www.edoardoottavianelli.it/ 200 OK
 
-
 ```
