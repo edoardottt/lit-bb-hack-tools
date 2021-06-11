@@ -56,9 +56,9 @@ func RetrieveHeaders(input []string) {
 						result[key] = removeDuplicateValues(update)
 					}
 				}
+				resp.Body.Close()
 			}
 			mutex.Unlock()
-			resp.Body.Close()
 		}(i, domain)
 	}
 	wg.Wait()
