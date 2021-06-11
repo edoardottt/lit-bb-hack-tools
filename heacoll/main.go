@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
 )
 
 //main
@@ -30,47 +31,41 @@ func ScanTargets() []string {
 
 //getHeaders
 func RetrieveHeaders(input []string) {
-	var result map[string][]string
-	result = make(map[string][]string)
-	for _, elem := range input {
-		result = GetHeaders(AddHeaders(elem), result)
+	result := make(map[string][]string)
+	var mutex = &sync.Mutex{}
+
+	limiter := make(chan string, 10) // Limits simultaneous requests
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
+
+	for i, domain := range input {
+		limiter <- domain
+		wg.Add(1)
+		go func(i int, domain string) {
+			defer wg.Done()
+			defer func() { <-limiter }()
+			resp, err := http.Get(domain)
+			mutex.Lock()
+			if err == nil {
+				for key, elem := range resp.Header {
+					_, exists := result[key]
+					if !exists {
+						result[key] = removeDuplicateValues(elem)
+					} else {
+						var update = result[key]
+						update = append(update, elem...)
+						result[key] = removeDuplicateValues(update)
+					}
+				}
+			}
+			mutex.Unlock()
+			resp.Body.Close()
+		}(i, domain)
 	}
+	wg.Wait()
 	for key, elem := range result {
 		fmt.Printf("%s : %s\n", key, removeDuplicateValues(elem))
 		fmt.Println()
 	}
-}
-
-//GetRequest performs a GET request and return
-//a string (the headers of the response)
-func GetHeaders(target string, result map[string][]string) map[string][]string {
-	resp, err := http.Get(target)
-	if err == nil {
-		defer resp.Body.Close()
-		for key, elem := range resp.Header {
-			_, exists := result[key]
-			if !exists {
-				result[key] = removeDuplicateValues(elem)
-			} else {
-				var update = result[key]
-				for _, el := range elem {
-					update = append(update, el)
-				}
-				result[key] = removeDuplicateValues(update)
-			}
-		}
-	}
-	return result
-}
-
-//AddHeaders
-func AddHeaders(input string) string {
-	if len(input) > 8 {
-		if input[:8] != "https://" {
-			return "https://" + input
-		}
-	}
-	return input
 }
 
 //removeDuplicateValues
