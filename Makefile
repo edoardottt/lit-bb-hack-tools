@@ -8,6 +8,7 @@ build:
 	@cd removehost && go build -o removehost && sudo mv removehost /usr/bin && echo "[ + ] removehost installed!"
 	@cd revlist && go build -o revlist && sudo mv revlist /usr/bin && echo "[ + ] revlist installed!"
 	@cd chainredir && go build -o chainredir && sudo mv chainredir /usr/bin && echo "[ + ] chainredir installed!"
+	@cd tahm && go build -o tahm && sudo mv tahm /usr/bin && echo "[ + ] tahm installed!"
 	@echo Done!
 
 clean:
@@ -20,4 +21,5 @@ clean:
 	@sudo rm -rf /usr/bin/removehost
 	@sudo rm -rf /usr/bin/revlist
 	@sudo rm -rf /usr/bin/chainredir
+	@sudo rm -rf /usr/bin/tahm
 	@echo Cleaned everything!
