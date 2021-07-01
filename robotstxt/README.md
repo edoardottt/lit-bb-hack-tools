@@ -4,7 +4,7 @@
 
 Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.  
 
-Inspired by [@remonsec](https://twitter.com/remonsec/status/1410481151433576449) 
+Inspired by [@remonsec](https://twitter.com/remonsec/status/1410661328977600517) 
 
 ### Install
 
