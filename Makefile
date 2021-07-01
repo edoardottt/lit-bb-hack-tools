@@ -9,6 +9,7 @@ build:
 	@cd revlist && go build -o revlist && sudo mv revlist /usr/bin && echo "[ + ] revlist installed!"
 	@cd chainredir && go build -o chainredir && sudo mv chainredir /usr/bin && echo "[ + ] chainredir installed!"
 	@cd tahm && go build -o tahm && sudo mv tahm /usr/bin && echo "[ + ] tahm installed!"
+	@cd robotstxt && go build -o robotstxt && sudo mv robotstxt /usr/bin && echo "[ + ] robotstxt installed!"
 	@echo Done!
 
 clean:
@@ -22,4 +23,5 @@ clean:
 	@sudo rm -rf /usr/bin/revlist
 	@sudo rm -rf /usr/bin/chainredir
 	@sudo rm -rf /usr/bin/tahm
+	@sudo rm -rf /usr/bin/robotstxt
 	@echo Cleaned everything!

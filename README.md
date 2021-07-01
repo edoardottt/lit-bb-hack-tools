@@ -22,6 +22,7 @@ Tools list 📃
 - [revlist](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/revlist) Take as input on stdin a list of items and print on stdout all the unique items in reverse order.
 - [chainredir](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/chainredir) Take as input a URL and print on stdout all the redirects.
 - [tahm](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/tahm) Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
+- [robotstxt](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/robotstxt) Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
 
 License 📝
 -------
