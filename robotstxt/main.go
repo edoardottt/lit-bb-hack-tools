@@ -67,7 +67,7 @@ func GetRobots(input []string) []string {
 		go func(domain string) {
 			defer wg.Done()
 			defer func() { <-limiter }()
-			robots := GetRequest("https://" + domain + "/robots.txt")
+			robots := GetRequest("https://" + RemoveProtocol(domain) + "/robots.txt")
 			mutex.Lock()
 			if robots != "" {
 				s := strings.Split(robots, "\n")
@@ -105,4 +105,14 @@ func GetRequest(target string) string {
 	//Convert the body to type string
 	sb := string(body)
 	return sb
+}
+
+//RemoveProtocol
+func RemoveProtocol(input string) string {
+	res := strings.Index(input, "://")
+	if res >= 0 {
+		return input[res+3:]
+	} else {
+		return input
+	}
 }
