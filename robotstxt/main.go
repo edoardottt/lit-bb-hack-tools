@@ -14,7 +14,6 @@ import (
 func main() {
 	input := ScanTargets()
 	result := GetRobots(input)
-	result = removeDuplicateValues(result)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
@@ -74,7 +73,7 @@ func GetRobots(input []string) []string {
 				for _, line := range s {
 					if strings.Contains(line, "Allow") || strings.Contains(line, "Disallow") {
 						word := strings.Split(line, " ")
-						if len(word) > 1 && !strings.Contains(word[1], "Disallow") {
+						if len(word) > 1 && !strings.Contains(word[1], "Disallow") && !strings.Contains(word[1], "Allow") {
 							result = append(result, word[1])
 						}
 					}
