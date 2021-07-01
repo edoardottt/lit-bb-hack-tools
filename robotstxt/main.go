@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
+	"time"
 )
 
 func main() {
@@ -54,24 +56,43 @@ func removeDuplicateValues(strSlice []string) []string {
 //GetRobots
 func GetRobots(input []string) []string {
 	var result []string
+	var mutex = &sync.Mutex{}
+
+	limiter := make(chan string, 10) // Limits simultaneous requests
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
+
 	for _, elem := range input {
-		robots := GetRequest("https://" + elem + "/robots.txt")
-		if robots != "" {
-			s := strings.Split(robots, "\n")
-			for _, line := range s {
-				if strings.Contains(line, "Allow") || strings.Contains(line, "Disallow") {
-					word := strings.Split(line, " ")
-					result = append(result, word[1])
+		limiter <- elem
+		wg.Add(1)
+		go func(domain string) {
+			defer wg.Done()
+			defer func() { <-limiter }()
+			robots := GetRequest("https://" + domain + "/robots.txt")
+			mutex.Lock()
+			if robots != "" {
+				s := strings.Split(robots, "\n")
+				for _, line := range s {
+					if strings.Contains(line, "Allow") || strings.Contains(line, "Disallow") {
+						word := strings.Split(line, " ")
+						if len(word) > 1 {
+							result = append(result, word[1])
+						}
+					}
 				}
 			}
-		}
+			mutex.Unlock()
+		}(elem)
 	}
+	wg.Wait()
 	return removeDuplicateValues(result)
 }
 
 //GetRequest performs a GET request
 func GetRequest(target string) string {
-	resp, err := http.Get(target)
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	resp, err := client.Get(target)
 	if err != nil {
 		return ""
 	}
