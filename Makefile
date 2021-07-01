@@ -1,4 +1,7 @@
 build:
+	@echo ""
+	@echo "	https://github.com/edoardottt/lit-bb-hack-tools"
+	@echo ""
 	@cd eae && go build -o eae && sudo mv eae /usr/bin && echo "[ + ] eae installed!"
 	@cd heacoll && go build -o heacoll && sudo mv heacoll /usr/bin && echo "[ + ] heacoll installed!"
 	@cd removepro && go build -o removepro && sudo mv removepro /usr/bin && echo "[ + ] removepro installed!"

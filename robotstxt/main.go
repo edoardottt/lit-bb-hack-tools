@@ -74,7 +74,7 @@ func GetRobots(input []string) []string {
 				for _, line := range s {
 					if strings.Contains(line, "Allow") || strings.Contains(line, "Disallow") {
 						word := strings.Split(line, " ")
-						if len(word) > 1 {
+						if len(word) > 1 && !strings.Contains(word[1], "Disallow") {
 							result = append(result, word[1])
 						}
 					}
