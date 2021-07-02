@@ -1,6 +1,6 @@
 build:
 	@echo ""
-	@echo "	https://github.com/edoardottt/lit-bb-hack-tools"
+	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools  <="
 	@echo ""
 	@cd eae && go build -o eae && sudo mv eae /usr/bin && echo "[ + ] eae installed!"
 	@cd heacoll && go build -o heacoll && sudo mv heacoll /usr/bin && echo "[ + ] heacoll installed!"
@@ -13,6 +13,7 @@ build:
 	@cd chainredir && go build -o chainredir && sudo mv chainredir /usr/bin && echo "[ + ] chainredir installed!"
 	@cd tahm && go build -o tahm && sudo mv tahm /usr/bin && echo "[ + ] tahm installed!"
 	@cd robotstxt && go build -o robotstxt && sudo mv robotstxt /usr/bin && echo "[ + ] robotstxt installed!"
+	@cd cleanpath && go build -o cleanpath && sudo mv cleanpath /usr/bin && echo "[ + ] cleanpath installed!"
 	@echo Done!
 
 clean:
@@ -27,4 +28,5 @@ clean:
 	@sudo rm -rf /usr/bin/chainredir
 	@sudo rm -rf /usr/bin/tahm
 	@sudo rm -rf /usr/bin/robotstxt
+	@sudo rm -rf /usr/bin/cleanpath
 	@echo Cleaned everything!
