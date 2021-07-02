@@ -1,5 +1,6 @@
-# lit-bb-hack-tools
-Little Bug Bounty & Hacking Tools⚔️
+<p align="center">
+  <img src="https://github.com/edoardottt/images/blob/main/lit-bb-hack-tools/banner.png">
+</p>
 
 Install 📥
 -------
