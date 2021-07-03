@@ -19,7 +19,6 @@ func main() {
 func ScanTargets() []string {
 
 	var result []string
-
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
