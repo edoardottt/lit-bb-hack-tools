@@ -25,6 +25,7 @@ Tools list 📃
 - [tahm](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/tahm) Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 - [robotstxt](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/robotstxt) Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
 - [cleanpath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/cleanpath) Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).
+- [eefjsf](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eefjsf) Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found. 
 
 License 📝
 -------

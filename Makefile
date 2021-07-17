@@ -14,6 +14,7 @@ build:
 	@cd tahm && go build -o tahm && sudo mv tahm /usr/bin && echo "[ + ] tahm installed!"
 	@cd robotstxt && go build -o robotstxt && sudo mv robotstxt /usr/bin && echo "[ + ] robotstxt installed!"
 	@cd cleanpath && go build -o cleanpath && sudo mv cleanpath /usr/bin && echo "[ + ] cleanpath installed!"
+	@cd eefjsf && go build -o eefjsf && sudo mv eefjsf /usr/bin && echo "[ + ] eefjsf installed!"
 	@echo Done!
 
 clean:
@@ -29,4 +30,5 @@ clean:
 	@sudo rm -rf /usr/bin/tahm
 	@sudo rm -rf /usr/bin/robotstxt
 	@sudo rm -rf /usr/bin/cleanpath
+	@sudo rm -rf /usr/bin/eefjsf
 	@echo Cleaned everything!
