@@ -20,6 +20,13 @@ Thanks to [@renniepak](https://twitter.com/renniepak/status/1288371394401783809)
 ### Sample output
 
 ```
-
-
+/api
+/chat_panel/v2
+/embed/video/
+/chat/v2/conversation/download
+/chat/v2
+/mychats
+/tunnel/UI/Login
+/hidden
+/hidden1
 ```
