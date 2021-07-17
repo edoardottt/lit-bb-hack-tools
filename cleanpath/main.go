@@ -52,19 +52,21 @@ func removeDuplicateValues(strSlice []string) []string {
 func GetPaths(s []string) []string {
 	var result []string
 	for _, elem := range s {
-		var paths []string
-		if HasProtocol(elem) {
-			if GetPath(elem) != "" {
-				paths = GetAllLevelsPaths(GetPath(elem))
+		if len(elem) != 0 {
+			var paths []string
+			if HasProtocol(elem) {
+				if GetPath(elem) != "" {
+					paths = GetAllLevelsPaths(GetPath(elem))
+				}
+			} else {
+				if elem[0] == '/' {
+					elem = elem[1:]
+				}
+				paths = GetAllLevelsPaths(elem)
 			}
-		} else {
-			if elem[0] == '/' {
-				elem = elem[1:]
+			if len(paths) != 0 {
+				result = append(result, paths...)
 			}
-			paths = GetAllLevelsPaths(elem)
-		}
-		if len(paths) != 0 {
-			result = append(result, paths...)
 		}
 	}
 	return removeDuplicateValues(result)
@@ -86,7 +88,7 @@ func RemoveProtocol(input string) string {
 	}
 }
 
-//GetPath
+//GetPath >
 func GetPath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -110,14 +112,16 @@ func GetAllLevelsPaths(input string) []string {
 		input = input + "/"
 	}
 	var elems = strings.Split(input, "/")
-	for i, elem := range elems {
-		if i == 0 {
-			result = append(result, elem)
-		} else {
-			for j := 1; j < i; j++ {
-				resTemp := strings.Join(elems[:j+1], "/")
-				result = append(result, resTemp)
+	for i := range elems {
+		if elems[i] == "*" {
+			break
+		}
+		for j := 1; j < i; j++ {
+			if strings.Contains(elems[j], "*") || elems[j] == "*" {
+				break
 			}
+			resTemp := strings.Join(elems[:j+1], "/")
+			result = append(result, resTemp)
 		}
 	}
 	return removeDuplicateValues(result)
