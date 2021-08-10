@@ -15,6 +15,7 @@ build:
 	@cd robotstxt && go build -o robotstxt && sudo mv robotstxt /usr/bin && echo "[ + ] robotstxt installed!"
 	@cd cleanpath && go build -o cleanpath && sudo mv cleanpath /usr/bin && echo "[ + ] cleanpath installed!"
 	@cd eefjsf && go build -o eefjsf && sudo mv eefjsf /usr/bin && echo "[ + ] eefjsf installed!"
+	@cd bbtargets && go build -o bbtargets && sudo mv bbtargets /usr/bin && echo "[ + ] bbtargets installed!"
 	@echo Done!
 
 clean:
@@ -31,4 +32,5 @@ clean:
 	@sudo rm -rf /usr/bin/robotstxt
 	@sudo rm -rf /usr/bin/cleanpath
 	@sudo rm -rf /usr/bin/eefjsf
+	@sudo rm -rf /usr/bin/bbtargets
 	@echo Cleaned everything!
