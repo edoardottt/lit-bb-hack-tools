@@ -76,12 +76,14 @@ func GetTargets() []string {
 //cleanIgnored is the function that clean the results
 //from ignored targets.
 func cleanIgnored(domains []string) []string {
-	var ignored = readFile("ignored.txt")
 	var ignoredsubs []string
-	for _, domain := range domains {
-		for _, forb := range ignored {
-			if strings.Contains(domain, forb) {
-				ignoredsubs = append(ignoredsubs, domain)
+	if _, err := os.Stat("ignored.txt"); err == nil {
+		var ignored = readFile("ignored.txt")
+		for _, domain := range domains {
+			for _, forb := range ignored {
+				if strings.Contains(domain, forb) {
+					ignoredsubs = append(ignoredsubs, domain)
+				}
 			}
 		}
 	}
