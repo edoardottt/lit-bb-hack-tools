@@ -112,6 +112,9 @@ func GetAllLevelsPaths(input string) []string {
 		input = input + "/"
 	}
 	var elems = strings.Split(input, "/")
+	if len(elems) == 2 {
+		return []string{elems[0]}
+	}
 	for i := range elems {
 		if elems[i] == "*" {
 			break
