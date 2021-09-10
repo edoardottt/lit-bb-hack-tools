@@ -16,7 +16,7 @@ build:
 	@cd cleanpath && go build -o cleanpath && sudo mv cleanpath /usr/bin && echo "[ + ] cleanpath installed!"
 	@cd eefjsf && go build -o eefjsf && sudo mv eefjsf /usr/bin && echo "[ + ] eefjsf installed!"
 	@cd bbtargets && go build -o bbtargets && sudo mv bbtargets /usr/bin && echo "[ + ] bbtargets installed!"
-	@cd npr && go build -o npr && sudo mv npr /usr/bin && echo "[ + ] npr installed!"
+	@cd nrp && go build -o nrp && sudo mv nrp /usr/bin && echo "[ + ] nrp installed!"
 	@echo Done!
 
 clean:
@@ -34,5 +34,5 @@ clean:
 	@sudo rm -rf /usr/bin/cleanpath
 	@sudo rm -rf /usr/bin/eefjsf
 	@sudo rm -rf /usr/bin/bbtargets
-	@sudo rm -rf /usr/bin/npr
+	@sudo rm -rf /usr/bin/nrp
 	@echo Cleaned everything!
