@@ -36,3 +36,8 @@ clean:
 	@sudo rm -rf /usr/bin/bbtargets
 	@sudo rm -rf /usr/bin/nrp
 	@echo Cleaned everything!
+
+update:
+	@git pull
+	@make clean
+	@make build
