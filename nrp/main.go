@@ -15,7 +15,12 @@ func main() {
 	input := ScanTargets()
 	var result []string
 	for _, elem := range input {
-		result = append(result, (ScanRedirect(elem).Url + " " + strconv.Itoa(ScanRedirect(elem).Code)))
+		finalUrl := ScanRedirect(elem)
+		if finalUrl.Url != "" {
+			final := finalUrl.Url + " " + strconv.Itoa(finalUrl.Code)
+			result = append(result, final)
+		}
+
 	}
 	for _, elem := range removeDuplicateValues(result) {
 		fmt.Println(elem)
@@ -48,10 +53,10 @@ type Redirect struct {
 
 //ScanRedirect
 func ScanRedirect(input string) Redirect {
-	result := []Redirect{}
+	result := []Redirect{{"", 1}}
 	nextURL := input
 	var i int
-	for i < 1000 {
+	for i < 10 {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
@@ -69,7 +74,7 @@ func ScanRedirect(input string) Redirect {
 		resp, err := client.Get(nextURL)
 
 		if err != nil {
-			panic(err)
+			return Redirect{"", 1}
 		}
 
 		if resp.StatusCode == 200 {
