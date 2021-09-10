@@ -24,6 +24,10 @@ func main() {
 //ScanTarget return the element
 //taken as input.
 func ScanTarget() string {
+	if len(os.Args) < 2 {
+		fmt.Println("usage: chainredir <url-here>")
+		os.Exit(1)
+	}
 	input := os.Args[1]
 	return input
 }
