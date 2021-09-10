@@ -9,7 +9,7 @@ Installation 📥
 - `cd lit-bb-hack-tools`
 - `make build`
 
-Then use the tools as described in every tool README.
+Then use the tools as described on the README files for each tool.
 
 - `make clean` (uninstall)
 - `make update` (update)
