@@ -20,7 +20,7 @@ For example, if two domains (A and B) redirects to the same domain C, the output
 ### Sample output
 
 ```
-example.com
-noredirect.com
-redirect-no.fr
+example.com 200
+noredirect.com 200
+redirect-no.fr 401
 ```
