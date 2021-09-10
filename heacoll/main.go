@@ -29,7 +29,7 @@ func ScanTargets() []string {
 	return result
 }
 
-//getHeaders
+//RetrieveHeaders
 func RetrieveHeaders(input []string) {
 	result := make(map[string][]string)
 	var mutex = &sync.Mutex{}
