@@ -27,6 +27,7 @@ Tools list 📃
 - [cleanpath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/cleanpath) Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).
 - [eefjsf](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eefjsf) Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found. 
 - [bbtargets](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbtargets) Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
+- [nrp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/nrp) Take as input on stdin a list of domains and print on stdout all the unique domains without redirects.
 
 License 📝
 -------
