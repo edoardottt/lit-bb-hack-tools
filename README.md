@@ -8,7 +8,8 @@ Install 📥
 - `git clone https://github.com/edoardottt/lit-bb-hack-tools`
 - `cd lit-bb-hack-tools`
 - `make build`
-- `make clean` (to uninstall)
+- `make clean` (uninstall)
+- `make update` (update)
 
 Tools list 📃
 -------
