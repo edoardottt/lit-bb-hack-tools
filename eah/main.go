@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"net/url"
 	"os"
 	"sort"
 	"strings"
@@ -12,13 +13,13 @@ func main() {
 	input := ScanTargets()
 	set := make(map[string]int)
 	for _, elem := range input {
-		protocol := GetProtocol(elem)
-		if protocol != "" {
-			_, exists := set[protocol]
+		host := GetHost(elem)
+		if host != "" {
+			_, exists := set[host]
 			if exists {
-				set[protocol] += 1
+				set[host] += 1
 			} else {
-				set[protocol] = 1
+				set[host] = 1
 			}
 		}
 	}
@@ -66,12 +67,11 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//GetProtocol >
-func GetProtocol(input string) string {
-	res := strings.Index(input, "://")
-	if res >= 0 {
-		return input[:res]
-	} else {
+//GetHost >
+func GetHost(input string) string {
+	u, err := url.Parse(input)
+	if err != nil {
 		return ""
 	}
+	return u.Host
 }

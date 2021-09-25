@@ -17,6 +17,7 @@ build:
 	@cd eefjsf && go build -o eefjsf && sudo mv eefjsf /usr/bin && echo "[ + ] eefjsf installed!"
 	@cd bbtargets && go build -o bbtargets && sudo mv bbtargets /usr/bin && echo "[ + ] bbtargets installed!"
 	@cd nrp && go build -o nrp && sudo mv nrp /usr/bin && echo "[ + ] nrp installed!"
+	@cd eah && go build -o eah && sudo mv eah /usr/bin && echo "[ + ] eah installed!"
 	@echo Done!
 
 clean:
@@ -35,6 +36,7 @@ clean:
 	@sudo rm -rf /usr/bin/eefjsf
 	@sudo rm -rf /usr/bin/bbtargets
 	@sudo rm -rf /usr/bin/nrp
+	@sudo rm -rf /usr/bin/eah
 	@echo Cleaned everything!
 
 update:
