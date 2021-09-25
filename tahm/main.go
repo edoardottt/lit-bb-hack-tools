@@ -32,10 +32,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return result
+	return RemoveDuplicateValues(result)
 }
 
-//TestMethods
+//TestMethods >
 func TestMethods(input []string) {
 	for _, elem := range input {
 		fmt.Println("= " + Red + elem + Reset + " =")
@@ -174,4 +174,21 @@ func DeleteRequest(target string) (string, int, error) {
 	sb := string(body)
 
 	return resp.Status, len(sb), nil
+}
+
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
+	keys := make(map[string]bool)
+	list := []string{}
+
+	// If the key(values of the slice) is not equal
+	// to the already present value in new slice (list)
+	// then we append it. else we jump on another element.
+	for _, entry := range strSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry)
+		}
+	}
+	return list
 }

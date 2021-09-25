@@ -13,7 +13,7 @@ import (
 
 func main() {
 	input := ScanTargets()
-	results := RetrieveContents(removeDuplicateValues(input))
+	results := RetrieveContents(RemoveDuplicateValues(input))
 	for _, elem := range results {
 		fmt.Println(elem[1 : len(elem)-1])
 	}
@@ -33,8 +33,8 @@ func ScanTargets() []string {
 	return result
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {
@@ -46,7 +46,7 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//getHeaders
+//RetrieveContents >
 func RetrieveContents(input []string) []string {
 	var result []string
 	var mutex = &sync.Mutex{}
@@ -69,7 +69,7 @@ func RetrieveContents(input []string) []string {
 					//Convert the body to type string
 					sb := string(body)
 					results := r.FindAllString(sb, -1)
-					result = append(result, removeDuplicateValues(results)...)
+					result = append(result, RemoveDuplicateValues(results)...)
 				}
 
 				resp.Body.Close()
@@ -78,5 +78,5 @@ func RetrieveContents(input []string) []string {
 		}(i, domain)
 	}
 	wg.Wait()
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }

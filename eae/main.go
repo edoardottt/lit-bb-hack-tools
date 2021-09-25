@@ -25,7 +25,7 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }
 
 //extractExtensions
@@ -68,8 +68,8 @@ func extractExtensions(input []string) {
 	}
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(intSlice []string) []string {
+//RemoveDuplicateValues
+func RemoveDuplicateValues(intSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range intSlice {

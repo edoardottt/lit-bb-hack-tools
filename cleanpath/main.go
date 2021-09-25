@@ -10,7 +10,7 @@ import (
 
 func main() {
 	input := ScanTargets()
-	output := GetPaths(removeDuplicateValues(input))
+	output := GetPaths(RemoveDuplicateValues(input))
 	for _, elem := range output {
 		fmt.Println(elem)
 	}
@@ -31,8 +31,8 @@ func ScanTargets() []string {
 	return result
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 
@@ -69,7 +69,7 @@ func GetPaths(s []string) []string {
 			}
 		}
 	}
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }
 
 //HasProtocol
@@ -127,5 +127,5 @@ func GetAllLevelsPaths(input string) []string {
 			result = append(result, resTemp)
 		}
 	}
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }

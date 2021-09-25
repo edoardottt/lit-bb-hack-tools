@@ -17,7 +17,7 @@ func main() {
 			result = append(result, query)
 		}
 	}
-	result = removeDuplicateValues(result)
+	result = RemoveDuplicateValues(result)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
@@ -37,8 +37,8 @@ func ScanTargets() []string {
 	return result
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {
@@ -50,7 +50,7 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//GetQuery
+//GetQuery >
 func GetQuery(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {

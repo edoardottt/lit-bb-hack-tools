@@ -87,11 +87,11 @@ func cleanIgnored(domains []string) []string {
 			}
 		}
 	}
-	return difference(domains, ignoredsubs)
+	return Difference(domains, ignoredsubs)
 }
 
-//difference returns the elements in `a` that aren't in `b`.
-func difference(a, b []string) []string {
+//Difference returns the elements in `a` that aren't in `b`.
+func Difference(a, b []string) []string {
 	mb := make(map[string]struct{}, len(b))
 	for _, x := range b {
 		mb[x] = struct{}{}
@@ -122,12 +122,12 @@ func readFile(inputFile string) []string {
 		}
 	}
 	file.Close()
-	text = removeDuplicateValues(text)
+	text = RemoveDuplicateValues(text)
 	return text
 }
 
-//removeDuplicateValues >
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {
