@@ -26,10 +26,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return result
+	return RemoveDuplicateValues(result)
 }
 
-//RetrieveHeaders
+//RetrieveHeaders >
 func RetrieveHeaders(input []string) {
 	result := make(map[string][]string)
 	var mutex = &sync.Mutex{}
@@ -49,11 +49,11 @@ func RetrieveHeaders(input []string) {
 				for key, elem := range resp.Header {
 					_, exists := result[key]
 					if !exists {
-						result[key] = removeDuplicateValues(elem)
+						result[key] = RemoveDuplicateValues(elem)
 					} else {
 						var update = result[key]
 						update = append(update, elem...)
-						result[key] = removeDuplicateValues(update)
+						result[key] = RemoveDuplicateValues(update)
 					}
 				}
 				resp.Body.Close()
@@ -63,13 +63,13 @@ func RetrieveHeaders(input []string) {
 	}
 	wg.Wait()
 	for key, elem := range result {
-		fmt.Printf("%s : %s\n", key, removeDuplicateValues(elem))
+		fmt.Printf("%s : %s\n", key, RemoveDuplicateValues(elem))
 		fmt.Println()
 	}
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 

@@ -22,7 +22,7 @@ func main() {
 		}
 
 	}
-	for _, elem := range removeDuplicateValues(result) {
+	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
 }
@@ -35,7 +35,7 @@ func ScanTargets() []string {
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
-		if !isUrl(sc.Text()) {
+		if !IsUrl(sc.Text()) {
 			fmt.Println(sc.Text() + " is not a proper url")
 			os.Exit(1)
 		}
@@ -91,8 +91,8 @@ func ScanRedirect(input string) Redirect {
 	return result[len(result)-1]
 }
 
-//isUrl >
-func isUrl(input string) bool {
+//IsUrl >
+func IsUrl(input string) bool {
 	u, err := url.Parse(input)
 	if err != nil {
 		panic(err)
@@ -112,8 +112,8 @@ func ExtractHost(input string) string {
 	return u.Scheme + u.Host
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {

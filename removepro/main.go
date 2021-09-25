@@ -24,7 +24,7 @@ func main() {
 			}
 		}
 	}
-	result = removeDuplicateValues(result)
+	result = RemoveDuplicateValues(result)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
@@ -45,8 +45,8 @@ func ScanTargets() []string {
 	return result
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {
@@ -58,7 +58,7 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//RemoveProtocol
+//RemoveProtocol >
 func RemoveProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {
@@ -68,7 +68,7 @@ func RemoveProtocol(input string) string {
 	}
 }
 
-//GetOnlySubs
+//GetOnlySubs >
 func GetOnlySubs(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -77,14 +77,14 @@ func GetOnlySubs(input string) string {
 	return u.Host
 }
 
-//ScanFlag
+//ScanFlag >
 func ScanFlag() bool {
 	subsPtr := flag.Bool("subs", false, "Return only subdomains without protocols.")
 	flag.Parse()
 	return *subsPtr
 }
 
-//RemovePort
+//RemovePort >
 func RemovePort(input string) string {
 	res := strings.Index(input, ":")
 	if res >= 0 {

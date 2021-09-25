@@ -50,11 +50,11 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return result
+	return RemoveDuplicateValues(result)
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range strSlice {

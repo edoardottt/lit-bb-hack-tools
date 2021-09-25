@@ -32,11 +32,11 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }
 
-//removeDuplicateValues
-func removeDuplicateValues(strSlice []string) []string {
+//RemoveDuplicateValues >
+func RemoveDuplicateValues(strSlice []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 
@@ -52,7 +52,7 @@ func removeDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//GetRobots
+//GetRobots >
 func GetRobots(input []string) []string {
 	var result []string
 	var mutex = &sync.Mutex{}
@@ -83,7 +83,7 @@ func GetRobots(input []string) []string {
 		}(elem)
 	}
 	wg.Wait()
-	return removeDuplicateValues(result)
+	return RemoveDuplicateValues(result)
 }
 
 //GetRequest performs a GET request
@@ -106,7 +106,7 @@ func GetRequest(target string) string {
 	return sb
 }
 
-//RemoveProtocol
+//RemoveProtocol >
 func RemoveProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {

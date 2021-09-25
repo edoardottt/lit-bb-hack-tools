@@ -9,7 +9,7 @@ import (
 
 func main() {
 	input := ScanTarget()
-	if !isUrl(input) {
+	if !IsUrl(input) {
 		fmt.Println("Please enter a valid url.")
 		os.Exit(1)
 	}
@@ -75,8 +75,8 @@ func ScanRedirects(input string) []Redirect {
 	return result
 }
 
-//isUrl
-func isUrl(input string) bool {
+//IsUrl >
+func IsUrl(input string) bool {
 	u, err := url.Parse(input)
 	if err != nil {
 		panic(err)
@@ -87,7 +87,7 @@ func isUrl(input string) bool {
 	return false
 }
 
-//ExtractHost
+//ExtractHost >
 func ExtractHost(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
