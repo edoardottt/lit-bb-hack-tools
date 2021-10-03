@@ -48,8 +48,8 @@ func main() {
 
 //help shows the usage
 func help() {
-	var usage = `Take as input on stdin a list of urls and print on stdout all the hosts sorted.
-	$> cat urls | eah`
+	var usage = `Take as input on stdin a list of urls and print on stdout all the protocols sorted.
+	$> cat urls | eap`
 	fmt.Println(usage)
 	os.Exit(0)
 }
