@@ -1,5 +1,18 @@
 #!/bin/bash
 
+print_usage() {
+  printf "It prints all the matches in a git repository with a specified pattern.\n\t(github-repo)>$ gitdump PATTERN-HERE\n"
+  exit 0
+}
+
+while getopts 'h' flag; do
+  case "${flag}" in
+    h) print_usage ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
 { find .git/objects/pack/ -name "*.idx"|while read i;do git show-index < "$i"|awk '{print $2}'; \
 done;find .git/objects/ -type f|grep -v '/pack/'|awk -F'/' '{print $(NF-1)$NF}'; } \
 |while read o;do git cat-file -p $o;done|grep -E $1 | sort | uniq
