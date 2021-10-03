@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -8,6 +9,11 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTarget()
 	if !IsUrl(input) {
 		fmt.Println("Please enter a valid url.")
@@ -19,6 +25,14 @@ func main() {
 		fmt.Println("[>] " + elem.Url + " " + elem.Code)
 		fmt.Println()
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input a URL and print on stdout all the redirects.
+	$> chainredir http://example.com`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTarget return the element
