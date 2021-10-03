@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -14,6 +15,11 @@ import (
 
 //main function
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	output := GetTargets()
 	if len(output) == 0 {
 		fmt.Println("[ ! ] Error while retrieving targets.")
@@ -22,6 +28,14 @@ func main() {
 	for _, elem := range output {
 		fmt.Println(elem)
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
+	$> bbtargets`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //Target is a struct containing informations about
