@@ -10,9 +10,10 @@ import (
 )
 
 func main() {
-	input := ScanTargets()
+	var input []string
 	var result []string
 	if !ScanFlag() {
+		input = ScanTargets()
 		for _, elem := range input {
 			result = append(result, RemoveProtocol(elem))
 		}
@@ -29,6 +30,16 @@ func main() {
 		fmt.Println(elem)
 	}
 
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the unique urls without protocols.  
+With -subs you can output only domains without the queries.
+	$> cat urls | removepro
+	$> cat urls | removepro -subs`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements
@@ -80,7 +91,11 @@ func GetOnlySubs(input string) string {
 //ScanFlag >
 func ScanFlag() bool {
 	subsPtr := flag.Bool("subs", false, "Return only subdomains without protocols.")
+	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	return *subsPtr
 }
 
