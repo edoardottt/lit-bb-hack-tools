@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net/url"
 	"os"
@@ -9,11 +10,24 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	output := GetPaths(RemoveDuplicateValues(input))
 	for _, elem := range output {
 		fmt.Println(elem)
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).
+	$> cat input | cleanpath`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements
