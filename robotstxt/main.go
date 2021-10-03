@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -12,12 +13,24 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	result := GetRobots(input)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
+}
 
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
+	$> cat urls | robotstxt`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements
