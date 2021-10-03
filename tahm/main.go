@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -17,7 +18,20 @@ var Red = "\033[31m"
 
 //main
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	TestMethods(ScanTargets())
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
+	$> cat urls | tahm`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net/url"
 	"os"
@@ -9,6 +10,11 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	var result []string
 	for _, elem := range input {
@@ -21,6 +27,14 @@ func main() {
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the unique queries without protocol and host.
+	$> cat urls | removehost`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements

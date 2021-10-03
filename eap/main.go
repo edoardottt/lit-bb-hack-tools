@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"sort"
@@ -9,6 +10,11 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	set := make(map[string]int)
 	for _, elem := range input {
@@ -37,6 +43,14 @@ func main() {
 			fmt.Printf("[ %d ] %s\n", k, s)
 		}
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the hosts sorted.
+	$> cat urls | eah`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements

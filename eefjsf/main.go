@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -12,11 +13,24 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	results := RetrieveContents(RemoveDuplicateValues(input))
 	for _, elem := range results {
 		fmt.Println(elem[1 : len(elem)-1])
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found.
+	$> cat js-urls | eefjsf`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements

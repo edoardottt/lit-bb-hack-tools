@@ -3,7 +3,6 @@
 **n**o **r**edirect **p**lease
 
 Take as input on stdin a list of domains and print on stdout all the unique domains without redirects.  
-
 For example, if two domains (A and B) redirects to the same domain C, the output will be C. 
 
 ### Install

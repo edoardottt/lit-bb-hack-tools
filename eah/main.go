@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net/url"
 	"os"
@@ -10,6 +11,11 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	set := make(map[string]int)
 	for _, elem := range input {
@@ -38,6 +44,14 @@ func main() {
 			fmt.Printf("[ %d ] %s\n", k, s)
 		}
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of urls and print on stdout all the protocols sorted.
+	$> cat urls | eap`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements
