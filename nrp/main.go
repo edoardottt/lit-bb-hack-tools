@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"crypto/tls"
+	"flag"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -12,6 +13,11 @@ import (
 )
 
 func main() {
+	helpPtr := flag.Bool("h", false, "Show usage.")
+	flag.Parse()
+	if *helpPtr {
+		help()
+	}
 	input := ScanTargets()
 	var result []string
 	for _, elem := range input {
@@ -25,6 +31,15 @@ func main() {
 	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
+}
+
+//help shows the usage
+func help() {
+	var usage = `Take as input on stdin a list of domains and print on stdout all the unique domains without redirects. 
+For example, if two domains (A and B) redirects to the same domain C, the output will be C.
+	$> cat urls | nrp`
+	fmt.Println(usage)
+	os.Exit(0)
 }
 
 //ScanTargets return the array of elements
