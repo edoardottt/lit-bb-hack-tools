@@ -33,6 +33,7 @@ Tools list 📃
 - [bbtargets](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbtargets) Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
 - [nrp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/nrp) Take as input on stdin a list of domains and print on stdout all the unique domains without redirects.
 - [eah](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eah) Take as input on stdin a list of urls and print on stdout all the hosts sorted.
+- [doomxss](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/doomxss) Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
 
 License 📝
 -------
