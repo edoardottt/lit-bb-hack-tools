@@ -18,6 +18,7 @@ build:
 	@cd bbtargets && go build -o bbtargets && sudo mv bbtargets /usr/bin && echo "[ + ] bbtargets installed!"
 	@cd nrp && go build -o nrp && sudo mv nrp /usr/bin && echo "[ + ] nrp installed!"
 	@cd eah && go build -o eah && sudo mv eah /usr/bin && echo "[ + ] eah installed!"
+	@cd doomxss && go build -o doomxss && sudo mv doomxss /usr/bin && echo "[ + ] doomxss installed!"
 	@echo Done!
 
 clean:
@@ -37,6 +38,7 @@ clean:
 	@sudo rm -rf /usr/bin/bbtargets
 	@sudo rm -rf /usr/bin/nrp
 	@sudo rm -rf /usr/bin/eah
+	@sudo rm -rf /usr/bin/doomxss
 	@echo Cleaned everything!
 
 update:
