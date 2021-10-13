@@ -11,6 +11,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/fatih/color"
+	"github.com/rodaine/table"
 )
 
 var Reset = "\033[0m"
@@ -53,26 +56,48 @@ func ScanTargets() []string {
 func TestMethods(input []string) {
 	for _, elem := range input {
 		fmt.Println("= " + Red + elem + Reset + " =")
+		headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
+		columnFmt := color.New(color.FgYellow).SprintfFunc()
+
+		tbl := table.New("METHOD", "STATUS", "SIZE")
+		tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 		GetStatus, lenSb, err := GetRequest(elem)
 		if err == nil {
-			fmt.Println(" GET " + "Status: " + GetStatus + " | Size: " + strconv.Itoa(lenSb))
+			tbl.AddRow("GET", GetStatus, strconv.Itoa(lenSb))
 		}
 		PostStatus, lenSb, err := PostRequest(elem)
 		if err == nil {
-			fmt.Println(" POST " + "Status: " + PostStatus + " | Size: " + strconv.Itoa(lenSb))
+			tbl.AddRow("POST", PostStatus, strconv.Itoa(lenSb))
 		}
 		PutStatus, lenSb, err := PutRequest(elem)
 		if err == nil {
-			fmt.Println(" PUT " + "Status: " + PutStatus + " | Size: " + strconv.Itoa(lenSb))
+			tbl.AddRow("PUT", PutStatus, strconv.Itoa(lenSb))
 		}
-		DeleteStatus, lenSb, err := DeleteRequest(elem)
+		DeleteStatus, lenSb, err := Request(elem, "DELETE")
 		if err == nil {
-			fmt.Println(" DELETE " + "Status: " + DeleteStatus + " | Size: " + strconv.Itoa(lenSb))
+			tbl.AddRow("DELETE", DeleteStatus, strconv.Itoa(lenSb))
 		}
 		HeadStatus, lenSb, err := HeadRequest(elem)
 		if err == nil {
-			fmt.Println(" HEAD " + "Status: " + HeadStatus + " | Size: " + strconv.Itoa(lenSb))
+			tbl.AddRow("HEAD", HeadStatus, strconv.Itoa(lenSb))
 		}
+		ConnectStatus, lenSb, err := Request(elem, "CONNECT")
+		if err == nil {
+			tbl.AddRow("CONNECT", ConnectStatus, strconv.Itoa(lenSb))
+		}
+		OptionsStatus, lenSb, err := Request(elem, "OPTIONS")
+		if err == nil {
+			tbl.AddRow("OPTIONS", OptionsStatus, strconv.Itoa(lenSb))
+		}
+		TraceStatus, lenSb, err := Request(elem, "TRACE")
+		if err == nil {
+			tbl.AddRow("TRACE", TraceStatus, strconv.Itoa(lenSb))
+		}
+		PatchStatus, lenSb, err := Request(elem, "PATCH")
+		if err == nil {
+			tbl.AddRow("PATCH", PatchStatus, strconv.Itoa(lenSb))
+		}
+		tbl.Print()
 		fmt.Println("---------------------------")
 		fmt.Println()
 	}
@@ -161,14 +186,14 @@ func PutRequest(target string) (string, int, error) {
 	return resp.Status, len(sb), nil
 }
 
-//DeleteRequest performs a DELETE request
-func DeleteRequest(target string) (string, int, error) {
+//Request performs a <METHOD> request
+func Request(target string, method string) (string, int, error) {
 
 	// Create client
 	client := &http.Client{}
 
 	// Create request
-	req, err := http.NewRequest("DELETE", target, nil)
+	req, err := http.NewRequest(method, target, nil)
 	if err != nil {
 		return "", 0, err
 	}
