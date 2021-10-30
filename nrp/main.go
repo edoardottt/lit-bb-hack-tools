@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 func main() {
@@ -20,14 +21,23 @@ func main() {
 	}
 	input := ScanTargets()
 	var result []string
-	for _, elem := range input {
-		finalUrl := ScanRedirect(elem)
-		if finalUrl.Url != "" {
-			final := finalUrl.Url + " " + strconv.Itoa(finalUrl.Code)
-			result = append(result, final)
-		}
+	limiter := make(chan string, 10) // Limits simultaneous requests
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
 
+	for _, elem := range input {
+		limiter <- elem
+		wg.Add(1)
+		go func(elem string) {
+			defer wg.Done()
+			defer func() { <-limiter }()
+			finalUrl := ScanRedirect(elem)
+			if finalUrl.Url != "" {
+				final := finalUrl.Url + " " + strconv.Itoa(finalUrl.Code)
+				result = append(result, final)
+			}
+		}(elem)
 	}
+	wg.Wait()
 	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
