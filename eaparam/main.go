@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"net/url"
 	"os"
-	"sort"
 	"strings"
 )
 
@@ -16,39 +16,19 @@ func main() {
 		help()
 	}
 	input := ScanTargets()
-	set := make(map[string]int)
+	var result []string
 	for _, elem := range input {
-		protocol := GetProtocol(elem)
-		if protocol != "" {
-			_, exists := set[protocol]
-			if exists {
-				set[protocol] += 1
-			} else {
-				set[protocol] = 1
-			}
-		}
+		result = append(result, ExtractParameters(elem)...)
 	}
-	//sort reverse
-	n := map[int][]string{}
-	var a []int
-	for k, v := range set {
-		n[v] = append(n[v], k)
-	}
-	for k := range n {
-		a = append(a, k)
-	}
-	sort.Sort(sort.Reverse(sort.IntSlice(a)))
-	for _, k := range a {
-		for _, s := range n[k] {
-			fmt.Printf("[ %d ] %s\n", k, s)
-		}
+	for _, elem := range RemoveDuplicateValues(result) {
+		fmt.Println(elem)
 	}
 }
 
 //help shows the usage
 func help() {
-	var usage = `Take as input on stdin a list of urls and print on stdout all the protocols sorted.
-	$> cat urls | eap`
+	var usage = `Take as input on stdin a list of urls and print on stdout all the unique parameters.
+	$> cat urls | eaparam`
 	fmt.Println(usage)
 	os.Exit(0)
 }
@@ -80,12 +60,19 @@ func RemoveDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//GetProtocol >
-func GetProtocol(input string) string {
-	res := strings.Index(input, "://")
-	if res >= 0 {
-		return input[:res]
-	} else {
-		return ""
+//ExtractParameters >
+func ExtractParameters(input string) []string {
+	var result []string
+	u, err := url.Parse(input)
+	if err != nil {
+		return []string{}
 	}
+	couples := strings.Split(u.RawQuery, "&")
+	for _, pair := range couples {
+		values := strings.Split(pair, "=")
+		if values[0] != "" {
+			result = append(result, values[0])
+		}
+	}
+	return result
 }
