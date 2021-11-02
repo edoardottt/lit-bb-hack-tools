@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"net/url"
 	"os"
 	"strings"
 )
@@ -15,8 +16,11 @@ func main() {
 		help()
 	}
 	input := ScanTargets()
-
+	var result []string
 	for _, elem := range input {
+		result = append(result, ExtractParameters(elem)...)
+	}
+	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
 }
@@ -54,4 +58,21 @@ func RemoveDuplicateValues(strSlice []string) []string {
 		}
 	}
 	return list
+}
+
+//ExtractParameters >
+func ExtractParameters(input string) []string {
+	var result []string
+	u, err := url.Parse(input)
+	if err != nil {
+		return []string{}
+	}
+	couples := strings.Split(u.RawQuery, "&")
+	for _, pair := range couples {
+		values := strings.Split(pair, "=")
+		if values[0] != "" {
+			result = append(result, values[0])
+		}
+	}
+	return result
 }
