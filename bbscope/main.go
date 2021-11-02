@@ -6,25 +6,41 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"os"
+	"regexp"
 	"strings"
 )
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
-	if *helpPtr {
+	if len(os.Args) < 2 || *helpPtr {
 		help()
 	}
-	input := ScanTargets()
-	conf := ScanBurpConfFile()
+	var result []string
+	switch os.Args[1] {
+	case "sub":
+		input := ScanTargets()
+		conf := ScanBurpConfFile()
+		result = checkSubs(input, conf)
+	case "url":
+		input := ScanTargets()
+		conf := ScanBurpConfFile()
+		result = checkUrls(input, conf)
+	default:
+		help()
+	}
+	for _, elem := range result {
+		fmt.Println(elem)
+	}
 }
 
 //help shows the usage
 func help() {
 	var usage = `Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
-	$> cat urls | bbscope target-scope.json
-	$> cat subs | bbscope target-scope.json`
+	$> cat urls | bbscope url target-scope.json
+	$> cat subs | bbscope sub target-scope.json`
 	fmt.Println(usage)
 	os.Exit(0)
 }
@@ -67,7 +83,7 @@ func ScanTargets() []string {
 
 //ScanBurpConfFile returns the struct of the configuration file
 func ScanBurpConfFile() BurpSuiteConfiguration {
-	jsonFile, err := os.Open(os.Args[1])
+	jsonFile, err := os.Open(os.Args[2])
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -100,4 +116,66 @@ func GetProtocol(input string) string {
 	} else {
 		return ""
 	}
+}
+
+//checkSubs returns a slice of string containing only the in scope subdomains
+func checkSubs(input []string, conf BurpSuiteConfiguration) []string {
+	var result []string
+	for _, item := range input {
+		if GetProtocol(item) == "" {
+			item = "http://" + item
+		}
+		u, err := url.Parse(item)
+		if err != nil {
+			continue
+		}
+		subdomain := u.Host
+		for _, excluded := range conf.Target.Scope.Exclude {
+			r, _ := regexp.Compile(excluded.Host)
+			if r.MatchString(subdomain) {
+				break
+			}
+		}
+		for _, included := range conf.Target.Scope.Include {
+			r, _ := regexp.Compile(included.Host)
+			if r.MatchString(subdomain) {
+				result = append(result, subdomain)
+				break
+			}
+		}
+	}
+	return result
+}
+
+//checkUrls returns a slice of string containing only the in scope urls
+func checkUrls(input []string, conf BurpSuiteConfiguration) []string {
+	var result []string
+	for _, item := range input {
+		if GetProtocol(item) == "" {
+			continue
+		}
+		u, err := url.Parse(item)
+		if err != nil {
+			continue
+		}
+		for _, excluded := range conf.Target.Scope.Exclude {
+			rHost, _ := regexp.Compile(excluded.Host)
+			rFile, _ := regexp.Compile(excluded.File)
+			if rHost.MatchString(u.Host) {
+				break
+			}
+			if rFile.MatchString(u.Path) {
+				break
+			}
+		}
+		for _, included := range conf.Target.Scope.Include {
+			rHost, _ := regexp.Compile(included.Host)
+			rFile, _ := regexp.Compile(included.File)
+			if rHost.MatchString(u.Host) && rFile.MatchString(u.Path) {
+				result = append(result, item)
+				break
+			}
+		}
+	}
+	return result
 }

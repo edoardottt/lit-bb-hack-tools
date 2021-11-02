@@ -13,8 +13,8 @@ Take as input on stdin a list of urls or subdomains and a BurpSuite Configuratio
 
 ### Usage
 
-- `cat urls | bbscope target-scope.json`
-- `cat subs | bbscope target-scope.json`
+- `cat urls | bbscope url target-scope.json`
+- `cat subs | bbscope sub target-scope.json`
 
 ### Sample output
 
