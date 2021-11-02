@@ -19,6 +19,7 @@ build:
 	@cd nrp && go build -o nrp && sudo mv nrp /usr/bin && echo "[ + ] nrp installed!"
 	@cd eah && go build -o eah && sudo mv eah /usr/bin && echo "[ + ] eah installed!"
 	@cd doomxss && go build -o doomxss && sudo mv doomxss /usr/bin && echo "[ + ] doomxss installed!"
+	@cd eaparam && go build -o eaparam && sudo mv eaparam /usr/bin && echo "[ + ] eaparam installed!"
 	@echo Done!
 
 clean:
@@ -39,6 +40,7 @@ clean:
 	@sudo rm -rf /usr/bin/nrp
 	@sudo rm -rf /usr/bin/eah
 	@sudo rm -rf /usr/bin/doomxss
+	@sudo rm -rf /usr/bin/eaparam
 	@echo Cleaned everything!
 
 update:
