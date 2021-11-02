@@ -34,6 +34,7 @@ Tools list 📃
 - [nrp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/nrp) Take as input on stdin a list of domains and print on stdout all the unique domains without redirects.
 - [eah](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eah) Take as input on stdin a list of urls and print on stdout all the hosts sorted.
 - [doomxss](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/doomxss) Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
+- [eaparam](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eaparam) Take as input on stdin a list of urls and print on stdout all the unique parameters.
 
 License 📝
 -------
