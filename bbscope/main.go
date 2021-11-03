@@ -89,7 +89,11 @@ func ScanBurpConfFile() BurpSuiteConfiguration {
 		os.Exit(1)
 	}
 	defer jsonFile.Close()
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	var conf BurpSuiteConfiguration
 	json.Unmarshal(byteValue, &conf)
 	return conf
@@ -158,15 +162,17 @@ func checkUrls(input []string, conf BurpSuiteConfiguration) []string {
 		if err != nil {
 			continue
 		}
+		var excludedItem = false
 		for _, excluded := range conf.Target.Scope.Exclude {
 			rHost, _ := regexp.Compile(excluded.Host)
 			rFile, _ := regexp.Compile(excluded.File)
-			if rHost.MatchString(u.Host) {
+			if rHost.MatchString(u.Host) && rFile.MatchString(u.Path) {
+				excludedItem = true
 				break
 			}
-			if rFile.MatchString(u.Path) {
-				break
-			}
+		}
+		if excludedItem {
+			continue
 		}
 		for _, included := range conf.Target.Scope.Include {
 			rHost, _ := regexp.Compile(included.Host)
