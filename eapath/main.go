@@ -18,7 +18,10 @@ func main() {
 	input := ScanTargets()
 	var result []string
 	for _, elem := range input {
-		result = append(result, ExtractPath(elem))
+		path := ExtractPath(elem)
+		if path != "" {
+			result = append(result, path)
+		}
 	}
 	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
@@ -64,6 +67,12 @@ func RemoveDuplicateValues(strSlice []string) []string {
 func ExtractPath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
+		return ""
+	}
+	if u.Scheme == "" {
+		u.Scheme = "http"
+	}
+	if u.Host == "" {
 		return ""
 	}
 	return u.Scheme + "://" + u.Host + u.Path
