@@ -36,6 +36,7 @@ Tools list 📃
 - [doomxss](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/doomxss) Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
 - [eaparam](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eaparam) Take as input on stdin a list of urls and print on stdout all the unique parameters.
 - [bbscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbscope) Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
+- [eapath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eapath) Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 
 License 📝
 -------
