@@ -37,6 +37,7 @@ Tools list 📃
 - [eaparam](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eaparam) Take as input on stdin a list of urls and print on stdout all the unique parameters.
 - [bbscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbscope) Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 - [eapath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eapath) Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
+- [rpfu](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/rpfu) Take as input on stdin a list of urls and print on stdout all the unique urls without ports (if 80 or 443).
 
 License 📝
 -------

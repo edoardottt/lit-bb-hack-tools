@@ -1,6 +1,6 @@
 build:
 	@echo ""
-	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.2.5 <="
+	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.2.6 <="
 	@echo ""
 	@cd eae && go build -o eae && sudo mv eae /usr/bin && echo "[ + ] eae installed!"
 	@cd heacoll && go build -o heacoll && sudo mv heacoll /usr/bin && echo "[ + ] heacoll installed!"
@@ -22,6 +22,7 @@ build:
 	@cd eaparam && go build -o eaparam && sudo mv eaparam /usr/bin && echo "[ + ] eaparam installed!"
 	@cd bbscope && go build -o bbscope && sudo mv bbscope /usr/bin && echo "[ + ] bbscope installed!"
 	@cd eapath && go build -o eapath && sudo mv eapath /usr/bin && echo "[ + ] eapath installed!"
+	@cd rpfu && go build -o rpfu && sudo mv rpfu /usr/bin && echo "[ + ] rpfu installed!"
 	@echo Done!
 
 clean:
@@ -45,6 +46,7 @@ clean:
 	@sudo rm -rf /usr/bin/eaparam
 	@sudo rm -rf /usr/bin/bbscope
 	@sudo rm -rf /usr/bin/eapath
+	@sudo rm -rf /usr/bin/rpfu
 	@echo Cleaned everything!
 
 update:
