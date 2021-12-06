@@ -11,24 +11,34 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+	payloadPtr := flag.String("p", "", "Input payload.")
 	flag.Parse()
 	if *helpPtr {
 		help()
 	}
-	input := ScanTargets()
-	var result []string
-	for _, elem := range input {
-		result = append(result, ExtractParameters(elem)...)
-	}
-	for _, elem := range RemoveDuplicateValues(result) {
-		fmt.Println(elem)
+	if *payloadPtr != "" {
+		input := ScanTargets()
+		var result []string
+		for _, elem := range input {
+			resultString := ReplaceParameters(elem, *payloadPtr)
+			if resultString != "" {
+				result = append(result, resultString)
+			}
+
+		}
+		for _, elem := range RemoveDuplicateValues(result) {
+			fmt.Println(elem)
+		}
+	} else {
+		fmt.Println("Payload required.")
+		os.Exit(0)
 	}
 }
 
 //help shows the usage
 func help() {
-	var usage = `Take as input on stdin a list of urls and print on stdout all the unique parameters.
-	$> cat urls | eaparam`
+	var usage = `Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
+	$> cat urls | rapwp -p "<svg onload=alert(1)>"`
 	fmt.Println(usage)
 	os.Exit(0)
 }
@@ -60,27 +70,21 @@ func RemoveDuplicateValues(strSlice []string) []string {
 	return list
 }
 
-//ExtractParameters >
-func ExtractParameters(input string) []string {
-	var result []string
+//ReplaceParameters >
+func ReplaceParameters(input string, payload string) string {
 	u, err := url.Parse(input)
 	if err != nil {
-		return []string{}
+		return ""
 	}
 	decodedValue, err := url.QueryUnescape(u.RawQuery)
 	if err != nil {
-		return []string{}
+		return ""
 	}
+	var queryResult = ""
 	couples := strings.Split(decodedValue, "&")
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
-		if values[0] != "" && !strings.Contains(values[0], ";") && !strings.Contains(values[0], "{") &&
-			!strings.Contains(values[0], "}") && !strings.Contains(values[0], "$") &&
-			!strings.Contains(values[0], " ") && !strings.Contains(values[0], "?") &&
-			!strings.Contains(values[0], "/") && !strings.Contains(values[0], "@") &&
-			!strings.Contains(values[0], "(") && !strings.Contains(values[0], ")") {
-			result = append(result, values[0])
-		}
+		queryResult += values[0] + "=" + url.QueryEscape(payload)
 	}
-	return result
+	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult
 }
