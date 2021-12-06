@@ -75,7 +75,8 @@ func ExtractParameters(input string) []string {
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
 		if values[0] != "" && !strings.Contains(values[0], ";") && !strings.Contains(values[0], "{") &&
-			!strings.Contains(values[0], "}") && !strings.Contains(values[0], "$") {
+			!strings.Contains(values[0], "}") && !strings.Contains(values[0], "$") &&
+			!strings.Contains(values[0], " ") {
 			result = append(result, values[0])
 		}
 	}
