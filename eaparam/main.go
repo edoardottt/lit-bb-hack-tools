@@ -67,10 +67,15 @@ func ExtractParameters(input string) []string {
 	if err != nil {
 		return []string{}
 	}
-	couples := strings.Split(u.RawQuery, "&")
+	decodedValue, err := url.QueryUnescape(u.RawQuery)
+	if err != nil {
+		return []string{}
+	}
+	couples := strings.Split(decodedValue, "&")
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
-		if values[0] != "" {
+		if values[0] != "" && !strings.Contains(values[0], ";") && !strings.Contains(values[0], "{") &&
+			!strings.Contains(values[0], "}") && !strings.Contains(values[0], "$") {
 			result = append(result, values[0])
 		}
 	}
