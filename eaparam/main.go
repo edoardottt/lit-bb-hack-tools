@@ -76,7 +76,8 @@ func ExtractParameters(input string) []string {
 		values := strings.Split(pair, "=")
 		if values[0] != "" && !strings.Contains(values[0], ";") && !strings.Contains(values[0], "{") &&
 			!strings.Contains(values[0], "}") && !strings.Contains(values[0], "$") &&
-			!strings.Contains(values[0], " ") {
+			!strings.Contains(values[0], " ") && !strings.Contains(values[0], "?") &&
+			!strings.Contains(values[0], "/") && !strings.Contains(values[0], "@") {
 			result = append(result, values[0])
 		}
 	}
