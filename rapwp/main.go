@@ -84,7 +84,7 @@ func ReplaceParameters(input string, payload string) string {
 	couples := strings.Split(decodedValue, "&")
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
-		queryResult += values[0] + "=" + url.QueryEscape(payload)
+		queryResult += values[0] + "=" + url.QueryEscape(payload) + "&"
 	}
-	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult
+	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
 }
