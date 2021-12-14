@@ -24,7 +24,6 @@ Tools list 📃
 - [eap](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eap) Take as input on stdin a list of urls and print on stdout all the protocols sorted.
 - [gitdump](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/gitdump) It prints all the matches in a git repository with a specified pattern.
 - [removehost](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/removehost) Take as input on stdin a list of urls and print on stdout all the unique queries without protocol and host.
-- [revlist](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/revlist) Take as input on stdin a list of items and print on stdout all the unique items in reverse order.
 - [chainredir](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/chainredir) Take as input a URL and print on stdout all the redirects.
 - [tahm](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/tahm) Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 - [robotstxt](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/robotstxt) Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
