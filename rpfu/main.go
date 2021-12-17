@@ -80,5 +80,8 @@ func GetHostWithoutPort(input string) string {
 			u.Host = strings.Split(u.Host, ":")[0]
 		}
 	}
-	return u.Scheme + "://" + u.Host + u.Path + u.RawQuery
+	if u.RawQuery != "" {
+		return u.Scheme + "://" + u.Host + u.Path + "?" + u.RawQuery
+	}
+	return u.Scheme + "://" + u.Host + u.Path
 }
