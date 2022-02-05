@@ -41,7 +41,9 @@ func help() {
 	var usage = `Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 	$> cat urls | bbscope url target-scope.json
 	$> cat subs | bbscope sub target-scope.json`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 
