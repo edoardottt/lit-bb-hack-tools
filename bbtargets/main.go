@@ -22,7 +22,9 @@ func main() {
 	}
 	output := GetTargets()
 	if len(output) == 0 {
+		fmt.Println()
 		fmt.Println("[ ! ] Error while retrieving targets.")
+		fmt.Println()
 		os.Exit(1)
 	}
 	for _, elem := range output {
@@ -34,7 +36,9 @@ func main() {
 func help() {
 	var usage = `Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
 	$> bbtargets`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 
