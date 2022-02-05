@@ -33,7 +33,9 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 	$> cat urls | tahm`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 

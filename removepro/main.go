@@ -38,7 +38,9 @@ func help() {
 With -subs you can output only domains without the queries.
 	$> cat urls | removepro
 	$> cat urls | removepro -subs`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 
