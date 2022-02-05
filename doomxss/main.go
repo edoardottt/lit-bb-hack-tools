@@ -28,7 +28,9 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
 	$> cat urls | doomxss`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 
