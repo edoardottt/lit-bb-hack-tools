@@ -23,6 +23,7 @@ build:
 	@cd eapath && go build -o eapath && sudo mv eapath /usr/bin && echo "[ + ] eapath installed!"
 	@cd rpfu && go build -o rpfu && sudo mv rpfu /usr/bin && echo "[ + ] rpfu installed!"
 	@cd rapwp && go build -o rapwp && sudo mv rapwp /usr/bin && echo "[ + ] rapwp installed!"
+	@cd checkbypass && go build -o checkbypass && sudo mv checkbypass /usr/bin && echo "[ + ] checkbypass installed!"
 	@echo Done!
 
 clean:
@@ -47,6 +48,7 @@ clean:
 	@sudo rm -rf /usr/bin/eapath
 	@sudo rm -rf /usr/bin/rpfu
 	@sudo rm -rf /usr/bin/rapwp
+	@sudo rm -rf /usr/bin/checkbypass
 	@echo Cleaned everything!
 
 update:
