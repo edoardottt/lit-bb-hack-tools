@@ -29,9 +29,11 @@ func main() {
 
 //help shows the usage
 func help() {
+	fmt.Println()
 	var usage = `Take as input a URL and print on stdout all the redirects.
 	$> chainredir http://example.com`
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 

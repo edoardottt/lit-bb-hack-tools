@@ -29,7 +29,9 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found.
 	$> cat js-urls | eefjsf`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 

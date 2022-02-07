@@ -48,7 +48,9 @@ func help() {
 	var usage = `Take as input on stdin a list of domains and print on stdout all the unique domains without redirects. 
 For example, if two domains (A and B) redirects to the same domain C, the output will be C.
 	$> cat urls | nrp`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 

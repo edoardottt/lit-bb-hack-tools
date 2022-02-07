@@ -33,7 +33,9 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique queries without protocol and host.
 	$> cat urls | removehost`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 

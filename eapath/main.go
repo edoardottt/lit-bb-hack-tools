@@ -32,7 +32,9 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 	$> cat urls | eaparam`
+	fmt.Println()
 	fmt.Println(usage)
+	fmt.Println()
 	os.Exit(0)
 }
 
