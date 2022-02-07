@@ -38,6 +38,7 @@ Tools list 📃
 - [eapath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eapath) Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 - [rpfu](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/rpfu) Take as input on stdin a list of urls and print on stdout all the unique urls without ports (if 80 or 443).
 - [rapwp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/rapwp) Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
+- [checkbypass](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/checkbypass) Take as input on stdin a payload and print on stdout all the successful WAF bypasses.
 
 License 📝
 -------
