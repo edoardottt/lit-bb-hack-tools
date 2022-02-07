@@ -16,7 +16,7 @@ Take as input on stdin a list of urls or subdomains and a BurpSuite Configuratio
 - `cat urls | bbscope url target-scope.json`
 - `cat subs | bbscope sub target-scope.json`
 
-### Sample output
+### Output
 
 ```
 partners.shopify.com

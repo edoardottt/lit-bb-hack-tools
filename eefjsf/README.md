@@ -17,7 +17,7 @@ Thanks to [@renniepak](https://twitter.com/renniepak/status/1288371394401783809)
 
 - `cat js-urls | eefjsf`
 
-### Sample output
+### Output
 
 ```
 /api

@@ -15,7 +15,7 @@ Take as input on stdin a list of html/js file urls and print on stdout all the p
 
 - `cat urls | doomxss`
 
-### Sample output
+### Output
 
 ```
 [ location.href= ] https://example.com/script.js

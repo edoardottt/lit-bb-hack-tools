@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the unique queries
 
 - `cat urls | removehost`
 
-### Sample output
+### Output
 
 ```
 /identification/ok

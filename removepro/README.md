@@ -17,7 +17,7 @@ With `-subs` you can output only domains without the queries.
 - `cat urls | removepro`
 - `cat urls | removepro -subs`
 
-### Sample output
+### Output
 
 ```
 google.com/id/ok

@@ -15,15 +15,20 @@ Take as input on stdin a list of urls and print on stdout all the status codes a
 
 `cat urls | tahm`
 
-### Sample output
+### Output
 
 ```
-= https://www.amazon.com =
- GET Status: 200 OK | Size: 390841
- POST Status: 405 Method Not Allowed | Size: 222
- PUT Status: 200 OK | Size: 395014
- DELETE Status: 500 Internal Server Error | Size: 171676
- HEAD Status: 200 OK | Size: 0
+= https://www.example.com/ =
+METHOD   STATUS                  SIZE  
+GET      200 OK                  1256  
+POST     404 Not Found           445   
+PUT      404 Not Found           1256  
+DELETE   405 Method Not Allowed  0     
+HEAD     200 OK                  0     
+CONNECT  400 Bad Request         349   
+OPTIONS  200 OK                  0     
+TRACE    405 Method Not Allowed  0     
+PATCH    405 Method Not Allowed  0     
 ---------------------------
 
 ```

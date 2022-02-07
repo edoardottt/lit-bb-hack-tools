@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and a payload and print on stdout all the 
 
 `cat urls | rapwp -p "<svg onload=alert(1)>"`
 
-### Sample output
+### Output
 
 ```
 https://sub1.example.com/path1?param1=%3Csvg%20onload=%22alert(1)%22%3E

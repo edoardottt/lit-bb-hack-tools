@@ -15,7 +15,7 @@ Produce as output on stdout all the bug bounty targets found on Chaos list by Pr
 
 - `bbtargets`
 
-### Sample output
+### Output
 
 ```
 acorns.com

@@ -15,7 +15,7 @@ Take as input on stdin a list of urls/paths and print on stdout all the unique p
 
 - `cat input | cleanpath`
 
-### Sample output
+### Output
 
 ```
 api

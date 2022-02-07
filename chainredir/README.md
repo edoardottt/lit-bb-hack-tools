@@ -15,7 +15,7 @@ Take as input a URL and print on stdout all the redirects.
 
 `chainredir http://example.com`
 
-### Sample output
+### Output
 
 ```
 

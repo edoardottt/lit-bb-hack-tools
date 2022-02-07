@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the unique urls wi
 
 `cat urls | eapath`
 
-### Sample output
+### Output
 
 ```
 https://example.com/file

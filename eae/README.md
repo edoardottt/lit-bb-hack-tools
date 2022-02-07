@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the extensions sor
 
 `cat urls | eae`
 
-### Sample output
+### Output
 
 ```
 [ 1434 ] .jpg

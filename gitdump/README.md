@@ -17,7 +17,7 @@ This is a @tomnomnom tool (https://twitter.com/tomnomnom/status/1133345832688857
 
 - `(github-repo)>$ gitdump PATTERN-HERE`
 
-### Sample output
+### Output
 
 ```
 (~/github/lit-bb-hack-tools)>$ gitdump func
