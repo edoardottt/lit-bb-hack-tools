@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the hosts sorted.
 
 `cat urls | eah`
 
-### Sample output
+### Output
 
 ```
 [ 1148 ] www.google.com

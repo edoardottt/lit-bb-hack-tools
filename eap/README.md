@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the protocols sort
 
 `cat urls | eap`
 
-### Sample output
+### Output
 
 ```
 [ 2458 ] http

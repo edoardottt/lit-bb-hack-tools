@@ -16,7 +16,7 @@ For example, if two domains (A and B) redirects to the same domain C, the output
 
 - `cat urls | nrp`
 
-### Sample output
+### Output
 
 ```
 example.com 200

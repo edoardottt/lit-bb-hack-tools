@@ -15,7 +15,7 @@ Take as input on stdin a payload and print on stdout all the successful WAF bypa
 
 - `checkbypass -p "<script>alert()</script>"`
 
-### Sample output
+### Output
 
 ```
 [ BYPASSED ] Cloudflare   : https://www.cloudflare.com/?=test%3Dciaoooo

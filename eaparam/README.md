@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the unique paramet
 
 `cat urls | eaparam`
 
-### Sample output
+### Output
 
 ```
 id

@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout CNAME records found wi
 
 - `cat urls | subtake`
 
-### Sample output
+### Output
 
 ```
 admin.stage2aa.paypal.com

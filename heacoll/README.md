@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout all the unique headers
 
 `cat urls | heacoll`
 
-### Sample output
+### Output
 
 ```
 Date : [Sat, 08 May 2021 14:20:28 GMT Sat, 08 May 2021 14:20:29 GMT Sat, 08 May 2021 14:20:30 GMT]

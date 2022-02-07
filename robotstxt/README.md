@@ -17,7 +17,7 @@ Inspired by [@remonsec](https://twitter.com/remonsec/status/1410661328977600517)
 
 - `cat urls | robotstxt`
 
-### Sample output
+### Output
 
 ```
 /search
