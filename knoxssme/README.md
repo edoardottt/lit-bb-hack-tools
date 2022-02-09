@@ -15,7 +15,7 @@ Take as input on stdin a list of urls and print on stdout the results from Knoxs
 ### Usage
 
 - `cat urls | knoxssme`
-- `cat urls | knoxssme -h exampleapikeywbfkwfiuwlahlflvug`
+- `cat urls | knoxssme -k exampleapikeywbfkwfiuwlahlflvug`
 - `cat urls | knoxssme -o output.txt`
 
 ### Output
