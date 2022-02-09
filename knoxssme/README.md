@@ -18,6 +18,9 @@ Take as input on stdin a list of urls and print on stdout the results from Knoxs
 - `cat urls | knoxssme -k exampleapikeywbfkwfiuwlahlflvug`
 - `cat urls | knoxssme -o output.txt`
 
+If you are on Linux and you configured correctly the configuration file you don't need the option `-k`.
+
+
 ### Output
 
 ```
