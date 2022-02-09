@@ -1,6 +1,6 @@
 build:
 	@echo ""
-	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.2.9 <="
+	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.3 <="
 	@echo ""
 	@cd eae && go build -o eae && sudo mv eae /usr/bin && echo "[ + ] eae installed!"
 	@cd heacoll && go build -o heacoll && sudo mv heacoll /usr/bin && echo "[ + ] heacoll installed!"
@@ -24,6 +24,7 @@ build:
 	@cd rpfu && go build -o rpfu && sudo mv rpfu /usr/bin && echo "[ + ] rpfu installed!"
 	@cd rapwp && go build -o rapwp && sudo mv rapwp /usr/bin && echo "[ + ] rapwp installed!"
 	@cd checkbypass && go build -o checkbypass && sudo mv checkbypass /usr/bin && echo "[ + ] checkbypass installed!"
+	@cd knoxssme && go build -o knoxssme && sudo mv knoxssme /usr/bin && echo "[ + ] knoxssme installed!"
 	@echo Done!
 
 clean:
@@ -49,6 +50,7 @@ clean:
 	@sudo rm -rf /usr/bin/rpfu
 	@sudo rm -rf /usr/bin/rapwp
 	@sudo rm -rf /usr/bin/checkbypass
+	@sudo rm -rf /usr/bin/knoxssme
 	@echo Cleaned everything!
 
 update:
