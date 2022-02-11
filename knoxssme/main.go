@@ -118,8 +118,10 @@ func ScanTargets() []string {
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
-		domain := strings.ToLower(sc.Text())
-		result = append(result, domain)
+		if strings.TrimSpace(sc.Text()) != "" {
+			domain := strings.ToLower(sc.Text())
+			result = append(result, domain)
+		}
 	}
 	return result
 }
