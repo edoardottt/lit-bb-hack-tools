@@ -40,6 +40,7 @@ Tools list 📃
 - [rapwp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/rapwp) Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
 - [checkbypass](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/checkbypass) Take as input on stdin a payload and print on stdout all the successful WAF bypasses.
 - [knoxssme](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/knoxssme) Take as input on stdin a list of urls and print on stdout the results from Knoxss.me API.
+- [genscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/genscope) Take as input a file containing a list of (sub)domains (wildcards allowed) and produce a BurpSuite Configuration file.
 
 License 📝
 -------
