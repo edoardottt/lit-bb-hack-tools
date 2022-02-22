@@ -25,6 +25,7 @@ build:
 	@cd rapwp && go build -o rapwp && sudo mv rapwp /usr/bin && echo "[ + ] rapwp installed!"
 	@cd checkbypass && go build -o checkbypass && sudo mv checkbypass /usr/bin && echo "[ + ] checkbypass installed!"
 	@cd knoxssme && go build -o knoxssme && sudo mv knoxssme /usr/bin && echo "[ + ] knoxssme installed!"
+	@cd genscope && go build -o genscope && sudo mv genscope /usr/bin && echo "[ + ] genscope installed!"
 	@echo Done!
 
 clean:
@@ -51,6 +52,7 @@ clean:
 	@sudo rm -rf /usr/bin/rapwp
 	@sudo rm -rf /usr/bin/checkbypass
 	@sudo rm -rf /usr/bin/knoxssme
+	@sudo rm -rf /usr/bin/genscope
 	@echo Cleaned everything!
 
 update:
