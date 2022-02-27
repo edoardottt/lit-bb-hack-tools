@@ -84,11 +84,18 @@ func main() {
 			}
 			fmt.Println(Red + "[ ERROR ] " + Reset + elem)
 			fmt.Println(err.Error())
-		} else if result.Xss == "true" {
+		} else if result.Xss == "true" { // XSS
 			if *outputPtr != "" {
 				AppendOutputToTxt("[ XSS! ] "+elem, *outputPtr)
 			}
 			fmt.Println(Green + "[ XSS! ] " + Reset + result.PoC)
+		} else if result.Xss == "none" && result.Error != "" { // ERROR
+			if *outputPtr != "" {
+				AppendOutputToTxt("[ ERROR ] "+elem, *outputPtr)
+				AppendOutputToTxt(result.Error, *outputPtr)
+			}
+			fmt.Println(Red + "[ ERROR ] " + Reset + elem)
+			fmt.Println(result.Error)
 		} else {
 			if *outputPtr != "" {
 				AppendOutputToTxt("[ SAFE ] "+elem, *outputPtr)
