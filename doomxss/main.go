@@ -140,4 +140,5 @@ var sinks = []string{
 	"eval(",
 	"setTimeout(",
 	"setInterval(",
+	"{{__html", // REACT
 }
