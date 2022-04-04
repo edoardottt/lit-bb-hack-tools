@@ -24,6 +24,7 @@ Inspired by [@ITSecurityguard](https://twitter.com/ITSecurityguard/status/151095
 /search/about
 /search/static
 /sprint_xhtml
+db.example.com:81/conf.txt
 /sprint_wml
 /pqa
 /trends/beta
