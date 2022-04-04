@@ -2,7 +2,7 @@
 
 **kubernetes** **metrics** 
 
-Take as input on stdin a list of urls and print on stdout all the unique paths and and url found in the /metrics endpoint.  
+Take as input on stdin a list of urls and print on stdout all the unique paths and urls found in the /metrics endpoint.  
 
 Inspired by [@ITSecurityguard](https://twitter.com/ITSecurityguard/status/1510951340763136005) 
 
