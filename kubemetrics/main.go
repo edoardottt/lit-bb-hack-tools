@@ -97,7 +97,7 @@ func GetMetrics(input []string) []string {
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
 						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "path=\"", ""), "\"", "")
-						if elem != "/" {
+						if elem != "/" && strings.Trim(elem, " ") != "" {
 							result = append(result, elem)
 						}
 					}
@@ -107,7 +107,7 @@ func GetMetrics(input []string) []string {
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
 						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "url=\"", ""), "\"", "")
-						if elem != "/" {
+						if elem != "/" && strings.Trim(elem, " ") != "" {
 							result = append(result, elem)
 						}
 					}
@@ -145,7 +145,7 @@ func HasProtocol(input string) bool {
 	return strings.Contains(input, "://")
 }
 
-//RemovePath
+//RemovePath >
 func RemovePath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
