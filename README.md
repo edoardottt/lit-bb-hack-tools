@@ -41,6 +41,7 @@ Tools list 📃
 - [checkbypass](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/checkbypass) Take as input on stdin a payload and print on stdout all the successful WAF bypasses.
 - [knoxssme](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/knoxssme) Take as input on stdin a list of urls and print on stdout the results from Knoxss.me API.
 - [genscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/genscope) Take as input a file containing a list of (sub)domains (wildcards allowed) and produce a BurpSuite Configuration file.
+- [kubemetrics](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/kubemetrics) Take as input on stdin a list of urls and print on stdout all the unique paths and urls found in the /metrics endpoint.
 
 License 📝
 -------
