@@ -1,6 +1,6 @@
 build:
 	@echo ""
-	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.3 <="
+	@echo "=>  https://github.com/edoardottt/lit-bb-hack-tools v1.3.1 <="
 	@echo ""
 	@cd eae && go build -o eae && sudo mv eae /usr/bin && echo "[ + ] eae installed!"
 	@cd heacoll && go build -o heacoll && sudo mv heacoll /usr/bin && echo "[ + ] heacoll installed!"
@@ -26,6 +26,7 @@ build:
 	@cd checkbypass && go build -o checkbypass && sudo mv checkbypass /usr/bin && echo "[ + ] checkbypass installed!"
 	@cd knoxssme && go build -o knoxssme && sudo mv knoxssme /usr/bin && echo "[ + ] knoxssme installed!"
 	@cd genscope && go build -o genscope && sudo mv genscope /usr/bin && echo "[ + ] genscope installed!"
+	@cd kubemetrics && go build -o kubemetrics && sudo mv kubemetrics /usr/bin && echo "[ + ] kubemetrics installed!"
 	@echo Done!
 
 clean:
@@ -53,6 +54,7 @@ clean:
 	@sudo rm -rf /usr/bin/checkbypass
 	@sudo rm -rf /usr/bin/knoxssme
 	@sudo rm -rf /usr/bin/genscope
+	@sudo rm -rf /usr/bin/kubemetrics
 	@echo Cleaned everything!
 
 update:
