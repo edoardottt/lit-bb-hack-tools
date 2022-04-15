@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"net/url"
 	"os"
 	"strings"
@@ -12,33 +13,76 @@ import (
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	payloadPtr := flag.String("p", "", "Input payload.")
+	payloadFilePtr := flag.String("pL", "", "Input payload file.")
 	flag.Parse()
 	if *helpPtr {
 		help()
 	}
+	if *payloadPtr != "" && *payloadFilePtr != "" {
+		fmt.Println("You can't specify both -p and -pL.")
+		os.Exit(0)
+	}
+	if *payloadPtr == "" && *payloadFilePtr == "" {
+		fmt.Println("Payload(s) required.")
+		os.Exit(0)
+	}
+	input := ScanTargets()
+	var result []string
 	if *payloadPtr != "" {
-		input := ScanTargets()
-		var result []string
 		for _, elem := range input {
 			resultString := ReplaceParameters(elem, *payloadPtr)
 			if resultString != "" {
 				result = append(result, resultString)
 			}
-
 		}
-		for _, elem := range RemoveDuplicateValues(result) {
-			fmt.Println(elem)
-		}
-	} else {
-		fmt.Println("Payload required.")
-		os.Exit(0)
 	}
+	if *payloadFilePtr != "" {
+		payloads := ReadFileLineByLine(*payloadFilePtr)
+		for _, payload := range RemoveDuplicateValues(payloads) {
+			for _, elem := range input {
+				resultString := ReplaceParameters(elem, payload)
+				if resultString != "" {
+					result = append(result, resultString)
+				}
+			}
+		}
+	}
+	for _, elem := range RemoveDuplicateValues(result) {
+		fmt.Println(elem)
+	}
+
+	/*
+		if *payloadPtr != "" && *payloadFilePtr != "" {
+			fmt.Println("You can't specify both -p and -pL.")
+			os.Exit(0)
+		}
+		if *payloadPtr != "" {
+			input := ScanTargets()
+			var result []string
+			for _, elem := range input {
+				resultString := ReplaceParameters(elem, *payloadPtr)
+				if resultString != "" {
+					result = append(result, resultString)
+				}
+
+			}
+			for _, elem := range RemoveDuplicateValues(result) {
+				fmt.Println(elem)
+			}
+		} else if *payloadFilePtr != "" {
+			input := ScanTargets()
+		} else {
+			fmt.Println("Payload(s) required.")
+			os.Exit(0)
+		}
+	*/
 }
 
 //help shows the usage
 func help() {
 	var usage = `Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
-	$> cat urls | rapwp -p "<svg onload=alert(1)>"`
+	$> cat urls | rapwp -p "<svg onload=alert(1)>"
+	$> cat urls | rapwp -pL payloads.txt`
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -89,4 +133,22 @@ func ReplaceParameters(input string, payload string) string {
 		queryResult += values[0] + "=" + url.QueryEscape(payload) + "&"
 	}
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
+}
+
+//ReadFileLineByLine reads all the lines from input file and returns
+//them as a slice of strings
+func ReadFileLineByLine(inputFile string) []string {
+	file, err := os.Open(inputFile)
+	if err != nil {
+		log.Fatalf("failed to open %s", inputFile)
+	}
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	var text []string
+	for scanner.Scan() {
+		text = append(text, scanner.Text())
+	}
+	file.Close()
+	text = RemoveDuplicateValues(text)
+	return text
 }
