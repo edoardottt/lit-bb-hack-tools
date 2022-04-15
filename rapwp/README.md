@@ -14,6 +14,7 @@ Take as input on stdin a list of urls and a payload and print on stdout all the 
 ### Usage
 
 `cat urls | rapwp -p "<svg onload=alert(1)>"`
+`cat urls | rapwp -pL payloads.txt`
 
 ### Output
 
