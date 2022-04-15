@@ -39,10 +39,12 @@ func main() {
 	if *payloadFilePtr != "" {
 		payloads := ReadFileLineByLine(*payloadFilePtr)
 		for _, payload := range RemoveDuplicateValues(payloads) {
-			for _, elem := range input {
-				resultString := ReplaceParameters(elem, payload)
-				if resultString != "" {
-					result = append(result, resultString)
+			if strings.Trim(payload, " ") != "" {
+				for _, elem := range input {
+					resultString := ReplaceParameters(elem, payload)
+					if resultString != "" {
+						result = append(result, resultString)
+					}
 				}
 			}
 		}
