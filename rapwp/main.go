@@ -52,32 +52,6 @@ func main() {
 	for _, elem := range RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
-
-	/*
-		if *payloadPtr != "" && *payloadFilePtr != "" {
-			fmt.Println("You can't specify both -p and -pL.")
-			os.Exit(0)
-		}
-		if *payloadPtr != "" {
-			input := ScanTargets()
-			var result []string
-			for _, elem := range input {
-				resultString := ReplaceParameters(elem, *payloadPtr)
-				if resultString != "" {
-					result = append(result, resultString)
-				}
-
-			}
-			for _, elem := range RemoveDuplicateValues(result) {
-				fmt.Println(elem)
-			}
-		} else if *payloadFilePtr != "" {
-			input := ScanTargets()
-		} else {
-			fmt.Println("Payload(s) required.")
-			os.Exit(0)
-		}
-	*/
 }
 
 //help shows the usage
