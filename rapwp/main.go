@@ -14,6 +14,7 @@ func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	payloadPtr := flag.String("p", "", "Input payload.")
 	payloadFilePtr := flag.String("pL", "", "Input payload file.")
+	oneByOnePtr := flag.Bool("obo", false, "Replace parameters one by one.")
 	flag.Parse()
 	if *helpPtr {
 		help()
@@ -29,21 +30,40 @@ func main() {
 	input := ScanTargets()
 	var result []string
 	if *payloadPtr != "" {
-		for _, elem := range input {
-			resultString := ReplaceParameters(elem, *payloadPtr)
-			if resultString != "" {
-				result = append(result, resultString)
+		if !*oneByOnePtr {
+			for _, elem := range input {
+				resultString := ReplaceParameters(elem, *payloadPtr)
+				if resultString != "" {
+					result = append(result, resultString)
+				}
 			}
+		} else {
+			for _, elem := range input {
+				resultSlice := ReplaceParametersOneByOne(elem, *payloadPtr)
+				if len(resultSlice) != 0 {
+					result = append(result, resultSlice...)
+				}
+			}
+
 		}
 	}
 	if *payloadFilePtr != "" {
 		payloads := ReadFileLineByLine(*payloadFilePtr)
 		for _, payload := range RemoveDuplicateValues(payloads) {
 			if strings.Trim(payload, " ") != "" {
-				for _, elem := range input {
-					resultString := ReplaceParameters(elem, payload)
-					if resultString != "" {
-						result = append(result, resultString)
+				if !*oneByOnePtr {
+					for _, elem := range input {
+						resultString := ReplaceParameters(elem, payload)
+						if resultString != "" {
+							result = append(result, resultString)
+						}
+					}
+				} else {
+					for _, elem := range input {
+						resultSlice := ReplaceParametersOneByOne(elem, payload)
+						if len(resultSlice) != 0 {
+							result = append(result, resultSlice...)
+						}
 					}
 				}
 			}
@@ -58,7 +78,8 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
 	$> cat urls | rapwp -p "<svg onload=alert(1)>"
-	$> cat urls | rapwp -pL payloads.txt`
+	$> cat urls | rapwp -pL payloads.txt
+	$> cat urls | rapwp -pL payloads.txt -obo`
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -109,6 +130,35 @@ func ReplaceParameters(input string, payload string) string {
 		queryResult += values[0] + "=" + url.QueryEscape(payload) + "&"
 	}
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
+}
+
+//ReplaceParametersOneByOne >
+func ReplaceParametersOneByOne(input string, payload string) []string {
+	u, err := url.Parse(input)
+	if err != nil {
+		return []string{}
+	}
+	decodedValue, err := url.QueryUnescape(u.RawQuery)
+	if err != nil {
+		return []string{}
+	}
+	var queryResult []string
+	couples := strings.Split(decodedValue, "&")
+	for _, pair1 := range couples {
+		var query = ""
+		for _, pair := range couples {
+			if pair1 == pair {
+				values := strings.Split(pair, "=")
+				query += values[0] + "=" + url.QueryEscape(payload) + "&"
+			} else {
+				values := strings.Split(pair, "=")
+				query += values[0] + "=" + values[1] + "&"
+			}
+		}
+		queryResult = append(queryResult, u.Scheme+"://"+u.Host+u.Path+"?"+query[:len(query)-1])
+	}
+
+	return queryResult
 }
 
 //ReadFileLineByLine reads all the lines from input file and returns
