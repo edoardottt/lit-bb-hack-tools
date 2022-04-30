@@ -2,6 +2,8 @@
   <img src="https://github.com/edoardottt/images/blob/main/lit-bb-hack-tools/banner.png">
 </p>
 
+Command Line tools useful during Bug Bounty / Penetration testing. Focused on Web targets.
+
 Installation 📥
 -------
 
