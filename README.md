@@ -45,6 +45,14 @@ Tools list 📃
 - [genscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/genscope) Take as input a file containing a list of (sub)domains (wildcards allowed) and produce a BurpSuite Configuration file.
 - [kubemetrics](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/kubemetrics) Take as input on stdin a list of urls and print on stdout all the unique paths and urls found in the /metrics endpoint.
 
+Changelog 📌
+-------
+Detailed changes for each release are documented in the [release notes](https://github.com/edoardottt/lit-bb-hack-tools/releases).
+
+Contributing 🤝
+------
+If you want to contribute to this project, you can start opening an [issue](https://github.com/edoardottt/lit-bb-hack-tools/issues).
+
 License 📝
 -------
 
