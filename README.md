@@ -53,8 +53,6 @@ Contributing 🤝
 ------
 If you want to contribute to this project, you can start opening an [issue](https://github.com/edoardottt/lit-bb-hack-tools/issues).
 
-[![](/CONTRIBUTORS.svg)](https://github.com/edoardottt/lit-bb-hack-tools/graphs/contributors)
-
 License 📝
 -------
 
