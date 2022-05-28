@@ -48,7 +48,7 @@ func main() {
 	} else {
 		apikey = ReadApiKey()
 		if apikey == "" {
-			fmt.Println(Red + "[ ERROR ] API key cannot be blank." + Reset)
+			fmt.Println(Red + "[ ERR! ] API key cannot be blank." + Reset)
 			os.Exit(1)
 		}
 	}
@@ -70,19 +70,19 @@ func main() {
 		resp, _, err := KnoxssApi(elem, apikey)
 		if err != nil {
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERROR ] "+elem, *outputPtr)
+				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 				AppendOutputToTxt(err.Error(), *outputPtr)
 			}
-			fmt.Println(Red + "[ ERROR ] " + Reset + elem)
+			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
 			continue
 		}
 		result, err := ReadResult(resp)
 		if err != nil {
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERROR ] "+elem, *outputPtr)
+				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 			}
-			fmt.Println(Red + "[ ERROR ] " + Reset + elem)
+			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
 		} else if result.Xss == "true" { // XSS
 			if *outputPtr != "" {
@@ -91,10 +91,10 @@ func main() {
 			fmt.Println(Green + "[ XSS! ] " + Reset + result.PoC)
 		} else if result.Xss == "none" && result.Error != "" { // ERROR
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERROR ] "+elem, *outputPtr)
+				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 				AppendOutputToTxt(result.Error, *outputPtr)
 			}
-			fmt.Println(Red + "[ ERROR ] " + Reset + elem)
+			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(result.Error)
 		} else {
 			if *outputPtr != "" {
