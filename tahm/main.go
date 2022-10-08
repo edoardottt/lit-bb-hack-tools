@@ -11,6 +11,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
@@ -18,6 +19,13 @@ import (
 
 var Reset = "\033[0m"
 var Red = "\033[31m"
+
+var myTransport http.RoundTripper = &http.Transport{
+	Proxy:                 http.ProxyFromEnvironment,
+	ResponseHeaderTimeout: time.Second * 45,
+}
+
+var myClient = &http.Client{Transport: myTransport}
 
 //main
 func main() {
@@ -107,7 +115,7 @@ func TestMethods(input []string) {
 
 //GetRequest performs a GET request
 func GetRequest(target string) (string, int, error) {
-	resp, err := http.Get(target)
+	resp, err := myClient.Get(target)
 	if err != nil {
 		return "", 0, err
 	}
@@ -127,7 +135,7 @@ func PostRequest(target string) (string, int, error) {
 	postBody, _ := json.Marshal("{data}")
 	responseBody := bytes.NewBuffer(postBody)
 	//Leverage Go's HTTP Post function to make request
-	resp, err := http.Post(target, "application/json", responseBody)
+	resp, err := myClient.Post(target, "application/json", responseBody)
 	//Handle Error
 	if err != nil {
 		return "", 0, err
@@ -144,7 +152,7 @@ func PostRequest(target string) (string, int, error) {
 
 //HeadRequest performs a HEAD request
 func HeadRequest(target string) (string, int, error) {
-	resp, err := http.Head(target)
+	resp, err := myClient.Head(target)
 	if err != nil {
 		return "", 0, err
 	}
@@ -160,9 +168,6 @@ func HeadRequest(target string) (string, int, error) {
 
 //PutRequest performs a PUT request
 func PutRequest(target string) (string, int, error) {
-	// initialize http client
-	client := &http.Client{}
-
 	// marshal User to json
 	json, _ := json.Marshal("{data}")
 
@@ -174,7 +179,7 @@ func PutRequest(target string) (string, int, error) {
 
 	// set the request header Content-Type for json
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-	resp, err := client.Do(req)
+	resp, err := myClient.Do(req)
 	if err != nil {
 		return "", 0, err
 	}
@@ -190,10 +195,6 @@ func PutRequest(target string) (string, int, error) {
 
 //Request performs a <METHOD> request
 func Request(target string, method string) (string, int, error) {
-
-	// Create client
-	client := &http.Client{}
-
 	// Create request
 	req, err := http.NewRequest(method, target, nil)
 	if err != nil {
@@ -201,7 +202,7 @@ func Request(target string, method string) (string, int, error) {
 	}
 
 	// Fetch Request
-	resp, err := client.Do(req)
+	resp, err := myClient.Do(req)
 	if err != nil {
 		return "", 0, err
 	}
