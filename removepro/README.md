@@ -5,12 +5,14 @@
 Take as input on stdin a list of urls and print on stdout all the unique urls without protocols.  
 With `-subs` you can output only domains without the queries.
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/removepro`
-- `go build -o removepro`
-- `sudo cp removepro /usr/bin`
+```
+https://google.com/id/ok
+http://ciao.it
+https://okokok.it/query?exec=ok
+http://cleandomain.out#fragment1
+```
 
 ### Usage
 

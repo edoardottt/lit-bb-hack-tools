@@ -4,12 +4,14 @@
 
 Take as input on stdin a list of urls and print on stdout all the unique headers found. 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/heacoll`
-- `go build -o heacoll`
-- `sudo cp heacoll /usr/bin`
+```
+https://sub1.example.com/path1?param1=value1
+https://sub1.example.com/path2
+https://sub2.example.com/path3/subpath1/
+https://sub3.example.com/
+```
 
 ### Usage
 

@@ -6,12 +6,22 @@ Take as input on stdin a list of urls and print on stdout all the unique paths f
 
 Inspired by [@remonsec](https://twitter.com/remonsec/status/1410661328977600517) 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/robotstxt`
-- `go build -o robotstxt`
-- `sudo cp robotstxt /usr/bin`
+```
+https://google.com/search
+https://google.com/search/about
+https://google.com/search/static
+https://google.com/pda/search?
+https://google.com/sprint_xhtml
+https://google.com/sprint_wml
+https://google.com/pqa
+https://google.com/books?*q=related:*
+https://google.com/books?*q=editions:*
+https://google.com/books?*q=subject:*
+https://google.com/trends/beta
+https://google.com/trends/topics
+```
 
 ### Usage
 

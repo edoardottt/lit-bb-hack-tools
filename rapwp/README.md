@@ -4,12 +4,14 @@
 
 Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/rapwp`
-- `go build -o rapwp`
-- `sudo cp rapwp /usr/bin`
+```
+https://sub1.example.com/path1?param1=value1
+https://sub1.example.com/path2?param1=value1&param2=value2
+https://sub2.example.com/path3/subpath1/?param1=value1
+https://sub3.example.com/path4?param4=value4
+```
 
 ### Usage
 

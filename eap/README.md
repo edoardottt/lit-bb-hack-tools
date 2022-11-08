@@ -2,14 +2,19 @@
 
 **e**xtract **a**ll **p**rotocols
 
-Take as input on stdin a list of urls and print on stdout all the protocols sorted. 
+Take as input on stdin a list of urls and print on stdout all the protocols sorted by count. 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/eap`
-- `go build -o eap`
-- `sudo cp eap /usr/bin`
+```
+https://example.com/file?p=1&id=1
+https://example.com/2?a="&page=!&url=1
+https://www.example.com/file?redir_url=2
+https://example.com/file?1=2?utm=cc
+https://example.com/2?d=2?hl=1
+https://www.example.com/file?hl=2
+...
+```
 
 ### Usage
 

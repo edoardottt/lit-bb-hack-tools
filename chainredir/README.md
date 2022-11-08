@@ -4,12 +4,6 @@
 
 Take as input a URL and print on stdout all the redirects. 
 
-### Install
-
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/chainredir`
-- `go build -o chainredir`
-- `sudo cp chainredir /usr/bin`
 
 ### Usage
 

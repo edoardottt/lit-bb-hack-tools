@@ -22,7 +22,7 @@ var Red = "\033[31m"
 
 var myTransport http.RoundTripper = &http.Transport{
 	Proxy:                 http.ProxyFromEnvironment,
-	ResponseHeaderTimeout: time.Second * 45,
+	ResponseHeaderTimeout: time.Second * 15,
 }
 
 var myClient = &http.Client{Transport: myTransport}

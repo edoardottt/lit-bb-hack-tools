@@ -4,12 +4,21 @@
 
 Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 
-### Install
+### Input (subs)
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/bbscope`
-- `go build -o bbscope`
-- `sudo cp bbscope /usr/bin`
+```
+partners.shopify.com
+accounts.shopify.com
+1.shopifykloud.com
+```
+
+### Input (urls)
+
+```
+https://partners.shopify.com/
+https://accounts.shopify.com/admin
+https://1.shopifykloud.com/1
+```
 
 ### Usage
 

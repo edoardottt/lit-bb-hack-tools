@@ -4,13 +4,6 @@
 
 Take as input on stdin a payload and print on stdout all the successful WAF bypasses.  
 
-### Install
-
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/checkbypass`
-- `go build -o checkbypass`
-- `sudo cp checkbypass /usr/bin`
-
 ### Usage
 
 - `checkbypass -p "<script>alert()</script>"`

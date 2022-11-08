@@ -6,12 +6,12 @@ Take as input on stdin a list of js file urls and print on stdout all the unique
 
 Thanks to [@renniepak](https://twitter.com/renniepak/status/1288371394401783809).
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/eefjsf`
-- `go build -o eefjsf`
-- `sudo cp eefjsf /usr/bin`
+```
+https://example.com/main.js
+https://test2.test.com/user-display.js
+```
 
 ### Usage
 

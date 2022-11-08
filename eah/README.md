@@ -4,12 +4,17 @@
 
 Take as input on stdin a list of urls and print on stdout all the hosts sorted. 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/eah`
-- `go build -o eah`
-- `sudo cp eah /usr/bin`
+```
+https://example.com/file?p=1&id=1
+https://example.com/2?a="&page=!&url=1
+https://www.google.com/file?redir_url=2
+https://example.com/file?1=2?utm=cc
+https://example.com/2?d=2?hl=1
+https://www.google.com/file?hl=2
+...
+```
 
 ### Usage
 

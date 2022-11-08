@@ -4,12 +4,14 @@
 
 Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods. 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/tahm`
-- `go build -o tahm`
-- `sudo cp tahm /usr/bin`
+```
+https://example.com
+https://test.com
+
+...
+```
 
 ### Usage
 
@@ -31,4 +33,5 @@ TRACE    405 Method Not Allowed  0
 PATCH    405 Method Not Allowed  0     
 ---------------------------
 
+...
 ```

@@ -4,12 +4,16 @@
 
 Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found. 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/doomxss`
-- `go build -o doomxss`
-- `sudo cp doomxss /usr/bin`
+```
+https://example.com/main.js
+https://test2.test.com/user-display.js
+https://sub2.sub1.test.com/user-display.html
+https://example.com/script.js
+https://bersaglio.it/checks.html
+...
+```
 
 ### Usage
 
@@ -20,5 +24,5 @@ Take as input on stdin a list of html/js file urls and print on stdout all the p
 ```
 [ location.href= ] https://example.com/script.js
 [ document.referrer= ] https://target.dom/alert.js
-[ eval( ] https://bersaglio.it/checks.js
+[ eval( ] https://bersaglio.it/checks.html
 ```

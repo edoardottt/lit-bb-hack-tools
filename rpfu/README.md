@@ -4,12 +4,16 @@
 
 Take as input on stdin a list of urls and print on stdout all the unique urls without ports (if 80 or 443). 
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/rpfu`
-- `go build -o rpfu`
-- `sudo cp rpfu /usr/bin`
+```
+https://google.com:443/id/ok
+https://ciao.it:443
+https://okokok.it:443/query?exec=ok
+http://cleandomain.out:80#fragment1
+
+...
+```
 
 ### Usage
 
@@ -21,5 +25,5 @@ Take as input on stdin a list of urls and print on stdout all the unique urls wi
 https://google.com/id/ok
 https://ciao.it
 https://okokok.it/query?exec=ok
-https://cleandomain.out#fragment1
+http://cleandomain.out#fragment1
 ```

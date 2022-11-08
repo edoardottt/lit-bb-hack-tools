@@ -4,12 +4,16 @@
 
 Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/eapath`
-- `go build -o eapath`
-- `sudo cp eapath /usr/bin`
+```
+https://example.com/file?p=1
+https://example.com/2?a="
+https://www.example.com/file
+https://example.com/file?1=2
+https://example.com/2?d=2
+https://www.example.com/file
+```
 
 ### Usage
 

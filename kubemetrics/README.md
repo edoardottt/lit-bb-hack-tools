@@ -6,12 +6,12 @@ Take as input on stdin a list of urls and print on stdout all the unique paths a
 
 Inspired by [@ITSecurityguard](https://twitter.com/ITSecurityguard/status/1510951340763136005), thanks to [@remonsec](https://twitter.com/remonsec).
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/kubemetrics`
-- `go build -o kubemetrics`
-- `sudo cp kubemetrics /usr/bin`
+```
+https://example.com
+https://test.com
+```
 
 ### Usage
 

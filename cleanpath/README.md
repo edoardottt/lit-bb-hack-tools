@@ -4,12 +4,17 @@
 
 Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).  
 
-### Install
+### Input
 
-- `git clone https://github.com/edoardottt/lit-bb-hack-tools`
-- `cd lit-bb-hack-tools/cleanpath`
-- `go build -o cleanpath`
-- `sudo cp cleanpath /usr/bin`
+```
+https://google.com/
+https://example.com/api
+http://example.com/books/all
+https://example.com/books/all/1.pdf
+books/all/2.pdf
+http://noredirect.com/nor
+https://redirect-no.fr/blocked
+```
 
 ### Usage
 
