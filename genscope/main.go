@@ -59,7 +59,7 @@ type Domain struct {
 
 // GenerateDomains.
 func GenerateDomains(input []string) {
-	var domains []Domain
+	var domains = []Domain{}
 
 	for _, elem := range input {
 		domain := "^" + strings.ReplaceAll(strings.ReplaceAll(elem, ".", "\\."), "*", ".*") + "$"

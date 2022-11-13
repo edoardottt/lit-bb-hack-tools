@@ -37,8 +37,10 @@ func main() {
 	}
 
 	// sort reverse.
-	n := map[int][]string{}
-	var a []int
+	var (
+		n = map[int][]string{}
+		a = []int{}
+	)
 
 	for k, v := range set {
 		n[v] = append(n[v], k)

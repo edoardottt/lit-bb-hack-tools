@@ -148,7 +148,7 @@ func ReplaceParametersOneByOne(input string, payload string) []string {
 		return []string{}
 	}
 
-	var queryResult []string
+	var queryResult = []string{}
 
 	couples := strings.Split(decodedValue, "&")
 	for _, pair1 := range couples {
