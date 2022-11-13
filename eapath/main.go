@@ -49,7 +49,6 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)

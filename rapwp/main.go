@@ -53,7 +53,6 @@ func main() {
 					result = append(result, resultSlice...)
 				}
 			}
-
 		}
 	}
 

@@ -43,7 +43,7 @@ func main() {
 	}
 }
 
-// help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 	$> cat urls | bbscope url target-scope.json
@@ -80,7 +80,6 @@ type Domain struct {
 // ScanTargets returns the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
