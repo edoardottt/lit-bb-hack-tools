@@ -152,7 +152,7 @@ func readFile(inputFile string) []string {
 
 	var (
 		text = []string{}
-		dir  = ""
+		dir  string
 	)
 
 	for scanner.Scan() {

@@ -108,10 +108,16 @@ func ScanBurpConfFile() BurpSuiteConfiguration {
 		os.Exit(1)
 	}
 
-	defer jsonFile.Close()
-
 	var conf BurpSuiteConfiguration
-	json.Unmarshal(byteValue, &conf)
+
+	err = json.Unmarshal(byteValue, &conf)
+	if err != nil {
+		fmt.Println(err)
+		jsonFile.Close()
+		os.Exit(1)
+	}
+
+	jsonFile.Close()
 
 	return conf
 }

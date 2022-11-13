@@ -98,6 +98,8 @@ func ScanRedirects(input string) []Redirect {
 			result = append(result, output)
 			i += 1
 		}
+
+		resp.Body.Close()
 	}
 
 	return result

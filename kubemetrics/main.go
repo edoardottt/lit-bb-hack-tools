@@ -95,7 +95,7 @@ func GetMetrics(input []string) []string {
 
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
-						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "path=\"", ""), "\"", "")
+						elem := strings.ReplaceAll(strings.ReplaceAll(strings.Split(match, ",")[0], "path=\"", ""), "\"", "")
 						if elem != "/" && strings.Trim(elem, " ") != "" {
 							result = append(result, elem)
 						}
@@ -107,7 +107,7 @@ func GetMetrics(input []string) []string {
 
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
-						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "url=\"", ""), "\"", "")
+						elem := strings.ReplaceAll(strings.ReplaceAll(strings.Split(match, ",")[0], "url=\"", ""), "\"", "")
 						if elem != "/" && strings.Trim(elem, " ") != "" {
 							result = append(result, elem)
 						}

@@ -25,7 +25,7 @@ func main() {
 
 	input := ScanTargets()
 
-	results := RetrieveContents(golazy.RemoveDuplicateValues(input))
+	results := RetrieveContents(golazy.RemoveDuplicateValues(input), 10)
 	for _, elem := range results {
 		fmt.Println(elem[1 : len(elem)-1])
 	}
@@ -58,7 +58,7 @@ func ScanTargets() []string {
 }
 
 // RetrieveContents.
-func RetrieveContents(input []string) []string {
+func RetrieveContents(input []string, channels int) []string {
 	var (
 		result = []string{}
 		mutex  = &sync.Mutex{}
@@ -66,8 +66,8 @@ func RetrieveContents(input []string) []string {
 
 	r := regexp.MustCompile(`\"\/[a-zA-Z0-9_\/?=&]*\"`)
 
-	limiter := make(chan string, 10) // Limits simultaneous requests.
-	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
+	limiter := make(chan string, channels) // Limits simultaneous requests.
+	wg := sync.WaitGroup{}                 // Needed to not prematurely exit before all requests have been finished.
 
 	for _, domain := range input {
 		limiter <- domain

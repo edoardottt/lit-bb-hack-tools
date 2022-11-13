@@ -39,9 +39,9 @@ func main() {
 			defer wg.Done()
 			defer func() { <-limiter }()
 
-			finalUrl := ScanRedirect(elem)
-			if finalUrl.URL != "" {
-				final := finalUrl.URL + " " + strconv.Itoa(finalUrl.Code)
+			finalURL := ScanRedirect(elem)
+			if finalURL.URL != "" {
+				final := finalURL.URL + " " + strconv.Itoa(finalURL.Code)
 				result = append(result, final)
 			}
 		}(elem)
@@ -130,6 +130,8 @@ func ScanRedirect(input string) Redirect {
 			result = append(result, output)
 			i += 1
 		}
+
+		resp.Body.Close()
 	}
 
 	return result[len(result)-1]

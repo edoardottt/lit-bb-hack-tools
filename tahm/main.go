@@ -217,6 +217,8 @@ func PutRequest(target string) (string, int, error) {
 
 	sb := string(body)
 
+	resp.Body.Close()
+
 	return resp.Status, len(sb), nil
 }
 
