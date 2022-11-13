@@ -60,12 +60,12 @@ func RetrieveHeaders(input []string) {
 	limiter := make(chan string, 10) // Limits simultaneous requests
 	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
 
-	for i, domain := range input {
+	for _, domain := range input {
 		limiter <- domain
 
 		wg.Add(1)
 
-		go func(i int, domain string) {
+		go func(domain string) {
 			defer wg.Done()
 
 			defer func() { <-limiter }()
@@ -89,7 +89,7 @@ func RetrieveHeaders(input []string) {
 				resp.Body.Close()
 			}
 			mutex.Unlock()
-		}(i, domain)
+		}(domain)
 	}
 
 	wg.Wait()
