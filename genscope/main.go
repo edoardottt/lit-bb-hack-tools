@@ -40,9 +40,9 @@ type Target struct {
 }
 
 type Scope struct {
-	Advanced_mode bool     `json:"advanced_mode"`
-	Exclude       []Domain `json:"exclude"`
-	Include       []Domain `json:"include"`
+	AdvancedMode bool     `json:"advanced_mode"`
+	Exclude      []Domain `json:"exclude"`
+	Include      []Domain `json:"include"`
 }
 
 type Domain struct {
@@ -64,7 +64,7 @@ func GenerateDomains(input []string) {
 		domains = append(domains, dom80)
 		domains = append(domains, dom443)
 	}
-	var result = BurpSuiteConfiguration{Target: Target{Scope: Scope{Advanced_mode: true, Exclude: []Domain{}, Include: domains}}}
+	var result = BurpSuiteConfiguration{Target: Target{Scope: Scope{AdvancedMode: true, Exclude: []Domain{}, Include: domains}}}
 
 	file, _ := json.MarshalIndent(result, "", "	")
 

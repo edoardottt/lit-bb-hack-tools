@@ -58,9 +58,9 @@ type Target struct {
 }
 
 type Scope struct {
-	Advanced_mode bool     `json:"advanced_mode"`
-	Exclude       []Domain `json:"exclude"`
-	Include       []Domain `json:"include"`
+	AdvancedMode bool     `json:"advanced_mode"`
+	Exclude      []Domain `json:"exclude"`
+	Include      []Domain `json:"include"`
 }
 
 type Domain struct {

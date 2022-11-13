@@ -87,7 +87,7 @@ func GetRequest(target string) (string, int, error) {
 
 type WAF struct {
 	Name          string
-	Url           string
+	URL           string
 	BlockedStatus int
 	BlockedString string
 }
@@ -127,7 +127,7 @@ var wafs = []WAF{
 func TestWAF(payload string) {
 	var distance = 12
 	for _, elem := range wafs {
-		url := ReplaceParameters(elem.Url, "test="+payload)
+		url := ReplaceParameters(elem.URL, "test="+payload)
 		resp, status, err := GetRequest(url)
 		if err != nil {
 			fmt.Println(Red + "[ ERROR:-( ] " + Reset + err.Error())

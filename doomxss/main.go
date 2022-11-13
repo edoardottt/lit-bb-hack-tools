@@ -22,7 +22,7 @@ func main() {
 	input := ScanTargets()
 	results := RetrieveContents(golazy.RemoveDuplicateValues(input))
 	for _, elem := range results {
-		fmt.Println("[ " + elem.Sink + " ] " + elem.Url)
+		fmt.Println("[ " + elem.Sink + " ] " + elem.URL)
 	}
 }
 
@@ -52,7 +52,7 @@ func ScanTargets() []string {
 
 type Result struct {
 	Sink string
-	Url  string
+	URL  string
 }
 
 // RetrieveContents.
@@ -97,7 +97,7 @@ func CheckSinks(body string, url string) []Result {
 	toCheck2 := strings.ReplaceAll(toCheck, " ", "")
 	for _, sink := range sinks {
 		if strings.Contains(toCheck2, sink) {
-			res := Result{Sink: sink, Url: url}
+			res := Result{Sink: sink, URL: url}
 			result = append(result, res)
 		}
 	}

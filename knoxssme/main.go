@@ -86,12 +86,12 @@ func main() {
 			}
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
-		case result.Xss == "true":
+		case result.XSS == "true":
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ XSS! ] "+elem, *outputPtr)
 			}
 			fmt.Println(Green + "[ XSS! ] " + Reset + result.PoC)
-		case result.Xss == "none" && result.Error != "":
+		case result.XSS == "none" && result.Error != "":
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 				golazy.AppendOutputToTxt(result.Error, *outputPtr)
@@ -169,12 +169,12 @@ func KnoxssAPI(url string, apikey string) (string, int, error) {
 }
 
 type Result struct {
-	Xss         string `json:"XSS"`
+	XSS         string `json:"XSS"`
 	PoC         string `json:"PoC"`
 	Target      string `json:"Target"`
 	PostData    string `json:"POST Data"`
 	Error       string `json:"Error"`
-	ApiCall     string `json:"API Call"`
+	APICall     string `json:"API Call"`
 	TimeElapsed string `json:"Time Elapsed"`
 	Timestamp   string `json:"Timestamp"`
 }

@@ -47,7 +47,7 @@ func help() {
 // a single bug bounty program.
 type Target struct {
 	Name    string   `json:"name"`
-	Url     string   `json:"url"`
+	URL     string   `json:"url"`
 	Bounty  bool     `json:"bounty"`
 	Domains []string `json:"domains"`
 }
@@ -83,8 +83,8 @@ func GetTargets() []string {
 	for _, res := range results.Targets {
 		// only programs with bounty.
 		if res.Bounty {
-			if strings.Contains(res.Url, "hackerone") || strings.Contains(res.Url, "bugcrowd") ||
-				strings.Contains(res.Url, "intigriti") || strings.Contains(res.Url, "yeswehack") {
+			if strings.Contains(res.URL, "hackerone") || strings.Contains(res.URL, "bugcrowd") ||
+				strings.Contains(res.URL, "intigriti") || strings.Contains(res.URL, "yeswehack") {
 				output = append(output, cleanIgnored(res.Domains)...)
 			}
 		}

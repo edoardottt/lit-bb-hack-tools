@@ -15,14 +15,14 @@ func main() {
 		help()
 	}
 	input := ScanTarget()
-	if !IsUrl(input) {
+	if !IsURL(input) {
 		fmt.Println("Please enter a valid url.")
 		os.Exit(1)
 	}
 	redirects := ScanRedirects(input)
 	fmt.Println()
 	for _, elem := range redirects {
-		fmt.Println("[>] " + elem.Url + " " + elem.Code)
+		fmt.Println("[>] " + elem.URL + " " + elem.Code)
 		fmt.Println()
 	}
 }
@@ -50,7 +50,7 @@ func ScanTarget() string {
 
 // Redirect Struct.
 type Redirect struct {
-	Url  string
+	URL  string
 	Code string
 }
 
@@ -69,7 +69,7 @@ func ScanRedirects(input string) []Redirect {
 			break
 		}
 		if nextURL[0] == '/' {
-			nextURL = ExtractHost(result[len(result)-1].Url) + nextURL
+			nextURL = ExtractHost(result[len(result)-1].URL) + nextURL
 		}
 		resp, err := client.Get(nextURL)
 
@@ -78,12 +78,12 @@ func ScanRedirects(input string) []Redirect {
 		}
 
 		if resp.StatusCode == 200 {
-			output := Redirect{Url: resp.Request.URL.String(), Code: resp.Status}
+			output := Redirect{URL: resp.Request.URL.String(), Code: resp.Status}
 			result = append(result, output)
 			break
 		} else {
 			nextURL = resp.Header.Get("Location")
-			output := Redirect{Url: resp.Request.URL.String(), Code: resp.Status}
+			output := Redirect{URL: resp.Request.URL.String(), Code: resp.Status}
 			result = append(result, output)
 			i += 1
 		}
@@ -91,8 +91,8 @@ func ScanRedirects(input string) []Redirect {
 	return result
 }
 
-// IsUrl.
-func IsUrl(input string) bool {
+// IsURL.
+func IsURL(input string) bool {
 	u, err := url.Parse(input)
 	if err != nil {
 		panic(err)

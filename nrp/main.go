@@ -33,8 +33,8 @@ func main() {
 			defer wg.Done()
 			defer func() { <-limiter }()
 			finalUrl := ScanRedirect(elem)
-			if finalUrl.Url != "" {
-				final := finalUrl.Url + " " + strconv.Itoa(finalUrl.Code)
+			if finalUrl.URL != "" {
+				final := finalUrl.URL + " " + strconv.Itoa(finalUrl.Code)
 				result = append(result, final)
 			}
 		}(elem)
@@ -64,7 +64,7 @@ func ScanTargets() []string {
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
-		if !IsUrl(sc.Text()) {
+		if !IsURL(sc.Text()) {
 			continue
 		}
 		domain := strings.ToLower(sc.Text())
@@ -76,7 +76,7 @@ func ScanTargets() []string {
 
 // Redirect Struct.
 type Redirect struct {
-	Url  string
+	URL  string
 	Code int
 }
 
@@ -98,7 +98,7 @@ func ScanRedirect(input string) Redirect {
 			break
 		}
 		if nextURL[0] == '/' {
-			nextURL = ExtractHost(result[len(result)-1].Url) + nextURL
+			nextURL = ExtractHost(result[len(result)-1].URL) + nextURL
 		}
 		resp, err := client.Get(nextURL)
 
@@ -107,12 +107,12 @@ func ScanRedirect(input string) Redirect {
 		}
 
 		if resp.StatusCode == 200 {
-			output := Redirect{Url: resp.Request.URL.String(), Code: resp.StatusCode}
+			output := Redirect{URL: resp.Request.URL.String(), Code: resp.StatusCode}
 			result = append(result, output)
 			break
 		} else {
 			nextURL = resp.Header.Get("Location")
-			output := Redirect{Url: resp.Request.URL.String(), Code: resp.StatusCode}
+			output := Redirect{URL: resp.Request.URL.String(), Code: resp.StatusCode}
 			result = append(result, output)
 			i += 1
 		}
@@ -120,8 +120,8 @@ func ScanRedirect(input string) Redirect {
 	return result[len(result)-1]
 }
 
-// IsUrl.
-func IsUrl(input string) bool {
+// IsURL.
+func IsURL(input string) bool {
 	u, err := url.Parse(input)
 	if err != nil {
 		return false
