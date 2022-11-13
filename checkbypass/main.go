@@ -22,12 +22,16 @@ func main() {
 		Red = ""
 		Green = ""
 	}
+
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	payloadPtr := flag.String("p", "", "Input payload.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	if *payloadPtr != "" {
 		TestWAF(*payloadPtr)
 	} else {
@@ -40,6 +44,7 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a payload and print on stdout all the successful WAF bypasses.
 	$> checkbypass -p "<script>alert()</script>"`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -52,16 +57,20 @@ func ReplaceParameters(input string, payload string) string {
 	if err != nil {
 		return ""
 	}
+
 	decodedValue, err := url.QueryUnescape(u.RawQuery)
 	if err != nil {
 		return ""
 	}
+
 	var queryResult = ""
+
 	couples := strings.Split(decodedValue, "&")
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
 		queryResult += values[0] + "=" + url.QueryEscape(payload) + "&"
 	}
+
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
 }
 
@@ -70,18 +79,23 @@ func GetRequest(target string) (string, int, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * 20,
 	}
+
 	resp, err := netClient.Get(target)
 	if err != nil {
 		return "", 0, err
 	}
+
 	defer resp.Body.Close()
+
 	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
+
 	// Convert the body to type string.
 	sb := string(body)
+
 	return sb, len(sb), nil
 }
 
@@ -126,21 +140,26 @@ var wafs = []WAF{
 // TestWAF.
 func TestWAF(payload string) {
 	var distance = 12
+
 	for _, elem := range wafs {
 		url := ReplaceParameters(elem.URL, "test="+payload)
+
 		resp, status, err := GetRequest(url)
 		if err != nil {
 			fmt.Println(Red + "[ ERROR:-( ] " + Reset + err.Error())
 			continue
 		}
+
 		if strings.Contains(resp, elem.BlockedString) {
 			fmt.Println(Red + "[ BLOCKED! ] " + Reset + elem.Name + strings.Repeat(" ", distance-len(elem.Name)) + " : " + url)
 			continue
 		}
+
 		if status == elem.BlockedStatus {
 			fmt.Println(Red + "[ BLOCKED! ] " + Reset + elem.Name + strings.Repeat(" ", distance-len(elem.Name)) + " : " + url)
 			continue
 		}
+
 		fmt.Println(Green + "[ BYPASSED ] " + Reset + elem.Name + strings.Repeat(" ", distance-len(elem.Name)) + " : " + url)
 	}
 }

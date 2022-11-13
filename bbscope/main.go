@@ -16,11 +16,15 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if len(os.Args) < 2 || *helpPtr {
 		help()
 	}
+
 	var result []string
+
 	switch os.Args[1] {
 	case "sub":
 		input := ScanTargets()
@@ -33,6 +37,7 @@ func main() {
 	default:
 		help()
 	}
+
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
@@ -43,6 +48,7 @@ func help() {
 	var usage = `Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 	$> cat urls | bbscope url target-scope.json
 	$> cat subs | bbscope sub target-scope.json`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -78,10 +84,12 @@ func ScanTargets() []string {
 	var result []string
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
+
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
@@ -93,15 +101,19 @@ func ScanBurpConfFile() BurpSuiteConfiguration {
 		jsonFile.Close()
 		os.Exit(1)
 	}
+
 	byteValue, err := ioutil.ReadAll(jsonFile)
 	if err != nil {
 		fmt.Println(err)
 		jsonFile.Close()
 		os.Exit(1)
 	}
+
 	defer jsonFile.Close()
+
 	var conf BurpSuiteConfiguration
 	json.Unmarshal(byteValue, &conf)
+
 	return conf
 }
 
@@ -118,21 +130,26 @@ func GetProtocol(input string) string {
 // checkSubs returns a slice of string containing only the in scope subdomains.
 func checkSubs(input []string, conf BurpSuiteConfiguration) []string {
 	var result []string
+
 	for _, item := range input {
 		if GetProtocol(item) == "" {
 			item = "http://" + item
 		}
+
 		u, err := url.Parse(item)
 		if err != nil {
 			continue
 		}
+
 		subdomain := u.Host
+
 		for _, excluded := range conf.Target.Scope.Exclude {
 			r, _ := regexp.Compile(excluded.Host)
 			if r.MatchString(subdomain) {
 				break
 			}
 		}
+
 		for _, included := range conf.Target.Scope.Include {
 			r, _ := regexp.Compile(included.Host)
 			if r.MatchString(subdomain) {
@@ -141,40 +158,50 @@ func checkSubs(input []string, conf BurpSuiteConfiguration) []string {
 			}
 		}
 	}
+
 	return result
 }
 
 // checkUrls returns a slice of string containing only the in scope urls.
 func checkUrls(input []string, conf BurpSuiteConfiguration) []string {
 	var result []string
+
 	for _, item := range input {
 		if GetProtocol(item) == "" {
 			continue
 		}
+
 		u, err := url.Parse(item)
 		if err != nil {
 			continue
 		}
+
 		var excludedItem = false
+
 		for _, excluded := range conf.Target.Scope.Exclude {
 			rHost, _ := regexp.Compile(excluded.Host)
 			rFile, _ := regexp.Compile(excluded.File)
+
 			if rHost.MatchString(u.Host) && rFile.MatchString(u.Path) {
 				excludedItem = true
 				break
 			}
 		}
+
 		if excludedItem {
 			continue
 		}
+
 		for _, included := range conf.Target.Scope.Include {
 			rHost, _ := regexp.Compile(included.Host)
 			rFile, _ := regexp.Compile(included.File)
+
 			if rHost.MatchString(u.Host) && rFile.MatchString(u.Path) {
 				result = append(result, item)
 				break
 			}
 		}
 	}
+
 	return result
 }

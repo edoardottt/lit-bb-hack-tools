@@ -16,11 +16,15 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	input := ScanTargets()
+
 	results := RetrieveContents(golazy.RemoveDuplicateValues(input))
 	for _, elem := range results {
 		fmt.Println(elem[1 : len(elem)-1])
@@ -31,6 +35,7 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found.
 	$> cat js-urls | eefjsf`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -40,21 +45,25 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
+
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return result
 }
 
 // RetrieveContents.
 func RetrieveContents(input []string) []string {
-	var result []string
-	var mutex = &sync.Mutex{}
+	var (
+		result = []string{}
+		mutex  = &sync.Mutex{}
+	)
+
 	r := regexp.MustCompile(`\"\/[a-zA-Z0-9_\/?=&]*\"`)
 
 	limiter := make(chan string, 10) // Limits simultaneous requests.
@@ -62,12 +71,17 @@ func RetrieveContents(input []string) []string {
 
 	for i, domain := range input {
 		limiter <- domain
+
 		wg.Add(1)
+
 		go func(i int, domain string) {
 			defer wg.Done()
 			defer func() { <-limiter }()
+
 			resp, err := http.Get(domain)
+
 			mutex.Lock()
+
 			if err == nil {
 				body, err := ioutil.ReadAll(resp.Body)
 				if err == nil && len(body) != 0 {
@@ -82,6 +96,8 @@ func RetrieveContents(input []string) []string {
 			mutex.Unlock()
 		}(i, domain)
 	}
+
 	wg.Wait()
+
 	return golazy.RemoveDuplicateValues(result)
 }

@@ -32,9 +32,11 @@ var myClient = &http.Client{Transport: myTransport}
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	TestMethods(ScanTargets())
 }
 
@@ -42,6 +44,7 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 	$> cat urls | tahm`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -51,7 +54,6 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
 
 	// accept domains on stdin
@@ -60,6 +62,7 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
@@ -67,47 +70,58 @@ func ScanTargets() []string {
 func TestMethods(input []string) {
 	for _, elem := range input {
 		fmt.Println("= " + Red + elem + Reset + " =")
+
 		headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 		columnFmt := color.New(color.FgYellow).SprintfFunc()
 
 		tbl := table.New("METHOD", "STATUS", "SIZE")
 		tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+
 		GetStatus, lenSb, err := GetRequest(elem)
 		if err == nil {
 			tbl.AddRow("GET", GetStatus, strconv.Itoa(lenSb))
 		}
+
 		PostStatus, lenSb, err := PostRequest(elem)
 		if err == nil {
 			tbl.AddRow("POST", PostStatus, strconv.Itoa(lenSb))
 		}
+
 		PutStatus, lenSb, err := PutRequest(elem)
 		if err == nil {
 			tbl.AddRow("PUT", PutStatus, strconv.Itoa(lenSb))
 		}
+
 		DeleteStatus, lenSb, err := Request(elem, "DELETE")
 		if err == nil {
 			tbl.AddRow("DELETE", DeleteStatus, strconv.Itoa(lenSb))
 		}
+
 		HeadStatus, lenSb, err := HeadRequest(elem)
 		if err == nil {
 			tbl.AddRow("HEAD", HeadStatus, strconv.Itoa(lenSb))
 		}
+
 		ConnectStatus, lenSb, err := Request(elem, "CONNECT")
 		if err == nil {
 			tbl.AddRow("CONNECT", ConnectStatus, strconv.Itoa(lenSb))
 		}
+
 		OptionsStatus, lenSb, err := Request(elem, "OPTIONS")
 		if err == nil {
 			tbl.AddRow("OPTIONS", OptionsStatus, strconv.Itoa(lenSb))
 		}
+
 		TraceStatus, lenSb, err := Request(elem, "TRACE")
 		if err == nil {
 			tbl.AddRow("TRACE", TraceStatus, strconv.Itoa(lenSb))
 		}
+
 		PatchStatus, lenSb, err := Request(elem, "PATCH")
 		if err == nil {
 			tbl.AddRow("PATCH", PatchStatus, strconv.Itoa(lenSb))
 		}
+
 		tbl.Print()
 		fmt.Println("---------------------------")
 		fmt.Println()
@@ -120,14 +134,18 @@ func GetRequest(target string) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
+
 	defer resp.Body.Close()
+
 	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
+
 	// Convert the body to type string.
 	sb := string(body)
+
 	return resp.Status, len(sb), nil
 }
 
@@ -135,19 +153,22 @@ func GetRequest(target string) (string, int, error) {
 func PostRequest(target string) (string, int, error) {
 	postBody, _ := json.Marshal("{data}")
 	responseBody := bytes.NewBuffer(postBody)
+
 	// Leverage Go's HTTP Post function to make request.
 	resp, err := myClient.Post(target, "application/json", responseBody)
-	// Handle Error.
 	if err != nil {
 		return "", 0, err
 	}
+
 	defer resp.Body.Close()
-	// Read the response body.
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
+
 	sb := string(body)
+
 	return resp.Status, len(sb), nil
 }
 
@@ -157,13 +178,16 @@ func HeadRequest(target string) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
+
 	defer resp.Body.Close()
-	// Read the response body.
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
+
 	sb := string(body)
+
 	return resp.Status, len(sb), nil
 }
 
@@ -180,6 +204,7 @@ func PutRequest(target string) (string, int, error) {
 
 	// set the request header Content-Type for json.
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+
 	resp, err := myClient.Do(req)
 	if err != nil {
 		return "", 0, err
@@ -189,6 +214,7 @@ func PutRequest(target string) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
+
 	sb := string(body)
 
 	return resp.Status, len(sb), nil
@@ -214,6 +240,7 @@ func Request(target string, method string) (string, int, error) {
 	if err != nil {
 		return "", 0, err
 	}
+
 	sb := string(body)
 
 	return resp.Status, len(sb), nil

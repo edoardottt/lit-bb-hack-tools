@@ -18,11 +18,15 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	input := ScanTargets()
+
 	result := GetMetrics(input)
 	for _, elem := range result {
 		fmt.Println(elem)
@@ -33,6 +37,7 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique paths and url found in the /metrics endpoint.
 	$> cat urls | kubemetrics`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -42,7 +47,6 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
 
 	// accept domains on stdin.
@@ -53,32 +57,42 @@ func ScanTargets() []string {
 			fmt.Println(domain + " has no protocol!")
 			os.Exit(1)
 		}
+
 		result = append(result, RemovePath(domain))
 	}
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
 // GetMetrics.
 func GetMetrics(input []string) []string {
-	var result []string
-	var mutex = &sync.Mutex{}
-	pathRe := `path\=\".*\"`
-	urlRe := `url\=\".*\"`
+	var (
+		result = []string{}
+		mutex  = &sync.Mutex{}
+		pathRe = `path\=\".*\"`
+		urlRe  = `url\=\".*\"`
+	)
 
 	limiter := make(chan string, 10) // Limits simultaneous requests.
 	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
 	for _, elem := range input {
 		limiter <- elem
+
 		wg.Add(1)
+
 		go func(domain string) {
 			defer wg.Done()
 			defer func() { <-limiter }()
+
 			metrics := GetRequest(domain + "/metrics")
+
 			mutex.Lock()
+
 			if metrics != "" {
 				if matched, err := regexp.Match(pathRe, []byte(metrics)); err == nil && matched {
 					re := regexp.MustCompile(pathRe)
+
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
 						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "path=\"", ""), "\"", "")
@@ -87,8 +101,10 @@ func GetMetrics(input []string) []string {
 						}
 					}
 				}
+
 				if matched, err := regexp.Match(urlRe, []byte(metrics)); err == nil && matched {
 					re := regexp.MustCompile(urlRe)
+
 					matches := re.FindAllString(metrics, -1)
 					for _, match := range matches {
 						elem := strings.ReplaceAll(strings.ReplaceAll(string(strings.Split(match, ",")[0]), "url=\"", ""), "\"", "")
@@ -101,7 +117,9 @@ func GetMetrics(input []string) []string {
 			mutex.Unlock()
 		}(elem)
 	}
+
 	wg.Wait()
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
@@ -110,18 +128,23 @@ func GetRequest(target string) string {
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}
+
 	resp, err := client.Get(target)
 	if err != nil {
 		return ""
 	}
+
 	defer resp.Body.Close()
+
 	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return ""
 	}
+
 	// Convert the body to type string.
 	sb := string(body)
+
 	return sb
 }
 
@@ -132,5 +155,6 @@ func RemovePath(input string) string {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
 	return u.Scheme + "://" + u.Host
 }

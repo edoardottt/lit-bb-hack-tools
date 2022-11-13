@@ -17,10 +17,13 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	output := GetTargets()
 	if len(output) == 0 {
 		fmt.Println()
@@ -28,6 +31,7 @@ func main() {
 		fmt.Println()
 		os.Exit(1)
 	}
+
 	for _, elem := range output {
 		fmt.Println(elem)
 	}
@@ -37,6 +41,7 @@ func main() {
 func help() {
 	var usage = `Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
 	$> bbtargets`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -64,12 +69,16 @@ func GetTargets() []string {
 	client := http.Client{
 		Timeout: 30 * time.Second,
 	}
+
 	var results Programs
+
 	url := "https://raw.githubusercontent.com/projectdiscovery/public-bugbounty-programs/master/chaos-bugbounty-list.json"
 	resp, err := client.Get(url)
+
 	if err != nil {
 		return []string{}
 	}
+
 	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -89,6 +98,7 @@ func GetTargets() []string {
 			}
 		}
 	}
+
 	return output
 }
 
@@ -96,6 +106,7 @@ func GetTargets() []string {
 // from ignored targets.
 func cleanIgnored(domains []string) []string {
 	var ignoredsubs []string
+
 	if _, err := os.Stat("ignored.txt"); err == nil {
 		var ignored = readFile("ignored.txt")
 		for _, domain := range domains {
@@ -106,21 +117,26 @@ func cleanIgnored(domains []string) []string {
 			}
 		}
 	}
+
 	return Difference(domains, ignoredsubs)
 }
 
 // Difference returns the elements in `a` that aren't in `b`.
 func Difference(a, b []string) []string {
 	mb := make(map[string]struct{}, len(b))
+
 	for _, x := range b {
 		mb[x] = struct{}{}
 	}
+
 	var diff []string
+
 	for _, x := range a {
 		if _, found := mb[x]; !found {
 			diff = append(diff, x)
 		}
 	}
+
 	return diff
 }
 
@@ -130,17 +146,25 @@ func readFile(inputFile string) []string {
 	if err != nil {
 		log.Fatalf("failed to open %s ", inputFile)
 	}
+
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
-	var text []string
-	var dir = ""
+
+	var (
+		text = []string{}
+		dir  = ""
+	)
+
 	for scanner.Scan() {
 		dir = scanner.Text()
 		if len(dir) > 0 {
 			text = append(text, dir)
 		}
 	}
+
 	file.Close()
+
 	text = golazy.RemoveDuplicateValues(text)
+
 	return text
 }

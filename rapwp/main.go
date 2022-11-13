@@ -17,20 +17,27 @@ func main() {
 	payloadPtr := flag.String("p", "", "Input payload.")
 	payloadFilePtr := flag.String("pL", "", "Input payload file.")
 	oneByOnePtr := flag.Bool("obo", false, "Replace parameters one by one.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	if *payloadPtr != "" && *payloadFilePtr != "" {
 		fmt.Println("You can't specify both -p and -pL.")
 		os.Exit(0)
 	}
+
 	if *payloadPtr == "" && *payloadFilePtr == "" {
 		fmt.Println("Payload(s) required.")
 		os.Exit(0)
 	}
+
 	input := ScanTargets()
+
 	var result []string
+
 	if *payloadPtr != "" {
 		if !*oneByOnePtr {
 			for _, elem := range input {
@@ -49,6 +56,7 @@ func main() {
 
 		}
 	}
+
 	if *payloadFilePtr != "" {
 		payloads := ReadFileLineByLine(*payloadFilePtr)
 		for _, payload := range golazy.RemoveDuplicateValues(payloads) {
@@ -71,6 +79,7 @@ func main() {
 			}
 		}
 	}
+
 	for _, elem := range golazy.RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
@@ -82,6 +91,7 @@ func help() {
 	$> cat urls | rapwp -p "<svg onload=alert(1)>"
 	$> cat urls | rapwp -pL payloads.txt
 	$> cat urls | rapwp -pL payloads.txt -obo`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -91,14 +101,15 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
+
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
@@ -108,16 +119,20 @@ func ReplaceParameters(input string, payload string) string {
 	if err != nil {
 		return ""
 	}
+
 	decodedValue, err := url.QueryUnescape(u.RawQuery)
 	if err != nil {
 		return ""
 	}
+
 	var queryResult = ""
+
 	couples := strings.Split(decodedValue, "&")
 	for _, pair := range couples {
 		values := strings.Split(pair, "=")
 		queryResult += values[0] + "=" + url.QueryEscape(payload) + "&"
 	}
+
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
 }
 
@@ -127,14 +142,18 @@ func ReplaceParametersOneByOne(input string, payload string) []string {
 	if err != nil {
 		return []string{}
 	}
+
 	decodedValue, err := url.QueryUnescape(u.RawQuery)
 	if err != nil {
 		return []string{}
 	}
+
 	var queryResult []string
+
 	couples := strings.Split(decodedValue, "&")
 	for _, pair1 := range couples {
 		var query = ""
+
 		for _, pair := range couples {
 			if pair1 == pair {
 				values := strings.Split(pair, "=")
@@ -157,13 +176,18 @@ func ReadFileLineByLine(inputFile string) []string {
 	if err != nil {
 		log.Fatalf("failed to open %s", inputFile)
 	}
+
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
+
 	var text []string
 	for scanner.Scan() {
 		text = append(text, scanner.Text())
 	}
+
 	file.Close()
+
 	text = golazy.RemoveDuplicateValues(text)
+
 	return text
 }

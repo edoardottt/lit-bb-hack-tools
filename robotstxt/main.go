@@ -16,12 +16,16 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	input := ScanTargets()
 	result := GetRobots(input)
+
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
@@ -31,6 +35,7 @@ func main() {
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
 	$> cat urls | robotstxt`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -40,7 +45,6 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
 
 	// accept domains on stdin.
@@ -49,25 +53,33 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
 // GetRobots.
 func GetRobots(input []string) []string {
-	var result []string
-	var mutex = &sync.Mutex{}
+	var (
+		result = []string{}
+		mutex  = &sync.Mutex{}
+	)
 
 	limiter := make(chan string, 10) // Limits simultaneous requests.
 	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
 	for _, elem := range input {
 		limiter <- elem
+
 		wg.Add(1)
+
 		go func(domain string) {
 			defer wg.Done()
 			defer func() { <-limiter }()
+
 			robots := GetRequest("https://" + RemoveProtocol(domain) + "/robots.txt")
+
 			mutex.Lock()
+
 			if robots != "" {
 				s := strings.Split(robots, "\n")
 				for _, line := range s {
@@ -82,7 +94,9 @@ func GetRobots(input []string) []string {
 			mutex.Unlock()
 		}(elem)
 	}
+
 	wg.Wait()
+
 	return golazy.RemoveDuplicateValues(result)
 }
 
@@ -91,18 +105,23 @@ func GetRequest(target string) string {
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}
+
 	resp, err := client.Get(target)
 	if err != nil {
 		return ""
 	}
+
 	defer resp.Body.Close()
+
 	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return ""
 	}
+
 	// Convert the body to type string.
 	sb := string(body)
+
 	return sb
 }
 

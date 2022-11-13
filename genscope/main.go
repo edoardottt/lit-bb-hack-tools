@@ -13,10 +13,13 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if len(os.Args) < 2 || *helpPtr {
 		help()
 	}
+
 	domains := golazy.RemoveDuplicateValues(golazy.ReadFileLineByLine(os.Args[1]))
 	GenerateDomains(domains)
 }
@@ -25,6 +28,7 @@ func main() {
 func help() {
 	var usage = `Take as input a file containing a list of (sub)domains (wildcards allowed) and produce a BurpSuite Configuration file.
 	$> genscope domains.txt`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -56,6 +60,7 @@ type Domain struct {
 // GenerateDomains.
 func GenerateDomains(input []string) {
 	var domains []Domain
+
 	for _, elem := range input {
 		domain := "^" + strings.ReplaceAll(strings.ReplaceAll(elem, ".", "\\."), "*", ".*") + "$"
 		// Here add logic for hosts.
@@ -64,6 +69,7 @@ func GenerateDomains(input []string) {
 		domains = append(domains, dom80)
 		domains = append(domains, dom443)
 	}
+
 	var result = BurpSuiteConfiguration{Target: Target{Scope: Scope{AdvancedMode: true, Exclude: []Domain{}, Include: domains}}}
 
 	file, _ := json.MarshalIndent(result, "", "	")

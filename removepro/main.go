@@ -12,8 +12,11 @@ import (
 )
 
 func main() {
-	var input []string
-	var result []string
+	var (
+		input  []string
+		result []string
+	)
+
 	if !ScanFlag() {
 		input = ScanTargets()
 		for _, elem := range input {
@@ -27,11 +30,12 @@ func main() {
 			}
 		}
 	}
+
 	result = golazy.RemoveDuplicateValues(result)
+
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
-
 }
 
 // help shows the usage.
@@ -40,6 +44,7 @@ func help() {
 With -subs you can output only domains without the queries.
 	$> cat urls | removepro
 	$> cat urls | removepro -subs`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -49,14 +54,15 @@ With -subs you can output only domains without the queries.
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
+
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
+
 	return result
 }
 
@@ -76,6 +82,7 @@ func GetOnlySubs(input string) string {
 	if err != nil {
 		return ""
 	}
+
 	return u.Host
 }
 
@@ -83,10 +90,13 @@ func GetOnlySubs(input string) string {
 func ScanFlag() bool {
 	subsPtr := flag.Bool("subs", false, "Return only subdomains without protocols.")
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	return *subsPtr
 }
 
@@ -96,5 +106,6 @@ func RemovePort(input string) string {
 	if res >= 0 {
 		return input[:res-1]
 	}
+
 	return input
 }

@@ -36,13 +36,17 @@ func main() {
 		Green = ""
 		Yellow = ""
 	}
+
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	keyPtr := flag.String("k", "", "API key (if not provided read it from config file).")
 	outputPtr := flag.String("o", "", "Output file.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	var apikey string
 	if *keyPtr != "" {
 		apikey = *keyPtr
@@ -53,20 +57,25 @@ func main() {
 			os.Exit(1)
 		}
 	}
+
 	if *outputPtr != "" {
 		f, err := os.OpenFile(*outputPtr, os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			fmt.Println("Can't create output file.")
 			os.Exit(1)
 		}
+
 		err = f.Truncate(0)
 		if err != nil {
 			fmt.Println("Can't create output file.")
 			os.Exit(1)
 		}
+
 		f.Close()
 	}
+
 	input := ScanTargets()
+
 	for _, elem := range golazy.RemoveDuplicateValues(input) {
 		resp, _, err := KnoxssAPI(elem, apikey)
 		if err != nil {
@@ -74,34 +83,42 @@ func main() {
 				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 				golazy.AppendOutputToTxt(err.Error(), *outputPtr)
 			}
+
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
+
 			continue
 		}
+
 		result, err := ReadResult(resp)
+
 		switch {
 		case err != nil:
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 			}
+
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
 		case result.XSS == "true":
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ XSS! ] "+elem, *outputPtr)
 			}
+
 			fmt.Println(Green + "[ XSS! ] " + Reset + result.PoC)
 		case result.XSS == "none" && result.Error != "":
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 				golazy.AppendOutputToTxt(result.Error, *outputPtr)
 			}
+
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(result.Error)
 		default:
 			if *outputPtr != "" {
 				golazy.AppendOutputToTxt("[ SAFE ] "+elem, *outputPtr)
 			}
+
 			fmt.Println(Yellow + "[ SAFE ] " + Reset + result.Target)
 		}
 	}
@@ -113,6 +130,7 @@ func help() {
 	$> cat urls | knoxssme
 	$> cat urls | knoxssme -h exampleapikeywbfkwfiuwlahlflvug
 	$> cat urls | knoxssme -o output.txt`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -122,8 +140,8 @@ func help() {
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
+
 	// accept domains on stdin
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
@@ -132,6 +150,7 @@ func ScanTargets() []string {
 			result = append(result, domain)
 		}
 	}
+
 	return result
 }
 
@@ -147,24 +166,32 @@ func KnoxssAPI(url string, apikey string) (string, int, error) {
 	client := &http.Client{
 		Timeout: time.Second * 1000,
 	}
+
 	var target = "https://knoxss.me/api/v3"
+
 	req, err := http.NewRequest("POST", target, responseBody)
 	if err != nil {
 		return "", 0, err
 	}
+
 	req.Header.Set("X-API-KEY", apikey)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", 0, err
 	}
+
 	defer resp.Body.Close()
+
 	// Read the response body.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
+
 	sb := string(body)
+
 	return sb, resp.StatusCode, nil
 }
 
@@ -181,8 +208,11 @@ type Result struct {
 
 // ReadResult.
 func ReadResult(input string) (Result, error) {
-	result := Result{}
-	var err error
+	var (
+		result = Result{}
+		err    error
+	)
+
 	switch {
 	case strings.Contains(input, "{") && strings.Contains(input, "XSS"):
 		err = json.Unmarshal([]byte(input), &result)
@@ -195,12 +225,14 @@ func ReadResult(input string) (Result, error) {
 		fmt.Println("something went wrong.")
 		os.Exit(1)
 	}
+
 	return result, err
 }
 
 // ReadAPIKey.
 func ReadAPIKey() string {
 	filename := ""
+
 	if runtime.GOOS == "windows" {
 		// Don't use colors
 		fmt.Println("[ ERROR ] Use -k option to insert Api key.")
@@ -213,17 +245,23 @@ func ReadAPIKey() string {
 		}
 		filename = home + "/.config/knoxss/knoxss.key"
 	}
+
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(Red + "[ ERROR ] " + Reset + "failed to open " + filename)
 		os.Exit(1)
 	}
+
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
+
 	var key string
+
 	if scanner.Scan() {
 		key = scanner.Text()
 	}
+
 	file.Close()
+
 	return key
 }

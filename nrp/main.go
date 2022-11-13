@@ -17,21 +17,28 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
+
 	if *helpPtr {
 		help()
 	}
+
 	input := ScanTargets()
-	var result []string
 	limiter := make(chan string, 10) // Limits simultaneous requests.
 	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
+	var result []string
+
 	for _, elem := range input {
 		limiter <- elem
+
 		wg.Add(1)
+
 		go func(elem string) {
 			defer wg.Done()
 			defer func() { <-limiter }()
+
 			finalUrl := ScanRedirect(elem)
 			if finalUrl.URL != "" {
 				final := finalUrl.URL + " " + strconv.Itoa(finalUrl.Code)
@@ -39,7 +46,9 @@ func main() {
 			}
 		}(elem)
 	}
+
 	wg.Wait()
+
 	for _, elem := range golazy.RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
@@ -50,6 +59,7 @@ func help() {
 	var usage = `Take as input on stdin a list of domains and print on stdout all the unique domains without redirects. 
 For example, if two domains (A and B) redirects to the same domain C, the output will be C.
 	$> cat urls | nrp`
+
 	fmt.Println()
 	fmt.Println(usage)
 	fmt.Println()
@@ -59,14 +69,15 @@ For example, if two domains (A and B) redirects to the same domain C, the output
 // ScanTargets return the array of elements
 // taken as input on stdin.
 func ScanTargets() []string {
-
 	var result []string
+
 	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		if !IsURL(sc.Text()) {
 			continue
 		}
+
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
@@ -84,6 +95,7 @@ type Redirect struct {
 func ScanRedirect(input string) Redirect {
 	result := []Redirect{{"", 1}}
 	nextURL := input
+
 	var i int
 	for i < 10 {
 		tr := &http.Transport{
@@ -97,11 +109,12 @@ func ScanRedirect(input string) Redirect {
 		if len(nextURL) == 0 {
 			break
 		}
+
 		if nextURL[0] == '/' {
 			nextURL = ExtractHost(result[len(result)-1].URL) + nextURL
 		}
-		resp, err := client.Get(nextURL)
 
+		resp, err := client.Get(nextURL)
 		if err != nil {
 			return Redirect{"", 1}
 		}
@@ -109,6 +122,7 @@ func ScanRedirect(input string) Redirect {
 		if resp.StatusCode == 200 {
 			output := Redirect{URL: resp.Request.URL.String(), Code: resp.StatusCode}
 			result = append(result, output)
+
 			break
 		} else {
 			nextURL = resp.Header.Get("Location")
@@ -117,6 +131,7 @@ func ScanRedirect(input string) Redirect {
 			i += 1
 		}
 	}
+
 	return result[len(result)-1]
 }
 
