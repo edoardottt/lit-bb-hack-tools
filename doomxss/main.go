@@ -9,6 +9,8 @@ import (
 	"os"
 	"strings"
 	"sync"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -18,13 +20,13 @@ func main() {
 		help()
 	}
 	input := ScanTargets()
-	results := RetrieveContents(RemoveDuplicateValues(input))
+	results := RetrieveContents(golazy.RemoveDuplicateValues(input))
 	for _, elem := range results {
 		fmt.Println("[ " + elem.Sink + " ] " + elem.Url)
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
 	$> cat urls | doomxss`
@@ -34,12 +36,12 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
@@ -48,31 +50,18 @@ func ScanTargets() []string {
 	return result
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
 type Result struct {
 	Sink string
 	Url  string
 }
 
-//RetrieveContents >
+// RetrieveContents.
 func RetrieveContents(input []string) []Result {
 	var result []Result
 	var mutex = &sync.Mutex{}
 
-	limiter := make(chan string, 10) // Limits simultaneous requests
-	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
+	limiter := make(chan string, 10) // Limits simultaneous requests.
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
 	for i, domain := range input {
 		limiter <- domain
@@ -85,7 +74,7 @@ func RetrieveContents(input []string) []Result {
 			if err == nil {
 				body, err := ioutil.ReadAll(resp.Body)
 				if err == nil && len(body) != 0 {
-					//Convert the body to type string
+					// Convert the body to type string.
 					sb := string(body)
 					results := CheckSinks(sb, domain)
 					result = append(result, results...)
@@ -100,8 +89,8 @@ func RetrieveContents(input []string) []Result {
 	return result
 }
 
-//CheckSinks returns a slice containing all
-//the probable sinks in the body
+// CheckSinks returns a slice containing all
+// the probable sinks in the body.
 func CheckSinks(body string, url string) []Result {
 	var result []Result
 	toCheck := strings.ToLower(body)

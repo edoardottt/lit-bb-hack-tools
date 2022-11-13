@@ -36,7 +36,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a payload and print on stdout all the successful WAF bypasses.
 	$> checkbypass -p "<script>alert()</script>"`
@@ -46,20 +46,7 @@ func help() {
 	os.Exit(0)
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//ReplaceParameters >
+// ReplaceParameters.
 func ReplaceParameters(input string, payload string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -78,7 +65,7 @@ func ReplaceParameters(input string, payload string) string {
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
 }
 
-//GetRequest performs a GET request
+// GetRequest performs a GET request.
 func GetRequest(target string) (string, int, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * 20,
@@ -88,12 +75,12 @@ func GetRequest(target string) (string, int, error) {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	//We Read the response body on the line below.
+	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
-	//Convert the body to type string
+	// Convert the body to type string.
 	sb := string(body)
 	return sb, len(sb), nil
 }
@@ -136,7 +123,7 @@ var wafs = []WAF{
 	"Your access to this service has been limited. (HTTP response code 403)"},*/
 }
 
-//TestWAF >
+// TestWAF.
 func TestWAF(payload string) {
 	var distance = 12
 	for _, elem := range wafs {

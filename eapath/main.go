@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -23,12 +25,12 @@ func main() {
 			result = append(result, path)
 		}
 	}
-	for _, elem := range RemoveDuplicateValues(result) {
+	for _, elem := range golazy.RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 	$> cat urls | eaparam`
@@ -38,8 +40,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -49,23 +51,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//ExtractPath >
+// ExtractPath.
 func ExtractPath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {

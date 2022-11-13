@@ -11,9 +11,10 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/edoardottt/golazy"
 )
 
-//main function
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
@@ -32,7 +33,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
 	$> bbtargets`
@@ -42,8 +43,8 @@ func help() {
 	os.Exit(0)
 }
 
-//Target is a struct containing informations about
-//a single bug bounty program.
+// Target is a struct containing informations about
+// a single bug bounty program.
 type Target struct {
 	Name    string   `json:"name"`
 	Url     string   `json:"url"`
@@ -51,14 +52,14 @@ type Target struct {
 	Domains []string `json:"domains"`
 }
 
-//Programs is a struct containing informations about
-//all the programs.
+// Programs is a struct containing informations about
+// all the programs.
 type Programs struct {
 	Targets []Target `json:"programs"`
 }
 
-//GetTargets is the function that actually retrieves
-//the json file containing the informations.
+// GetTargets is the function that actually retrieves
+// the json file containing the informations.
 func GetTargets() []string {
 	client := http.Client{
 		Timeout: 30 * time.Second,
@@ -80,7 +81,7 @@ func GetTargets() []string {
 	var output []string
 
 	for _, res := range results.Targets {
-		//ony programs with bounty
+		// only programs with bounty.
 		if res.Bounty {
 			if strings.Contains(res.Url, "hackerone") || strings.Contains(res.Url, "bugcrowd") ||
 				strings.Contains(res.Url, "intigriti") || strings.Contains(res.Url, "yeswehack") {
@@ -91,8 +92,8 @@ func GetTargets() []string {
 	return output
 }
 
-//cleanIgnored is the function that clean the results
-//from ignored targets.
+// cleanIgnored is the function that clean the results
+// from ignored targets.
 func cleanIgnored(domains []string) []string {
 	var ignoredsubs []string
 	if _, err := os.Stat("ignored.txt"); err == nil {
@@ -108,7 +109,7 @@ func cleanIgnored(domains []string) []string {
 	return Difference(domains, ignoredsubs)
 }
 
-//Difference returns the elements in `a` that aren't in `b`.
+// Difference returns the elements in `a` that aren't in `b`.
 func Difference(a, b []string) []string {
 	mb := make(map[string]struct{}, len(b))
 	for _, x := range b {
@@ -123,7 +124,7 @@ func Difference(a, b []string) []string {
 	return diff
 }
 
-//readFile >
+// readFile.
 func readFile(inputFile string) []string {
 	file, err := os.Open(inputFile)
 	if err != nil {
@@ -140,19 +141,6 @@ func readFile(inputFile string) []string {
 		}
 	}
 	file.Close()
-	text = RemoveDuplicateValues(text)
+	text = golazy.RemoveDuplicateValues(text)
 	return text
-}
-
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
 }

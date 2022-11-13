@@ -8,6 +8,8 @@ import (
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -29,7 +31,7 @@ func main() {
 			}
 		}
 	}
-	//sort reverse
+	// sort reverse.
 	n := map[int][]string{}
 	var a []int
 	for k, v := range set {
@@ -46,7 +48,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the hosts sorted.
 	$> cat urls | eah`
@@ -56,34 +58,21 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//GetHost >
+// GetHost.
 func GetHost(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {

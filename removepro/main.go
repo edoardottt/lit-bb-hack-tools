@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -25,14 +27,14 @@ func main() {
 			}
 		}
 	}
-	result = RemoveDuplicateValues(result)
+	result = golazy.RemoveDuplicateValues(result)
 	for _, elem := range result {
 		fmt.Println(elem)
 	}
 
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique urls without protocols.  
 With -subs you can output only domains without the queries.
@@ -44,12 +46,12 @@ With -subs you can output only domains without the queries.
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
@@ -58,20 +60,7 @@ func ScanTargets() []string {
 	return result
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//RemoveProtocol >
+// RemoveProtocol.
 func RemoveProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {
@@ -81,7 +70,7 @@ func RemoveProtocol(input string) string {
 	}
 }
 
-//GetOnlySubs >
+// GetOnlySubs.
 func GetOnlySubs(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -90,7 +79,7 @@ func GetOnlySubs(input string) string {
 	return u.Host
 }
 
-//ScanFlag >
+// ScanFlag.
 func ScanFlag() bool {
 	subsPtr := flag.Bool("subs", false, "Return only subdomains without protocols.")
 	helpPtr := flag.Bool("h", false, "Show usage.")
@@ -101,7 +90,7 @@ func ScanFlag() bool {
 	return *subsPtr
 }
 
-//RemovePort >
+// RemovePort.
 func RemovePort(input string) string {
 	res := strings.Index(input, ":")
 	if res >= 0 {

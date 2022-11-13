@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/edoardottt/golazy"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 )
@@ -27,7 +28,7 @@ var myTransport http.RoundTripper = &http.Transport{
 
 var myClient = &http.Client{Transport: myTransport}
 
-//main
+// main.
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
@@ -37,7 +38,7 @@ func main() {
 	TestMethods(ScanTargets())
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 	$> cat urls | tahm`
@@ -47,8 +48,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -59,10 +60,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//TestMethods >
+// TestMethods.
 func TestMethods(input []string) {
 	for _, elem := range input {
 		fmt.Println("= " + Red + elem + Reset + " =")
@@ -113,35 +114,35 @@ func TestMethods(input []string) {
 	}
 }
 
-//GetRequest performs a GET request
+// GetRequest performs a GET request.
 func GetRequest(target string) (string, int, error) {
 	resp, err := myClient.Get(target)
 	if err != nil {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	//We Read the response body on the line below.
+	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
-	//Convert the body to type string
+	// Convert the body to type string.
 	sb := string(body)
 	return resp.Status, len(sb), nil
 }
 
-//PostRequest performs a POST request
+// PostRequest performs a POST request.
 func PostRequest(target string) (string, int, error) {
 	postBody, _ := json.Marshal("{data}")
 	responseBody := bytes.NewBuffer(postBody)
-	//Leverage Go's HTTP Post function to make request
+	// Leverage Go's HTTP Post function to make request.
 	resp, err := myClient.Post(target, "application/json", responseBody)
-	//Handle Error
+	// Handle Error.
 	if err != nil {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	//Read the response body
+	// Read the response body.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
@@ -150,14 +151,14 @@ func PostRequest(target string) (string, int, error) {
 	return resp.Status, len(sb), nil
 }
 
-//HeadRequest performs a HEAD request
+// HeadRequest performs a HEAD request.
 func HeadRequest(target string) (string, int, error) {
 	resp, err := myClient.Head(target)
 	if err != nil {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	//Read the response body
+	// Read the response body.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
@@ -166,18 +167,18 @@ func HeadRequest(target string) (string, int, error) {
 	return resp.Status, len(sb), nil
 }
 
-//PutRequest performs a PUT request
+// PutRequest performs a PUT request.
 func PutRequest(target string) (string, int, error) {
-	// marshal User to json
+	// marshal User to json.
 	json, _ := json.Marshal("{data}")
 
-	// set the HTTP method, url, and request body
+	// set the HTTP method, url, and request body.
 	req, err := http.NewRequest(http.MethodPut, target, bytes.NewBuffer(json))
 	if err != nil {
 		return "", 0, err
 	}
 
-	// set the request header Content-Type for json
+	// set the request header Content-Type for json.
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	resp, err := myClient.Do(req)
 	if err != nil {
@@ -193,22 +194,22 @@ func PutRequest(target string) (string, int, error) {
 	return resp.Status, len(sb), nil
 }
 
-//Request performs a <METHOD> request
+// Request performs a <METHOD> request.
 func Request(target string, method string) (string, int, error) {
-	// Create request
+	// Create request.
 	req, err := http.NewRequest(method, target, nil)
 	if err != nil {
 		return "", 0, err
 	}
 
-	// Fetch Request
+	// Fetch Request.
 	resp, err := myClient.Do(req)
 	if err != nil {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
 
-	// Read Response Body
+	// Read Response Body.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
@@ -216,21 +217,4 @@ func Request(target string, method string) (string, int, error) {
 	sb := string(body)
 
 	return resp.Status, len(sb), nil
-}
-
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-
-	// If the key(values of the slice) is not equal
-	// to the already present value in new slice (list)
-	// then we append it. else we jump on another element.
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
 }

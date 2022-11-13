@@ -12,6 +12,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -27,7 +29,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique paths and url found in the /metrics endpoint.
 	$> cat urls | kubemetrics`
@@ -37,51 +39,34 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
 
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
-		if !HasProtocol(domain) {
+		if !golazy.HasProtocol(domain) {
 			fmt.Println(domain + " has no protocol!")
 			os.Exit(1)
 		}
 		result = append(result, RemovePath(domain))
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-
-	// If the key(values of the slice) is not equal
-	// to the already present value in new slice (list)
-	// then we append it. else we jump on another element.
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//GetMetrics >
+// GetMetrics.
 func GetMetrics(input []string) []string {
 	var result []string
 	var mutex = &sync.Mutex{}
 	pathRe := `path\=\".*\"`
 	urlRe := `url\=\".*\"`
 
-	limiter := make(chan string, 10) // Limits simultaneous requests
-	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished
+	limiter := make(chan string, 10) // Limits simultaneous requests.
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
 	for _, elem := range input {
 		limiter <- elem
@@ -117,10 +102,10 @@ func GetMetrics(input []string) []string {
 		}(elem)
 	}
 	wg.Wait()
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//GetRequest performs a GET request
+// GetRequest performs a GET request.
 func GetRequest(target string) string {
 	client := http.Client{
 		Timeout: 5 * time.Second,
@@ -130,22 +115,17 @@ func GetRequest(target string) string {
 		return ""
 	}
 	defer resp.Body.Close()
-	//We Read the response body on the line below.
+	// We Read the response body on the line below.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return ""
 	}
-	//Convert the body to type string
+	// Convert the body to type string.
 	sb := string(body)
 	return sb
 }
 
-//HasProtocol >
-func HasProtocol(input string) bool {
-	return strings.Contains(input, "://")
-}
-
-//RemovePath >
+// RemovePath.
 func RemovePath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {

@@ -10,6 +10,8 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -36,7 +38,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage
 func help() {
 	var usage = `Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 	$> cat urls | bbscope url target-scope.json
@@ -69,52 +71,41 @@ type Domain struct {
 	Protocol string `json:"protocol"`
 }
 
-//ScanTargets returns the array of elements
-//taken as input on stdin.
+// ScanTargets returns the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//ScanBurpConfFile returns the struct of the configuration file
+// ScanBurpConfFile returns the struct of the configuration file.
 func ScanBurpConfFile() BurpSuiteConfiguration {
 	jsonFile, err := os.Open(os.Args[2])
 	if err != nil {
 		fmt.Println(err)
+		jsonFile.Close()
 		os.Exit(1)
 	}
-	defer jsonFile.Close()
 	byteValue, err := ioutil.ReadAll(jsonFile)
 	if err != nil {
 		fmt.Println(err)
+		jsonFile.Close()
 		os.Exit(1)
 	}
+	defer jsonFile.Close()
 	var conf BurpSuiteConfiguration
 	json.Unmarshal(byteValue, &conf)
 	return conf
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//GetProtocol >
+// GetProtocol.
 func GetProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {
@@ -124,7 +115,7 @@ func GetProtocol(input string) string {
 	}
 }
 
-//checkSubs returns a slice of string containing only the in scope subdomains
+// checkSubs returns a slice of string containing only the in scope subdomains.
 func checkSubs(input []string, conf BurpSuiteConfiguration) []string {
 	var result []string
 	for _, item := range input {
@@ -153,7 +144,7 @@ func checkSubs(input []string, conf BurpSuiteConfiguration) []string {
 	return result
 }
 
-//checkUrls returns a slice of string containing only the in scope urls
+// checkUrls returns a slice of string containing only the in scope urls.
 func checkUrls(input []string, conf BurpSuiteConfiguration) []string {
 	var result []string
 	for _, item := range input {

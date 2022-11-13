@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -16,13 +18,13 @@ func main() {
 		help()
 	}
 	input := ScanTargets()
-	output := GetPaths(RemoveDuplicateValues(input))
+	output := GetPaths(golazy.RemoveDuplicateValues(input))
 	for _, elem := range output {
 		fmt.Println(elem)
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).
 	$> cat input | cleanpath`
@@ -32,8 +34,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -47,30 +49,13 @@ func ScanTargets() []string {
 	return result
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-
-	// If the key(values of the slice) is not equal
-	// to the already present value in new slice (list)
-	// then we append it. else we jump on another element.
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//GetPaths
+// GetPaths.
 func GetPaths(s []string) []string {
 	var result []string
 	for _, elem := range s {
 		if len(elem) != 0 {
 			var paths []string
-			if HasProtocol(elem) {
+			if golazy.HasProtocol(elem) {
 				if GetPath(elem) != "" {
 					paths = GetAllLevelsPaths(GetPath(elem))
 				}
@@ -85,16 +70,10 @@ func GetPaths(s []string) []string {
 			}
 		}
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//HasProtocol
-func HasProtocol(input string) bool {
-	res := strings.Index(input, "://")
-	return res >= 0
-}
-
-//RemoveProtocol
+// RemoveProtocol.
 func RemoveProtocol(input string) string {
 	res := strings.Index(input, "://")
 	if res >= 0 {
@@ -104,7 +83,7 @@ func RemoveProtocol(input string) string {
 	}
 }
 
-//GetPath >
+// GetPath.
 func GetPath(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -118,14 +97,14 @@ func GetPath(input string) string {
 
 }
 
-//GetAllLevelsPaths
+// GetAllLevelsPaths.
 func GetAllLevelsPaths(input string) []string {
 	if input == "" {
 		return []string{}
 	}
 	var result []string
 	if input[len(input)-1] != '/' {
-		input = input + "/"
+		input += "/"
 	}
 	var elems = strings.Split(input, "/")
 	if len(elems) == 2 {
@@ -143,5 +122,5 @@ func GetAllLevelsPaths(input string) []string {
 			result = append(result, resTemp)
 		}
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }

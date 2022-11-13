@@ -27,7 +27,7 @@ func main() {
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	fmt.Println()
 	var usage = `Take as input a URL and print on stdout all the redirects.
@@ -37,8 +37,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTarget return the element
-//taken as input.
+// ScanTarget return the element
+// taken as input.
 func ScanTarget() string {
 	if len(os.Args) < 2 {
 		fmt.Println("usage: chainredir <url-here>")
@@ -48,13 +48,13 @@ func ScanTarget() string {
 	return input
 }
 
-//Redirect Struct
+// Redirect Struct.
 type Redirect struct {
 	Url  string
 	Code string
 }
 
-//ScanRedirects
+// ScanRedirects.
 func ScanRedirects(input string) []Redirect {
 	result := []Redirect{}
 	nextURL := input
@@ -91,7 +91,7 @@ func ScanRedirects(input string) []Redirect {
 	return result
 }
 
-//IsUrl >
+// IsUrl.
 func IsUrl(input string) bool {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -103,7 +103,7 @@ func IsUrl(input string) bool {
 	return false
 }
 
-//ExtractHost >
+// ExtractHost.
 func ExtractHost(input string) string {
 	u, err := url.Parse(input)
 	if err != nil {

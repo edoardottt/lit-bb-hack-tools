@@ -8,9 +8,10 @@ import (
 	"os"
 	"strings"
 	"sync"
+
+	"github.com/edoardottt/golazy"
 )
 
-//main
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
@@ -20,7 +21,7 @@ func main() {
 	RetrieveHeaders(ScanTargets())
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the unique headers found.
 	$> cat urls | heacoll`
@@ -30,8 +31,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -42,10 +43,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//RetrieveHeaders >
+// RetrieveHeaders.
 func RetrieveHeaders(input []string) {
 	result := make(map[string][]string)
 	var mutex = &sync.Mutex{}
@@ -65,11 +66,11 @@ func RetrieveHeaders(input []string) {
 				for key, elem := range resp.Header {
 					_, exists := result[key]
 					if !exists {
-						result[key] = RemoveDuplicateValues(elem)
+						result[key] = golazy.RemoveDuplicateValues(elem)
 					} else {
 						var update = result[key]
 						update = append(update, elem...)
-						result[key] = RemoveDuplicateValues(update)
+						result[key] = golazy.RemoveDuplicateValues(update)
 					}
 				}
 				resp.Body.Close()
@@ -79,24 +80,7 @@ func RetrieveHeaders(input []string) {
 	}
 	wg.Wait()
 	for key, elem := range result {
-		fmt.Printf("%s : %s\n", key, RemoveDuplicateValues(elem))
+		fmt.Printf("%s : %s\n", key, golazy.RemoveDuplicateValues(elem))
 		fmt.Println()
 	}
-}
-
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-
-	// If the key(values of the slice) is not equal
-	// to the already present value in new slice (list)
-	// then we append it. else we jump on another element.
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
 }

@@ -8,9 +8,10 @@ import (
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
-//main
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
 	flag.Parse()
@@ -20,7 +21,7 @@ func main() {
 	extractExtensions(ScanTargets())
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout all the extensions sorted.
 	$> cat urls | eae`
@@ -30,21 +31,21 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
-	// accept domains on stdin
+	// accept domains on stdin.
 	sc := bufio.NewScanner(os.Stdin)
 	for sc.Scan() {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//extractExtensions
+// extractExtensions.
 func extractExtensions(input []string) {
 	set := make(map[string]int)
 	for _, elem := range input {
@@ -67,7 +68,7 @@ func extractExtensions(input []string) {
 			}
 		}
 	}
-	//sort reverse
+	// sort reverse.
 	n := map[int][]string{}
 	var a []int
 	for k, v := range set {
@@ -82,17 +83,4 @@ func extractExtensions(input []string) {
 			fmt.Printf("[ %d ] %s\n", k, s)
 		}
 	}
-}
-
-//RemoveDuplicateValues
-func RemoveDuplicateValues(intSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range intSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
 }

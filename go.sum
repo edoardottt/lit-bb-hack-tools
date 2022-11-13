@@ -1,6 +1,8 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/edoardottt/golazy v0.1.1-dev h1:aM7n7MfghDgSBCOORaiVX5yC3aJ0CE/clkvGalqCTiU=
 github.com/edoardottt/golazy v0.1.1-dev/go.mod h1:YxKUzhzluq/A4MvKXnxpuN4fTbIJFrOaghTJ+avI2rs=
+github.com/edoardottt/golazy v0.1.2-dev h1:P2MEUKVKJi42DPihjmjddinw2oALmGa6c20K1aouTNA=
+github.com/edoardottt/golazy v0.1.2-dev/go.mod h1:uZRa3TRYvQSxmbAc7O9+3RelkMu+ACbKiUoy+uPsGVM=
 github.com/fatih/color v1.13.0 h1:8LOYc1KYPPmyKMuN8QV2DNRWNbLo6LZ0iLs8+mlH53w=
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
 github.com/mattn/go-colorable v0.1.9 h1:sqDoxXbdeALODt0DAeJCVp38ps9ZogZEAXjus69YV3U=

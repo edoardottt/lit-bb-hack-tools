@@ -8,12 +8,13 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/edoardottt/golazy"
 )
 
 /*
@@ -27,7 +28,7 @@ var Red = "\033[31m"
 var Green = "\033[32m"
 var Yellow = "\033[33m"
 
-//main >
+// main.
 func main() {
 	if runtime.GOOS == "windows" {
 		Reset = ""
@@ -46,7 +47,7 @@ func main() {
 	if *keyPtr != "" {
 		apikey = *keyPtr
 	} else {
-		apikey = ReadApiKey()
+		apikey = ReadAPIKey()
 		if apikey == "" {
 			fmt.Println(Red + "[ ERR! ] API key cannot be blank." + Reset)
 			os.Exit(1)
@@ -66,46 +67,47 @@ func main() {
 		f.Close()
 	}
 	input := ScanTargets()
-	for _, elem := range RemoveDuplicateValues(input) {
-		resp, _, err := KnoxssApi(elem, apikey)
+	for _, elem := range golazy.RemoveDuplicateValues(input) {
+		resp, _, err := KnoxssAPI(elem, apikey)
 		if err != nil {
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
-				AppendOutputToTxt(err.Error(), *outputPtr)
+				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
+				golazy.AppendOutputToTxt(err.Error(), *outputPtr)
 			}
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
 			continue
 		}
 		result, err := ReadResult(resp)
-		if err != nil {
+		switch {
+		case err != nil:
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
+				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
 			}
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(err.Error())
-		} else if result.Xss == "true" { // XSS
+		case result.Xss == "true":
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ XSS! ] "+elem, *outputPtr)
+				golazy.AppendOutputToTxt("[ XSS! ] "+elem, *outputPtr)
 			}
 			fmt.Println(Green + "[ XSS! ] " + Reset + result.PoC)
-		} else if result.Xss == "none" && result.Error != "" { // ERROR
+		case result.Xss == "none" && result.Error != "":
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
-				AppendOutputToTxt(result.Error, *outputPtr)
+				golazy.AppendOutputToTxt("[ ERR! ] "+elem, *outputPtr)
+				golazy.AppendOutputToTxt(result.Error, *outputPtr)
 			}
 			fmt.Println(Red + "[ ERR! ] " + Reset + elem)
 			fmt.Println(result.Error)
-		} else {
+		default:
 			if *outputPtr != "" {
-				AppendOutputToTxt("[ SAFE ] "+elem, *outputPtr)
+				golazy.AppendOutputToTxt("[ SAFE ] "+elem, *outputPtr)
 			}
 			fmt.Println(Yellow + "[ SAFE ] " + Reset + result.Target)
 		}
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and print on stdout the results from Knoxss.me API.
 	$> cat urls | knoxssme
@@ -117,8 +119,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -133,26 +135,13 @@ func ScanTargets() []string {
 	return result
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//FilterAnd replaces all occurrences of & with %26
+// FilterAnd replaces all occurrences of & with %26.
 func FilterAnd(input string) string {
 	return strings.ReplaceAll(input, "&", "%26")
 }
 
-//KnoxssApi performs a POST request to knoxss api
-func KnoxssApi(url string, apikey string) (string, int, error) {
+// KnoxssAPI performs a POST request to knoxss API.
+func KnoxssAPI(url string, apikey string) (string, int, error) {
 	postBody := FilterAnd("target=" + url)
 	responseBody := bytes.NewBuffer([]byte(postBody))
 	client := &http.Client{
@@ -170,7 +159,7 @@ func KnoxssApi(url string, apikey string) (string, int, error) {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	//Read the response body
+	// Read the response body.
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
@@ -190,23 +179,27 @@ type Result struct {
 	Timestamp   string `json:"Timestamp"`
 }
 
-//ReadResult
+// ReadResult.
 func ReadResult(input string) (Result, error) {
 	result := Result{}
 	var err error
-	if strings.Contains(input, "{") && strings.Contains(input, "XSS") { // if json response
+	switch {
+	case strings.Contains(input, "{") && strings.Contains(input, "XSS"):
 		err = json.Unmarshal([]byte(input), &result)
-	} else if strings.Contains(input, "Error Code: <b>HTTP 504</b>") { //Sucuri page
+	case strings.Contains(input, "Error Code: <b>HTTP 504</b>"):
 		err = errors.New("knoxss.me replied with HTTP 504: Backend or gateway connection timeout")
-	} else if strings.Contains(input, "Incorrect API key") {
+	case strings.Contains(input, "Incorrect API key"):
 		fmt.Println(Red + "[ ERROR ] " + Reset + "Incorrect API key.")
+		os.Exit(1)
+	default:
+		fmt.Println("something went wrong.")
 		os.Exit(1)
 	}
 	return result, err
 }
 
-//ReadApiKey
-func ReadApiKey() string {
+// ReadAPIKey.
+func ReadAPIKey() string {
 	filename := ""
 	if runtime.GOOS == "windows" {
 		// Don't use colors
@@ -233,16 +226,4 @@ func ReadApiKey() string {
 	}
 	file.Close()
 	return key
-}
-
-//AppendOutputToTxt >
-func AppendOutputToTxt(output string, filename string) {
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
-	if _, err := file.WriteString(output + "\n"); err != nil {
-		log.Fatal(err)
-	}
-	file.Close()
 }

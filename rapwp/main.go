@@ -8,6 +8,8 @@ import (
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -49,7 +51,7 @@ func main() {
 	}
 	if *payloadFilePtr != "" {
 		payloads := ReadFileLineByLine(*payloadFilePtr)
-		for _, payload := range RemoveDuplicateValues(payloads) {
+		for _, payload := range golazy.RemoveDuplicateValues(payloads) {
 			if strings.Trim(payload, " ") != "" {
 				if !*oneByOnePtr {
 					for _, elem := range input {
@@ -69,12 +71,12 @@ func main() {
 			}
 		}
 	}
-	for _, elem := range RemoveDuplicateValues(result) {
+	for _, elem := range golazy.RemoveDuplicateValues(result) {
 		fmt.Println(elem)
 	}
 }
 
-//help shows the usage
+// help shows the usage.
 func help() {
 	var usage = `Take as input on stdin a list of urls and a payload and print on stdout all the unique urls with ready to use payloads.
 	$> cat urls | rapwp -p "<svg onload=alert(1)>"
@@ -86,8 +88,8 @@ func help() {
 	os.Exit(0)
 }
 
-//ScanTargets return the array of elements
-//taken as input on stdin.
+// ScanTargets return the array of elements
+// taken as input on stdin.
 func ScanTargets() []string {
 
 	var result []string
@@ -97,23 +99,10 @@ func ScanTargets() []string {
 		domain := strings.ToLower(sc.Text())
 		result = append(result, domain)
 	}
-	return RemoveDuplicateValues(result)
+	return golazy.RemoveDuplicateValues(result)
 }
 
-//RemoveDuplicateValues >
-func RemoveDuplicateValues(strSlice []string) []string {
-	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
-			list = append(list, entry)
-		}
-	}
-	return list
-}
-
-//ReplaceParameters >
+// ReplaceParameters.
 func ReplaceParameters(input string, payload string) string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -132,7 +121,7 @@ func ReplaceParameters(input string, payload string) string {
 	return u.Scheme + "://" + u.Host + u.Path + "?" + queryResult[:len(queryResult)-1]
 }
 
-//ReplaceParametersOneByOne >
+// ReplaceParametersOneByOne.
 func ReplaceParametersOneByOne(input string, payload string) []string {
 	u, err := url.Parse(input)
 	if err != nil {
@@ -161,8 +150,8 @@ func ReplaceParametersOneByOne(input string, payload string) []string {
 	return queryResult
 }
 
-//ReadFileLineByLine reads all the lines from input file and returns
-//them as a slice of strings
+// ReadFileLineByLine reads all the lines from input file and returns
+// them as a slice of strings.
 func ReadFileLineByLine(inputFile string) []string {
 	file, err := os.Open(inputFile)
 	if err != nil {
@@ -175,6 +164,6 @@ func ReadFileLineByLine(inputFile string) []string {
 		text = append(text, scanner.Text())
 	}
 	file.Close()
-	text = RemoveDuplicateValues(text)
+	text = golazy.RemoveDuplicateValues(text)
 	return text
 }
