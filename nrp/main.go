@@ -11,8 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-
-	"github.com/edoardottt/golazy"
 )
 
 func main() {
@@ -24,11 +22,11 @@ func main() {
 		help()
 	}
 
-	input := ScanTargets()
-	limiter := make(chan string, 10) // Limits simultaneous requests.
-	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
+	result := sync.Map{}
 
-	var result []string
+	input := ScanTargets()
+	limiter := make(chan string, 30) // Limits simultaneous requests.
+	wg := sync.WaitGroup{}           // Needed to not prematurely exit before all requests have been finished.
 
 	for _, elem := range input {
 		limiter <- elem
@@ -42,16 +40,15 @@ func main() {
 			finalURL := ScanRedirect(elem)
 			if finalURL.URL != "" {
 				final := finalURL.URL + " " + strconv.Itoa(finalURL.Code)
-				result = append(result, final)
+				if _, ok := result.Load(final); !ok {
+					result.Store(final, true)
+					fmt.Println(final)
+				}
 			}
 		}(elem)
 	}
 
 	wg.Wait()
-
-	for _, elem := range golazy.RemoveDuplicateValues(result) {
-		fmt.Println(elem)
-	}
 }
 
 // help shows the usage.
