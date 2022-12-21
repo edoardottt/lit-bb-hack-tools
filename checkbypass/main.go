@@ -135,6 +135,14 @@ var wafs = []WAF{
 	"https://www.wordfence.com/products/", // THIS IS NOT BEHIND WORDFENCE !
 	403,
 	"Your access to this service has been limited. (HTTP response code 403)"},*/
+	/*
+	Missing:
+		- Fortiweb
+		- Wordfence
+		- Azure WAF
+		- Sucuri
+		- Barracuda
+	*/
 }
 
 // TestWAF.
