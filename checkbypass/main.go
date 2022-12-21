@@ -136,12 +136,12 @@ var wafs = []WAF{
 	403,
 	"Your access to this service has been limited. (HTTP response code 403)"},*/
 	/*
-	Missing:
-		- Fortiweb
-		- Wordfence
-		- Azure WAF
-		- Sucuri
-		- Barracuda
+		Missing:
+			- Fortiweb
+			- Wordfence
+			- Azure WAF
+			- Sucuri
+			- Barracuda
 	*/
 }
 
