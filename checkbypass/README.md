@@ -16,6 +16,5 @@ Take as input on stdin a payload and print on stdout all the successful WAF bypa
 [ BYPASSED ] F5           : https://www.f5.com/?=test%3Dciaoooo
 [ BYPASSED ] CloudFront   : https://docs.aws.amazon.com/?=test%3Dciaoooo
 [ BYPASSED ] Fortiweb     : https://www.fortinet.com/?=test%3Dciaoooo
-[ BYPASSED ] Imperva      : https://www.imperva.com/?=test%3Dciaoooo
-[ BYPASSED ] Wordfence    : https://www.wordfence.com/products/?=test%3Dciaoooo
+[ BYPASSED ] Sucuri       : https://sucuri.net/?=test%3Dciaoooo
 ```
