@@ -4,6 +4,11 @@
 
 Command Line tools useful during Bug Bounty / Penetration testing. Focused on Web targets.
 
+<a href="https://edoardoottavianelli.it">
+	<img src="https://github.com/edoardottt/lit-bb-hack-tools/actions/workflows/go.yml/badge.svg" alt="workflows" />
+</a>
+<br>
+
 Installation 📥
 -------
 
