@@ -5,7 +5,7 @@
 Command Line tools useful during Bug Bounty / Penetration testing. Focused on Web targets.
 
 <a href="https://github.com/edoardottt/lit-bb-hack-tools/actions">
-	<img src="https://github.com/edoardottt/lit-bb-hack-tools/actions/workflows/go.yml/badge.svg" alt="workflows" />
+ <img src="https://github.com/edoardottt/lit-bb-hack-tools/actions/workflows/go.yml/badge.svg" alt="workflows" />
 </a>
 <br>
 
@@ -35,7 +35,7 @@ Tools list 📃
 - [tahm](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/tahm) Take as input on stdin a list of urls and print on stdout all the status codes and body sizes for HTTP methods.
 - [robotstxt](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/robotstxt) Take as input on stdin a list of urls and print on stdout all the unique paths found in the robots.txt file.
 - [cleanpath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/cleanpath) Take as input on stdin a list of urls/paths and print on stdout all the unique paths (at any level).
-- [eefjsf](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eefjsf) Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found. 
+- [eefjsf](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eefjsf) Take as input on stdin a list of js file urls and print on stdout all the unique endpoints found.
 - [bbtargets](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbtargets) Produce as output on stdout all the bug bounty targets found on Chaos list by Project Discovery.
 - [nrp](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/nrp) Take as input on stdin a list of domains and print on stdout all the unique domains without redirects.
 - [eah](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eah) Take as input on stdin a list of urls and print on stdout all the hosts sorted.
@@ -49,19 +49,24 @@ Tools list 📃
 - [knoxssme](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/knoxssme) Take as input on stdin a list of urls and print on stdout the results from Knoxss.me API.
 - [genscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/genscope) Take as input a file containing a list of (sub)domains (wildcards allowed) and produce a BurpSuite Configuration file.
 - [kubemetrics](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/kubemetrics) Take as input on stdin a list of urls and print on stdout all the unique paths and urls found in the /metrics endpoint.
+- [earh](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/earh) Take as input on stdin a list of urls and print on stdout all the unique root hosts.
 
 Changelog 📌
 -------
+
 Detailed changes for each release are documented in the [release notes](https://github.com/edoardottt/lit-bb-hack-tools/releases).
 
 Contributing 🤝
 ------
+
 If you want to contribute to this project, you can start opening an [issue](https://github.com/edoardottt/lit-bb-hack-tools/issues).
 
 Before opening a pull request, download [golangci-lint](https://golangci-lint.run/usage/install/) and run
+
 ```bash
 golangci-lint run
 ```
+
 If there aren't errors, go ahead :)
 
 License 📝
