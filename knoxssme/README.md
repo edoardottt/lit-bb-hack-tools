@@ -4,9 +4,11 @@
 
 Take as input on stdin a list of urls and print on stdout the results from Knoxss.me API.
 
-#### (Only for Linux) Create the configuration file `~/.config/knoxss/knoxss.key` and copy your API key there.
+  
+> **Note**
+> (Only for Linux) Create the configuration file `~/.config/knoxss/knoxss.key` and copy your API key there.  
 
-### INput
+### Input
 
 ```
 https://brutelogic.com.br/xsx.php
