@@ -3,7 +3,7 @@ module github.com/edoardottt/lit-bb-hack-tools
 go 1.18
 
 require (
-	github.com/edoardottt/golazy v0.1.3-dev
+	github.com/edoardottt/golazy v0.1.4
 	github.com/fatih/color v1.16.0
 	github.com/rodaine/table v1.1.1
 )
