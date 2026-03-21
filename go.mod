@@ -1,11 +1,11 @@
 module github.com/edoardottt/lit-bb-hack-tools
 
-go 1.18
+go 1.21
 
 require (
 	github.com/edoardottt/golazy v0.1.4
 	github.com/fatih/color v1.18.0
-	github.com/rodaine/table v1.3.0
+	github.com/rodaine/table v1.3.1
 )
 
 require (
