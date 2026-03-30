@@ -70,6 +70,7 @@ func GetPaths(s []string) []string {
 				if elem[0] == '/' {
 					elem = elem[1:]
 				}
+
 				paths = GetAllLevelsPaths(elem)
 			}
 

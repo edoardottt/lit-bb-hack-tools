@@ -22,7 +22,7 @@ func main() {
 
 	input := ScanTargets()
 
-	var result []string
+	var result []string //nolint:prealloc
 	for _, elem := range input {
 		result = append(result, ExtractParameters(elem)...)
 	}

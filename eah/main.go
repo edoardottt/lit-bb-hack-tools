@@ -38,8 +38,8 @@ func main() {
 
 	// sort reverse.
 	var (
-		n = map[int][]string{}
-		a = []int{}
+		n = make(map[int][]string, len(set))
+		a = make([]int, 0, len(n))
 	)
 
 	for k, v := range set {

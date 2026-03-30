@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -31,6 +31,7 @@ var myClient = &http.Client{Transport: myTransport}
 // main.
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
 
 	if *helpPtr {
@@ -138,7 +139,7 @@ func GetRequest(target string) (string, int, error) {
 	defer resp.Body.Close()
 
 	// We Read the response body on the line below.
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
@@ -162,7 +163,7 @@ func PostRequest(target string) (string, int, error) {
 
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
@@ -181,7 +182,7 @@ func HeadRequest(target string) (string, int, error) {
 
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
@@ -210,7 +211,7 @@ func PutRequest(target string) (string, int, error) {
 		return "", 0, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
@@ -238,7 +239,7 @@ func Request(target string, method string) (string, int, error) {
 	defer resp.Body.Close()
 
 	// Read Response Body.
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}

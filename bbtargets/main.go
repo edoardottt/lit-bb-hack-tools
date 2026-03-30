@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -73,15 +73,15 @@ func GetTargets() []string {
 	var results Programs
 
 	url := "https://raw.githubusercontent.com/projectdiscovery/public-bugbounty-programs/master/chaos-bugbounty-list.json"
-	resp, err := client.Get(url)
 
+	resp, err := client.Get(url)
 	if err != nil {
 		return []string{}
 	}
 
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	if err := json.Unmarshal(body, &results); err != nil {
 		return []string{}

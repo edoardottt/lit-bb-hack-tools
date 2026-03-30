@@ -162,6 +162,7 @@ func ReplaceParametersOneByOne(input string, payload string) []string {
 				query += values[0] + "=" + values[1] + "&"
 			}
 		}
+
 		queryResult = append(queryResult, u.Scheme+"://"+u.Host+u.Path+"?"+query[:len(query)-1])
 	}
 
