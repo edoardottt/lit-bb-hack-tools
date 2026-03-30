@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"regexp"
@@ -83,7 +83,7 @@ func RetrieveContents(input []string, channels int) []string {
 			mutex.Lock()
 
 			if err == nil {
-				body, err := ioutil.ReadAll(resp.Body)
+				body, err := io.ReadAll(resp.Body)
 				if err == nil && len(body) != 0 {
 					// Convert the body to type string.
 					sb := string(body)

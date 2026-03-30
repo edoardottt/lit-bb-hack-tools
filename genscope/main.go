@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -59,14 +58,16 @@ type Domain struct {
 
 // GenerateDomains.
 func GenerateDomains(input []string) {
-	var domains = []Domain{}
+	var domains = make([]Domain, 0, 2*len(input))
 
 	for _, elem := range input {
 		domain := "^" + strings.ReplaceAll(strings.ReplaceAll(elem, ".", "\\."), "*", ".*") + "$"
 		// Here add logic for hosts.
 		dom80 := Domain{Enabled: true, File: "^/.*", Host: domain, Port: "^80$", Protocol: "http"}
 		dom443 := Domain{Enabled: true, File: "^/.*", Host: domain, Port: "^443$", Protocol: "https"}
+
 		domains = append(domains, dom80)
+
 		domains = append(domains, dom443)
 	}
 
@@ -74,5 +75,5 @@ func GenerateDomains(input []string) {
 
 	file, _ := json.MarshalIndent(result, "", "	")
 
-	_ = ioutil.WriteFile("genscope.json", file, 0644)
+	_ = os.WriteFile("genscope.json", file, 0644)
 }

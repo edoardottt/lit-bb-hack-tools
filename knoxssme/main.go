@@ -7,7 +7,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"runtime"
@@ -16,12 +16,6 @@ import (
 
 	"github.com/edoardottt/golazy"
 )
-
-/*
-TODO:
-
-- Daily api calls check
-*/
 
 var Reset = "\033[0m"
 var Red = "\033[31m"
@@ -185,7 +179,7 @@ func KnoxssAPI(url string, apikey string) (string, int, error) {
 	defer resp.Body.Close()
 
 	// Read the response body.
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
@@ -243,6 +237,7 @@ func ReadAPIKey() string {
 			fmt.Println(Red + "[ ERROR ] " + Reset + "Cannot read API Key from config file.")
 			os.Exit(1)
 		}
+
 		filename = home + "/.config/knoxss/knoxss.key"
 	}
 

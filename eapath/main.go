@@ -13,6 +13,7 @@ import (
 
 func main() {
 	helpPtr := flag.Bool("h", false, "Show usage.")
+
 	flag.Parse()
 
 	if *helpPtr {

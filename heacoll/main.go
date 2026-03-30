@@ -81,6 +81,7 @@ func RetrieveHeaders(input []string) {
 						result[key] = golazy.RemoveDuplicateValues(elem)
 					} else {
 						var update = result[key]
+
 						update = append(update, elem...)
 						result[key] = golazy.RemoveDuplicateValues(update)
 					}

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/url"
 	"os"
 	"regexp"
@@ -101,7 +101,7 @@ func ScanBurpConfFile() BurpSuiteConfiguration {
 		os.Exit(1)
 	}
 
-	byteValue, err := ioutil.ReadAll(jsonFile)
+	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
 		fmt.Println(err)
 		jsonFile.Close()

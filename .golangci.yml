@@ -1,23 +1,20 @@
+version: "2"
 linters:
-  # Enable all available linters.
-  # Default: false
-  disable-all: true
+  default: none
   enable:
     - asciicheck
     - bodyclose
+    - copyloopvar
     - dogsled
     - dupl
-    - errcheck
     - exhaustive
-    - exportloopref
-    - gochecknoinits
     - goconst
     - gocritic
     - godot
+    - godox
     - goheader
     - gomodguard
     - goprintffuncname
-    - gosimple
     - govet
     - ineffassign
     - misspell
@@ -27,16 +24,9 @@ linters:
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
-    - stylecheck
     - testpackage
-    - typecheck
     - unconvert
     - unparam
     - unused
     - whitespace
-    - wsl
-
-linters-settings:
-  wsl:
-    strict-append: false
-    enforce-err-cuddling: true
+    - wsl_v5
