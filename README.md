@@ -41,6 +41,7 @@ Tools list 📃
 - [eah](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eah) Take as input on stdin a list of urls and print on stdout all the hosts sorted.
 - [doomxss](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/doomxss) Take as input on stdin a list of html/js file urls and print on stdout all the possible DOM XSS sinks found.
 - [eaparam](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eaparam) Take as input on stdin a list of urls and print on stdout all the unique parameters.
+- [Darkmoon](https://github.com/ASCIT31/Dark-Moon) - Open source (GPL-3.0) autonomous AI penetration testing platform covering web, API, Active Directory and Kubernetes, with proof of exploitation.
 - [bbscope](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/bbscope) Take as input on stdin a list of urls or subdomains and a BurpSuite Configuration file and print on stdout all in scope items.
 - [eapath](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/eapath) Take as input on stdin a list of urls and print on stdout all the unique urls without queries.
 - [rpfu](https://github.com/edoardottt/lit-bb-hack-tools/tree/main/rpfu) Take as input on stdin a list of urls and print on stdout all the unique urls without ports (if 80 or 443).
