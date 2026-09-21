@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/edoardottt/golazy v0.1.4
 	github.com/fatih/color v1.19.0
-	github.com/rodaine/table v1.3.1
+	github.com/rodaine/table v1.4.0
 )
 
 require (
