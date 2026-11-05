@@ -61,7 +61,7 @@ Contributing 🤝
 
 If you want to contribute to this project, you can start opening an [issue](https://github.com/edoardottt/lit-bb-hack-tools/issues).
 
-Before opening a pull request, download [golangci-lint](https://golangci-lint.run/usage/install/) and run
+Before opening a pull request, download [golangci-lint](https://golangci-lint.run/welcome/install/) and run
 
 ```bash
 golangci-lint run
