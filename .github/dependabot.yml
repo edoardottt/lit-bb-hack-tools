@@ -13,7 +13,7 @@ updates:
       prefix: "chore"
       include: "scope"
     labels:
-      - "Type: Maintenance"
+      - "Maintenance"
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -27,4 +27,8 @@ updates:
       prefix: "chore"
       include: "scope"
     labels:
-      - "Type: Maintenance"
+      - "Maintenance"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
